@@ -1,29 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {TableGen} from './timeTable/cellGen.js';
 import './index.css';
 
-class TimeTable extends React.Component {
-
-	
-	CreateColumn(){
-		for (var i = 0; i < 7; i++) {
-			React.createElement("tr")
-		}
-	}
-	render() {
-		return (
-			React.createElement("div", {id: "TimeTableDIV"},
-				React.createElement("table", {id: "TimeTable"},
-					this.CreateColumn()
-				)
-			)
-		);
-	}
-}
-
 // ========================================
-
+/*
+Add user setting later
+*/
+//
 ReactDOM.render(
-  <TimeTable />,
+  <TableGen 
+	//TODO
+	//change Time format later!
+  	TimeRange={[6, 11]}
+  />,
   document.getElementById('root')
 );
