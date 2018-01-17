@@ -4,7 +4,7 @@ export class TableGen extends Component {
 	constructor(props) {
     	super(props);
     	this.state = {
-    		DayArr: [" ", "Monday", "Tuesday", "Wednesday",
+    		DayArr: ["", "Monday", "Tuesday", "Wednesday",
 				    "Thursday", "Friday", "Saturday",
 				    "Sunday"],
     		
@@ -23,19 +23,20 @@ export class TableGen extends Component {
     		//Define a fromate later
     		Class: [{Name: "Eng",
     				 Code: 101,
-    				 TimeFromH: "6",
-    				 TimeFromMin: "30",
-    				 TimeToH: "7",
-    				 TimeToMin: "30",
+    				 TimeFromH: 6,
+    				 TimeFromMin: 30,
+    				 TimeToH: 7,
+    				 TimeToMin: 30,
     				 Date: ["Monday", "Wednesday", "Friday"]},
     				{Name: "Math",
     				 Code: 102,
-    				 TimeFromH: "9",
-    				 TimeFromMin: "30",
-    				 TimeToH: "10",
-    				 TimeToMin: "30",
+    				 TimeFromH: 9,
+    				 TimeFromMin: 30,
+    				 TimeToH: 10,
+    				 TimeToMin: 30,
     				 Date: ["Tuesday", "Thursday"]}
-    				],	    
+    				],
+    		CellHeight: 20	    
     	}
     	
     }
@@ -65,26 +66,46 @@ export class TableGen extends Component {
 	}
 
 	//See if that day has a class or not
+	//TODO
+	//When class format changes, change it!
 	//Take: Time and date
 	//Return: String of cell data
 	FindClass(Time, Day){
-		var match = " ";
-		if(Day === " "){
+		var match = "";
+		var height = 20; 
+		if(Day === ""){
 			var h = Time.getHours();
 			var min = Time.getMinutes();
 			match = h.toString() + ":" + min.toString();
 		}else{
 			var Classes = this.state.Class.slice()
 			for(var i = 0; i < Classes.length; i++){
-				if(Classes[i].TimeFromH == Time.getHours() &&
-				   Classes[i].TimeFromMin == Time.getMinutes() &&
+				if(Classes[i].TimeFromH === Time.getHours() &&
+				   Classes[i].TimeFromMin === Time.getMinutes() &&
 				   Classes[i].Date.includes(Day)
 				   ){
 					match = Classes[i].Name + "\n" + Classes[i].Code;
+					height =  (Classes[i].TimeToH - Classes[i].TimeFromH) * this.props.CellHeight;
 				}
 			}
 		}
-		return match;
+		var key = Time + Day;
+		var ClassVar, cell
+
+		if(Day === ""){//time Cell
+			ClassVar = "TimeCell";
+			cell = React.createElement("td", {key: key },
+				<button className={ClassVar}>{match}</button>
+			)
+		} else {//Dtat Cell
+			ClassVar = "DataCell";
+			
+			cell = React.createElement("td", {key: key },
+				<button className={ClassVar} height={40+"px"} >{match}</button>
+			)
+		}
+		
+		return cell;	
 	}
 
 	//Gen Row to each time given
@@ -92,9 +113,8 @@ export class TableGen extends Component {
 	//Return: that row
 	CreateRowData(Time){
 		const listHeader = this.state.DayArr.map((Day) =>
-			<td key={Time + Day}>
-				{<button>{this.FindClass(Time, Day)}</button>}
-			</td>
+			this.FindClass(Time, Day)
+			
 		); 
 
 		return listHeader;
@@ -106,7 +126,7 @@ export class TableGen extends Component {
     	//table header
 		const listHeader = this.state.DayArr.map((Day) =>
 			<th key={Day}>
-				{<button>{Day}</button>}
+				{<button className="DayCell">{Day}</button>}
 			</th>
 		);   
 
@@ -124,8 +144,7 @@ export class TableGen extends Component {
 				),
 				React.createElement("tbody", {id: "TimeTableBody"},
 					listItems
-				)
-				
+				)				
 			)
 		);   	
     }
