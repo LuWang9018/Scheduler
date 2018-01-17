@@ -8,7 +8,7 @@ import './index.css';
 Add user setting later
 */
 //
-GenUI(){
+function GenUI(){
 	var UI = React.createElement("")
 }
 
