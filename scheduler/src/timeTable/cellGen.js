@@ -85,7 +85,6 @@ export class TableGen extends Component {
 				   Classes[i].Date.includes(Day)
 				   ){
 					match = Classes[i].Name + "\n" + Classes[i].Code;
-					height =  (Classes[i].TimeToH - Classes[i].TimeFromH) * this.props.CellHeight;
 				}
 			}
 		}
@@ -100,8 +99,8 @@ export class TableGen extends Component {
 		} else {//Dtat Cell
 			ClassVar = "DataCell";
 			
-			cell = React.createElement("td", {key: key },
-				<button className={ClassVar} height={40+"px"} >{match}</button>
+			cell = React.createElement("td", {key: key,},
+				<button className={ClassVar}>{match}</button>
 			)
 		}
 		

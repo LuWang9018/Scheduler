@@ -8,6 +8,11 @@ import './index.css';
 Add user setting later
 */
 //
+GenUI(){
+	var UI = React.createElement("")
+}
+
+
 ReactDOM.render(
   <TableGen 
 	//TODO

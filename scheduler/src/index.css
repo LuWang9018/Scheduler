@@ -41,7 +41,8 @@ td, th, tr{
 	padding: 0px 0px;
 	border: 0;	
 	border: 1px solid black;
-	vertical-align: bottom;
+	
+	vertical-align: middle;
 }
 
 table{
