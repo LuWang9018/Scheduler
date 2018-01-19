@@ -2,11 +2,9 @@ todo:
 Lu:
 1. momentjs
 2. cell new line
-3. cell over size
+3. cell change to div
 4. alignment
 5. on click
 6. ...
 
-*webpack
 *momentjs
-*babel
