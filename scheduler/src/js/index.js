@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {TableGen} from './timeTable/cellGen.js';
+import {TableGen, NewTableGen} from './timeTable/cellGen.js';
 import '../css/index.css';
 
 import test from '../assets/try.jpg';
@@ -22,6 +22,9 @@ ReactDOM.render(
 			TimeRange={[6, 11]}
 		/>
 		<img src = {test} alt='test'/>
+		<NewTableGen 
+			TimeRange = {[6, 11]}
+		/>
 	</div>,	
   document.getElementById('root')
 );

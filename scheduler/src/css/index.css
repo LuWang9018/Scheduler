@@ -4,6 +4,11 @@ body {
   font-family: sans-serif;
 }
 
+.Cellcolumns{
+	display:inline-block;	
+	float: left;
+}
+
 .DataCell{
 	margin: 0px;
 	padding: 0px 0px;
@@ -16,6 +21,7 @@ body {
 }
 
 .TimeCell{
+
 	margin: 0px;
 	padding: 0px 0px;
 	border: 0;
@@ -24,7 +30,7 @@ body {
 	background-color: #008CBA;
 	border: 1px solid #008CBA;
 	position: relative;
-	top: -11px;
+	top: -10px;
 }
 
 .DayCell{

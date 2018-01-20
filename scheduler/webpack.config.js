@@ -4,7 +4,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+const moment = require('moment');
 // Constant with our paths
 const paths = {
   DIST: path.resolve(__dirname, 'dist'),
@@ -62,5 +62,8 @@ module.exports = {
   // import MyComponent from './my-component.jsx';
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      moment: 'moment/moment.js',
+    },
   },  
 };	

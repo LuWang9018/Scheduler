@@ -1,10 +1,11 @@
 import React, { Component }  from 'react';
+var moment = require('moment');
 
 export class TableGen extends Component {
 	constructor(props) {
     	super(props);
     	this.state = {
-    		DayArr: ["", "Monday", "Tuesday", "Wednesday",
+    		DayArr: ["","Monday", "Tuesday", "Wednesday",
 				    "Thursday", "Friday", "Saturday",
 				    "Sunday"],
     		
@@ -151,4 +152,111 @@ export class TableGen extends Component {
 	render() {
 		return this.CreateRow()
 	}
+}
+
+export class NewTableGen extends Component{
+	constructor(props) {
+    	super(props);
+    	this.state = {
+    		DayArr: ["Monday", "Tuesday", "Wednesday",
+				    "Thursday", "Friday", "Saturday",
+				    "Sunday"],
+    		
+    		//display time from xx:xx to yy:yy
+    		//TODO
+    		//change Time format later!    		
+    		TimeRange: [props.TimeRange[0], props.TimeRange[1]],
+    		
+    		//A time array 
+    		//eg: 6:00, 6:30 .....
+    		TimeArr : this.InitTime(props.TimeRange),
+
+    		//Class list
+    		//TODO
+    		//should get from server
+    		//Define a fromate later
+    		Class: [{Name: "Eng",
+    				 Code: 101,
+    				 TimeFromH: 6,
+    				 TimeFromMin: 30,
+    				 TimeToH: 7,
+    				 TimeToMin: 30,
+    				 Date: ["Monday", "Wednesday", "Friday"]},
+    				{Name: "Math",
+    				 Code: 102,
+    				 TimeFromH: 9,
+    				 TimeFromMin: 30,
+    				 TimeToH: 10,
+    				 TimeToMin: 30,
+    				 Date: ["Tuesday", "Thursday"]}
+    				],
+    		CellHeight: 20	    
+    	}    	
+    }
+
+	InitTime(vars){
+
+		var start = vars[0];
+		var end = vars[1];
+		var TmpTimeArr = [];
+		var time = moment('06:00 am', "HH:mm");
+
+		for(var i = start; i <= end; i++){
+			
+			var TmpTime = moment(time);
+			TmpTimeArr.push(TmpTime);
+			time = time.add(30, 'minutes');
+			var TmpTime2 = moment(time);
+			TmpTimeArr.push(TmpTime2);
+			time = time.add(30, 'minutes');
+			//console.log()
+		}
+		return TmpTimeArr
+	}
+
+	GenTimeCells(props){
+		const TimeCells = React.createElement("div", {className: "Cellcolumns"},
+			<div key = "top-left" className="TimeCell"></div>,
+			this.state.TimeArr.map((time) => 
+				<div key = {time.format()} className="TimeCell"> 
+					{time.format("HH:mm")}
+				</div>
+			)
+		)
+
+		return TimeCells;	
+	}
+
+	GenDayCells(props){
+		
+		var DayCells = this.state.TimeArr.map((Day) => 
+			[<div key = {Day+"1"} className="DataCell"> </div>]			
+		)	
+		
+		return DayCells;
+	}
+
+	GenDayColumns(props){		
+		var DayColumns = this.state.DayArr.map((Day) => 
+			React.createElement("div", {className: "Cellcolumns", key: Day+"Columns"},
+				<div key = {Day} className="DayCell">{Day}</div>,
+				this.GenDayCells({Day: {Day}})
+			)
+		)
+
+
+		return DayColumns;	
+	}
+
+
+    CreateTimeCells(props){
+    	return React.createElement("div", {className: "TimeTable"},
+    		this.GenTimeCells(),
+    		this.GenDayColumns()
+    	)
+    }
+
+    render() {
+		return this.CreateTimeCells()
+	}	
 }
