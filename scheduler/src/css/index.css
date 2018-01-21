@@ -1,3 +1,10 @@
+:root {
+	--timetable-width: 100%;
+	--column-width: var(--timetable-width)/7-100px;
+	--column-height:20px;
+};
+
+
 body {
   margin: 0;
   padding: 0;
@@ -6,18 +13,19 @@ body {
 
 .Cellcolumns{
 	display:inline-block;	
-	float: left;
+	float: left;	
 }
 
 .DataCell{
 	margin: 0px;
 	padding: 0px 0px;
 	border: 0;
-	height: 20px;
-	width: 70px;
+	height: var(--column-height);
+	width: var(--column-width);
 	background-color: #e7e7e7; 
 	position: relative;
 	color: black;
+	border: 0.1px solid black;
 }
 
 .TimeCell{
@@ -26,20 +34,37 @@ body {
 	padding: 0px 0px;
 	border: 0;
 	height: 20px;
-	width: 70px;
+	width: 50px;
 	background-color: #008CBA;
 	border: 1px solid #008CBA;
 	position: relative;
 	top: -10px;
+	border: 0.1px solid black;
+	text-align: right;
 }
 
 .DayCell{
 	margin: 0px;
 	padding: 0px 0px;
 	border: 0;
-	height: 20px;
-	width: 70px;
+	height: var(--column-height);
+	width: var(--column-width);
 	background-color: #008CBA;
+	border: 0.1px solid black;
+	text-align: center;
+}
+
+.TimeTable{
+	margin: 0px;
+	padding: 0px 0px;
+	border: 0;
+	height: 20px;
+	width: var(--timetable-width);
+	background-color: #008CBA;
+	border: 0.1px solid black;
+	max-width: 3000px;
+    min-height: 500px;
+
 }
 
 td, th, tr{
@@ -48,8 +73,8 @@ td, th, tr{
 	border: 0;	
 	border: 1px solid black;
 	
-	vertical-align: middle;
-}
+/*	vertical-align: middle;
+*/}
 
 table{
 	margin: 0px;
