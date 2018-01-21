@@ -1,9 +1,9 @@
 :root {
-	--timetable-width: 100%;
-	--column-width: var(--timetable-width)/7-100px;
+	--timetable-width: 80%;
+	--column-width: 100%;
 	--column-height:20px;
-};
 
+};
 
 body {
   margin: 0;
@@ -28,21 +28,6 @@ body {
 	border: 0.1px solid black;
 }
 
-.TimeCell{
-
-	margin: 0px;
-	padding: 0px 0px;
-	border: 0;
-	height: 20px;
-	width: 50px;
-	background-color: #008CBA;
-	border: 1px solid #008CBA;
-	position: relative;
-	top: -10px;
-	border: 0.1px solid black;
-	text-align: right;
-}
-
 .DayCell{
 	margin: 0px;
 	padding: 0px 0px;
@@ -54,17 +39,29 @@ body {
 	text-align: center;
 }
 
-.TimeTable{
+.TimeCell{
+
 	margin: 0px;
 	padding: 0px 0px;
 	border: 0;
 	height: 20px;
+	width: 100px;
+	background-color: #008CBA;
+	border: 1px solid #008CBA;
+	position: relative;
+	top: -10px;
+	border: 0.1px solid black;
+	text-align: right;
+}
+
+.TimeTable{
+	margin: 0px;
+	padding: 0px 0px;
+	border: 0;
+	height: 1000px;
 	width: var(--timetable-width);
 	background-color: #008CBA;
 	border: 0.1px solid black;
-	max-width: 3000px;
-    min-height: 500px;
-
 }
 
 td, th, tr{
