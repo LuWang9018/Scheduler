@@ -1,5 +1,7 @@
 import React, { Component }  from 'react';
 var moment = require('moment');
+import {GenTimeColumns} from "./ColumnsGen/TimeCGen";
+import {GenDayColumns} from "./ColumnsGen/DayCGen";
 
 export class TableGen extends Component {
 	constructor(props) {
@@ -214,45 +216,19 @@ export class NewTableGen extends Component{
 		return TmpTimeArr
 	}
 
-	GenTimeCells(props){
-		const TimeCells = React.createElement("div", {className: "Cellcolumns"},
-			<div key = "top-left" className="TimeCell"></div>,
-			this.state.TimeArr.map((time) => 
-				<div key = {time.format()} className="TimeCell"> 
-					{time.format("HH:mm")}
-				</div>
-			)
-		)
-
-		return TimeCells;	
-	}
-
-	GenDayCells(props){
-		
-		var DayCells = this.state.TimeArr.map((Day) => 
-			[<div key = {Day+"1"} className="DataCell"> </div>]			
-		)	
-		
-		return DayCells;
-	}
-
-	GenDayColumns(props){		
-		var DayColumns = this.state.DayArr.map((Day) => 
-			React.createElement("div", {className: "Cellcolumns", key: Day+"Columns"},
-				<div key = {Day} className="DayCell">{Day}</div>,
-				this.GenDayCells({Day: {Day}})
-			)
-		)
 
 
-		return DayColumns;	
-	}
 
 
-    CreateTimeCells(props){
+
+    CreateTimeCells(){
     	return React.createElement("div", {className: "TimeTable"},
-    		this.GenTimeCells(),
-    		this.GenDayColumns()
+    		<GenTimeColumns 
+    			TimeArr={this.state.TimeArr}
+    		/>,
+    		<GenDayColumns
+    			TimeArr={this.state.TimeArr}
+    		/>
     	)
     }
 
