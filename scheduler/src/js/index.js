@@ -17,12 +17,6 @@ function GenUI(){
 ReactDOM.render(
 	<div>
 		<TableGen 
-		//TODO
-		//change Time format later!
-			TimeRange={[6, 11]}
-		/>
-		<img src = {test} alt='test'/>
-		<NewTableGen 
 			TimeRange = {[6, 11]}
 		/>
 	</div>,	
