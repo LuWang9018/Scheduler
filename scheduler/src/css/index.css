@@ -1,7 +1,7 @@
 :root {
 	--timetable-width: 80%;
-	--column-width: `0%;
-	--column-height:20px;
+	--cell-width: 14%;
+	--cell-height:30px;
 
 };
 
@@ -11,22 +11,27 @@ body {
   font-family: sans-serif;
 }
 
-.TimeTableDayColumns{
-	position: absolute;
-	left: 60px;
-}
-
 .Cellcolumns{
 	display:inline;	
 	float: left;
-	width: var(--column-width);
+	width: var(--cell-width);
+	/*position: absolute;*/
+}
+
+.TimeTableDayColumns{
+	margin: 0px;
+	padding: 0px 0px;
+	border: 0;
+    position: absolute;
+    left: 50px;
+    width: 95%
 }
 
 .DataCell{
 	margin: 0px;
 	padding: 0px 0px;
 	border: 0;
-	height: var(--column-height);
+	height: var(--cell-height);
 	/*width: var(--column-width);*/
 	background-color: #e7e7e7; 
 	position: relative;
@@ -39,7 +44,7 @@ body {
 	margin: 0px;
 	padding: 0px 0px;
 	border: 0;
-	height: var(--column-height);
+	height: var(--cell-height);
 	/*width: var(--column-width);*/
 	position: relative;
 	background-color: #008CBA;
@@ -52,14 +57,14 @@ body {
 	margin: 0px;
 	padding: 0px 0px;
 	border: 0;
-	height: 20px;
-	width: 60px;
+	height: var(--cell-height);
+	width: 50px;
 	background-color: #008CBA;
 	border: 1px solid #008CBA;
 	position: relative;
 	top: -10px;
 	border: 0.1px solid black;
-	text-align: right;
+    text-align: center;
 }
 
 .TimeTable{
