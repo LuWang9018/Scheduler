@@ -159,11 +159,7 @@ export class TableGen extends Component {
 export class NewTableGen extends Component{
 	constructor(props) {
     	super(props);
-    	this.state = {
-    		DayArr: ["Monday", "Tuesday", "Wednesday",
-				    "Thursday", "Friday", "Saturday",
-				    "Sunday"],
-    		
+    	this.state = {    		
     		//display time from xx:xx to yy:yy
     		//TODO
     		//change Time format later!    		
@@ -216,8 +212,21 @@ export class NewTableGen extends Component{
 		return TmpTimeArr
 	}
 
+	GenClassCell(props){
+		var classCell = React.createElement("div", {style:{position: 'absolute', top: '0px'}},
+				props.Class.Name + ' ' + props.Class.Code
+		)
 
+		return classCell;
+	}
 
+	GenClassCells(){
+		var classCells = this.state.Class.map((Class1) =>
+			this.GenClassCell({Class: Class1})
+		)
+
+		return classCells;
+	}
 
 
 
@@ -228,7 +237,10 @@ export class NewTableGen extends Component{
     		/>,
     		<GenDayColumns
     			TimeArr={this.state.TimeArr}
-    		/>
+    		/>,
+    		this.GenClassCells()
+
+    		
     	)
     }
 
