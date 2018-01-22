@@ -3,6 +3,12 @@ var moment = require('moment');
 
 
 function GenClassCell(props){
+	const DayArr = ["Monday", "Tuesday", "Wednesday",
+				    "Thursday", "Friday", "Saturday",
+				    "Sunday"];
+
+	const unityPX = 30.00 / 60;
+	const timeStart = moment('06:30 am', "HH:mm");
 
 	var divStyle = {
 		position: 'absolute',
@@ -10,6 +16,8 @@ function GenClassCell(props){
 		left: '0px'
 	};
 
+	divStyle.left = (DayArr.indexOf(props.Date) * 80).toString() + "px";
+	//divStyle.top = 30 + props.Class.timeStart.duration(timeStart).duration().asMinutes()*unityPX;
 	var classCell = React.createElement("div", 
 		{
 			style:divStyle
@@ -23,10 +31,10 @@ function GenClassCell(props){
 
 function GenClassCells(props){
 
-	var classCells = props.Date.map((Date1) =>
+	var classCells = props.Class.Date.map((Date) =>
 		<GenClassCell	
-			Class={props}
-			Date={Date1}
+			Class={props.Class}
+			Date={Date}
 		/>
 	)
 
