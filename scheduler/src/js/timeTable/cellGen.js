@@ -2,6 +2,7 @@ import React, { Component }  from 'react';
 var moment = require('moment');
 import {GenTimeColumns} from "./ColumnsGen/TimeCGen";
 import {GenDayColumns} from "./ColumnsGen/DayCGen";
+import {GenClassCellForAllDays} from "./ClassGen/ClassCellGen";
 
 
 export class TableGen extends Component{
@@ -57,30 +58,7 @@ export class TableGen extends Component{
 	}
 
 
-	GenClassCell(props){
-		var divStyle = {
-			position: 'absolute',
-			top: '0px',
-			left: '0px'
-		};
 
-		var classCell = React.createElement("div", 
-			{
-				style:divStyle
-			},
-			props.Class.Name + ' ' + props.Class.Code
-		)
-
-		return classCell;
-	}
-
-	GenClassCells(){
-		var classCells = this.state.Class.map((Class1) =>
-			this.GenClassCell({Class: Class1})
-		)
-
-		return classCells;
-	}
 
 
 
@@ -99,7 +77,9 @@ export class TableGen extends Component{
     			<GenDayColumns
 	    			TimeArr={this.state.TimeArr}
 	    		/>,	    		
-	    		this.GenClassCells()    		
+	    		<GenClassCellForAllDays
+	    			Class = {this.state.Class}
+	    		/>    		
     		)    		
     	)
     }
