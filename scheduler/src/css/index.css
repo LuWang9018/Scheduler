@@ -1,6 +1,6 @@
 :root {
 	--timetable-width: 80%;
-	--column-width: 100px;
+	--column-width: 10%;
 	--column-height:20px;
 
 };
@@ -13,7 +13,8 @@ body {
 
 .Cellcolumns{
 	display:inline-block;	
-	float: left;	
+	float: left;
+	width: var(--column-width);
 }
 
 .DataCell{
@@ -21,11 +22,12 @@ body {
 	padding: 0px 0px;
 	border: 0;
 	height: var(--column-height);
-	width: var(--column-width);
+	/*width: var(--column-width);*/
 	background-color: #e7e7e7; 
 	position: relative;
 	color: black;
 	border: 0.1px solid black;
+
 }
 
 .DayCell{
@@ -33,7 +35,8 @@ body {
 	padding: 0px 0px;
 	border: 0;
 	height: var(--column-height);
-	width: var(--column-width);
+	/*width: var(--column-width);*/
+	position: relative;
 	background-color: #008CBA;
 	border: 0.1px solid black;
 	text-align: center;
@@ -62,6 +65,7 @@ body {
 	width: var(--timetable-width);
 	background-color: #008CBA;
 	border: 0.1px solid black;
+	min-width: 500px
 }
 
 td, th, tr{
