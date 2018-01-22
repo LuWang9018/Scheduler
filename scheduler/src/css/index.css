@@ -15,11 +15,10 @@ body {
 	display:inline;	
 	float: left;
 	width: var(--cell-width);
-	/*position: absolute;*/
 }
 
 .TimeTableDayColumns{
-	margin: 0px;
+	margin: 0px;c
 	padding: 0px 0px;
 	border: 0;
     position: absolute;
@@ -62,7 +61,7 @@ body {
 	background-color: #008CBA;
 	border: 1px solid #008CBA;
 	position: relative;
-	top: -10px;
+	top: -15px;
 	border: 0.1px solid black;
     text-align: center;
 }
