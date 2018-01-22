@@ -12,7 +12,7 @@ body {
 }
 
 .Cellcolumns{
-	display:inline-block;	
+	display:inline;	
 	float: left;
 	width: var(--column-width);
 }
@@ -65,7 +65,8 @@ body {
 	width: var(--timetable-width);
 	background-color: #008CBA;
 	border: 0.1px solid black;
-	min-width: 500px
+	min-width: 500px;
+	position: relative;
 }
 
 td, th, tr{

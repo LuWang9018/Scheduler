@@ -213,7 +213,10 @@ export class NewTableGen extends Component{
 	}
 
 	GenClassCell(props){
-		var classCell = React.createElement("div", {style:{position: 'absolute', top: '0px'}},
+		var classCell = React.createElement("div", {
+				style:{position: 'absolute',
+		 			top: '0px',
+		 			left: '0px'}},
 				props.Class.Name + ' ' + props.Class.Code
 		)
 
@@ -231,16 +234,22 @@ export class NewTableGen extends Component{
 
 
     CreateTimeCells(){
-    	return React.createElement("div", {className: "TimeTable"},
+    	return React.createElement("div", 
+    		{
+    			className: "TimeTable"
+    		},
     		<GenTimeColumns 
     			TimeArr={this.state.TimeArr}
     		/>,
-    		<GenDayColumns
-    			TimeArr={this.state.TimeArr}
-    		/>,
-    		this.GenClassCells()
-
-    		
+    		React.createElement("div", 
+    			{
+    				className: "TimeTableDayColumns"
+    			},
+    			<GenDayColumns
+	    			TimeArr={this.state.TimeArr}
+	    		/>,	    		
+	    		this.GenClassCells()    		
+    		)    		
     	)
     }
 
