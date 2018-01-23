@@ -10,7 +10,7 @@ export function GenTimeColumns(props){
 				{time.format("HH:mm")}
 			</div>
 		)
-	)
+	);
 
 	return TimeCells;	
 }

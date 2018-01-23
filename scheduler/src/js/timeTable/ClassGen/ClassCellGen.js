@@ -23,7 +23,7 @@ function GenClassCell(props){
 			style:divStyle
 		},
 		props.Class.Name + ' ' + props.Class.Code
-	)
+	);
 
 	return classCell;
 }
@@ -36,7 +36,7 @@ function GenClassCells(props){
 			Class={props.Class}
 			Date={Date}
 		/>
-	)
+	);
 
 
 	return classCells;
@@ -46,7 +46,7 @@ export function GenClassCellForAllDays(props){
 		<GenClassCells	
 			Class={Class}
 		/>
-	)
+	);
 
 	return classCellDays;
 }

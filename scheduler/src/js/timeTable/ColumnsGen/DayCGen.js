@@ -2,10 +2,18 @@ import React, { Component }  from 'react';
 var moment = require('moment');
 
 function GenDayCells(props){
-	
-	var DayCells = props.TimeArr.map((Time) => 
-		<div key = {Time.format("HH:mm") + " " + props.Day} className="DataCell"> </div>			
-	)	
+
+    const buttonStyle = {
+        position: 'relative',
+        height: '20px',
+        width: '70px',
+        //opacity: '100',
+    };
+
+	var DayCells = props.TimeArr.map((Time) =>
+        React.createElement("div", {Time: Time.format("HH:mm") + " " + props.Day, className: 'DataCell', type: 'button', style: buttonStyle})
+		//<div key = {Time.format("HH:mm") + " " + props.Day} className="DataCell"> </div>
+	);
 	
 	return DayCells;
 }
@@ -23,7 +31,7 @@ export function GenDayColumns(props){
 				TimeArr={props.TimeArr}
 			/>
 		)
-	)
+	);
 
 
 	return DayColumns;	
