@@ -1,5 +1,4 @@
 :root {
-	--timetable-width: 100%;
 	--cell-width: 14%;
 	--cell-height:30px;
 
@@ -11,6 +10,19 @@ body {
   font-family: sans-serif;
 }
 
+.TimeTable{
+	margin: 0px;
+	padding: 0px 0px;
+	border: 0;
+	height: 1000px;
+	width: 100%;
+	background-color: #008CBA;
+	/*border: 0.1px solid black;*/
+	min-width: 500px;
+	position: relative;
+	box-sizing:border-box;
+}
+
 .Cellcolumns{
 	display:inline;	
 	float: left;
@@ -18,12 +30,13 @@ body {
 }
 
 .TimeTableDayColumns{
-	margin: 0px;c
+	margin: 0px;
 	padding: 0px 0px;
 	border: 0;
     position: absolute;
     left: 50px;
-    width: 95%;
+    right:2px;
+    /*width: 95%;*/
     box-sizing:border-box;
 }
 
@@ -46,39 +59,30 @@ body {
 	padding: 0px 0px;
 	border: 0;
 	height: var(--cell-height);
+	line-height: var(--cell-height);
 	/*width: var(--column-width);*/
 	position: relative;
 	background-color: #008CBA;
 	border: 0.1px solid black;
 	text-align: center;
+	font-size: 18px;
 	box-sizing:border-box;
 }
 
 .TimeCell{
 
 	margin: 0px;
-	padding: 0px 0px;
+	padding: 0px 1px;
 	border: 0;
 	height: var(--cell-height);
+	line-height: var(--cell-height);
 	width: 50px;
-	background-color: #008CBA;
-	border: 1px solid #008CBA;
+	/*background-color: #008CBA;*/
+	/*border: 1px solid #008CBA;*/
 	position: relative;
 	top: -15px;
 	/*border: 0.1px solid black;*/
-    text-align: center;
-    box-sizing:border-box;
-}
-
-.TimeTable{
-	margin: 0px;
-	padding: 0px 0px;
-	border: 0;
-	height: 1000px;
-	width: var(--timetable-width);
-	background-color: #008CBA;
-	/*border: 0.1px solid black;*/
-	min-width: 500px;
-	position: relative;
-	box-sizing:border-box;
+    text-align: right;
+    font-size: 12px;
+    box-sizing: border-box;
 }
