@@ -1,5 +1,5 @@
 :root {
-	--timetable-width: 80%;
+	--timetable-width: 100%;
 	--cell-width: 14%;
 	--cell-height:30px;
 
@@ -65,7 +65,7 @@ body {
 	border: 1px solid #008CBA;
 	position: relative;
 	top: -15px;
-	border: 0.1px solid black;
+	/*border: 0.1px solid black;*/
     text-align: center;
     box-sizing:border-box;
 }
@@ -77,7 +77,7 @@ body {
 	height: 1000px;
 	width: var(--timetable-width);
 	background-color: #008CBA;
-	border: 0.1px solid black;
+	/*border: 0.1px solid black;*/
 	min-width: 500px;
 	position: relative;
 	box-sizing:border-box;
