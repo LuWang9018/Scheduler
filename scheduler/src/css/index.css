@@ -23,7 +23,8 @@ body {
 	border: 0;
     position: absolute;
     left: 50px;
-    width: 95%
+    width: 95%;
+    box-sizing:border-box;
 }
 
 .DataCell{
@@ -36,7 +37,7 @@ body {
 	position: relative;
 	color: black;
 	border: 0.1px solid black;
-
+	box-sizing:border-box;
 }
 
 .DayCell{
@@ -49,6 +50,7 @@ body {
 	background-color: #008CBA;
 	border: 0.1px solid black;
 	text-align: center;
+	box-sizing:border-box;
 }
 
 .TimeCell{
@@ -64,6 +66,7 @@ body {
 	top: -15px;
 	border: 0.1px solid black;
     text-align: center;
+    box-sizing:border-box;
 }
 
 .TimeTable{
@@ -76,20 +79,5 @@ body {
 	border: 0.1px solid black;
 	min-width: 500px;
 	position: relative;
-}
-
-td, th, tr{
-	margin: 0px;
-	padding: 0px 0px;
-	border: 0;	
-	border: 1px solid black;
-	
-/*	vertical-align: middle;
-*/}
-
-table{
-	margin: 0px;
-	padding: 0px 0px;
-	border: 0;	
-	border-collapse: collapse;
+	box-sizing:border-box;
 }

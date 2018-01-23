@@ -24,13 +24,13 @@ export class TableGen extends Component{
     		//Define a fromate later
     		Class: [{Name: "Eng",
     				 Code: 101,
-    				 TimeFrom: moment('06:30 am', "HH:mm"),
+    				 TimeFrom: moment('06:40 am', "HH:mm"),
     				 TimeTo: moment('07:30 am', "HH:mm"),
     				 Date: ["Monday", "Wednesday", "Friday"]},
     				{Name: "Math",
     				 Code: 102,
-    				 TimeFrom: moment('11:30 am', "HH:mm"),
-    				 TimeTo: moment('1:30 pm', "HH:mm"),
+    				 TimeFrom: moment('9:30 am', "HH:mm"),
+    				 TimeTo: moment('11:00 pm', "HH:mm"),
     				 Date: ["Tuesday", "Thursday"]}
     				],
     		CellHeight: 20	    
@@ -43,6 +43,7 @@ export class TableGen extends Component{
 		var end = vars[1];
 		var TmpTimeArr = [];
 		var time = moment('06:00 am', "HH:mm");
+		//time = time.add(-30, 'minutes')
 
 		for(var i = start; i <= end; i++){
 			
