@@ -10,8 +10,16 @@ function GenDayCells(props){
         //opacity: '100',
     };
 
-	var DayCells = props.TimeArr.map((Time) =>
-        React.createElement("div", {Time: Time.format("HH:mm") + " " + props.Day, className: 'DataCell', type: 'button'})
+	var DayCells = props.TimeArr.map((time) =>
+        React.createElement("div",
+			{
+				time: time.format("HH:mm").toString() + " " + props.Day,
+				className: 'DataCell',
+				key : time.format("HH:mm").toString() + " " + props.Day,
+				onClick : props.onClick(true)
+			}
+        )
+        
 		//<div key = {Time.format("HH:mm") + " " + props.Day} className="DataCell"> </div>
 	);
 	
@@ -28,7 +36,8 @@ export function GenDayColumns(props){
 			<div key = {Day} className="DayCell">{Day}</div>,
 			<GenDayCells 
 				Day={Day} 
-				TimeArr={props.TimeArr}
+				TimeArr={props.TimeArr}	
+				onClick={props.onClick}			
 			/>
 		)
 	);

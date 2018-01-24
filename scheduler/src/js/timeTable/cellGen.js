@@ -1,4 +1,5 @@
 import React, { Component }  from 'react';
+import update from 'immutability-helper';
 var moment = require('moment');
 import {GenTimeColumns} from "./ColumnsGen/TimeCGen";
 import {GenDayColumns} from "./ColumnsGen/DayCGen";
@@ -24,16 +25,31 @@ export class TableGen extends Component{
     		//Define a fromate later
     		Class: [{Name: "Eng",
     				 Code: 101,
+    				 Section: "001",
     				 TimeFrom: moment('06:40 am', "HH:mm"),
     				 TimeTo: moment('07:30 am', "HH:mm"),
-    				 Date: ["Monday", "Wednesday", "Friday"]},
+    				 Date: ["Monday", "Wednesday", "Friday"],
+    				 LocationB: ["AAA"],
+    				 LocationR: ["111"],
+    				 Prof: "SB",
+    				 Type: ["LEC"], 
+    				 Color: ["red"],
+    				},
     				{Name: "Math",
     				 Code: 102,
+    				 Section: "001",
     				 TimeFrom: moment('9:30 am', "HH:mm"),
     				 TimeTo: moment('11:00 pm', "HH:mm"),
-    				 Date: ["Tuesday", "Thursday"]}
+    				 Date: ["Tuesday", "Thursday"],
+    				 LocationB: ["AAA"],
+    				 LocationR: ["111"],
+    				 Prof: "SB",
+    				 Type: ["LEC"], 
+    				 Color: ["red"],    				 
+    				},
     				],
-    		CellHeight: 20	    
+    		CellHeight: 30,
+    		AddClassWindowOn: false	    
     	}    	
     }
 
@@ -58,11 +74,6 @@ export class TableGen extends Component{
 		return TmpTimeArr
 	}
 
-
-
-
-
-
     CreateTimeCells(){
     	return React.createElement("div", 
     		{
@@ -77,12 +88,23 @@ export class TableGen extends Component{
     			},
     			<GenDayColumns
 	    			TimeArr={this.state.TimeArr}
+	    			onClick={props => this.handleWhiteCellClick(props)}
 	    		/>,	    		
 	    		<GenClassCellForAllDays
 	    			Class = {this.state.Class}
+	    			form = {this.state.AddClassWindowOn}
 	    		/>    		
     		)    		
     	)
+    }
+
+	//turn add class window on/off
+	//props: {
+	//	OnOff: true/flase	
+	//}
+    handleWhiteCellClick(props){
+    	var NewState = update(this.state, {AddClassWindowOn: {$set: props.OnOff}});
+    	this.setState(NewState);
     }
 
     render() {

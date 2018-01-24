@@ -40,7 +40,8 @@ function GenClassCell(props){
 
 	var classCell = React.createElement("div", 
 		{
-			style:divStyle
+			style:divStyle,
+			key:props.Class.Name + " " + props.Date
 		},
 		props.Class.Name + ' ' + props.Class.Code + ' ' + minutes2
 	)
@@ -51,10 +52,11 @@ function GenClassCell(props){
 
 function GenClassCells(props){
 
-	var classCells = props.Class.Date.map((Date) =>
+	var classCells = props.Class.Date.map((Date, index) =>
 		<GenClassCell	
 			Class={props.Class}
 			Date={Date}
+			key = {Date+index}
 		/>
 	)
 
@@ -62,9 +64,10 @@ function GenClassCells(props){
 	return classCells;
 }
 export function GenClassCellForAllDays(props){
-	var classCellDays = props.Class.map((Class) =>
+	var classCellDays = props.Class.map((Class, index) =>
 		<GenClassCells	
 			Class={Class}
+			key= {Class + index}
 		/>
 	)
 
