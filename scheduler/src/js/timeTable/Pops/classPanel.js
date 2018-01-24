@@ -49,6 +49,7 @@ export class ClassPanel extends React.Component {
             height: '150px',
             width: '1000px',
             zIndex: '10',
+            opacity: '1.0',
         };
 
         const groundLevel = {
@@ -58,12 +59,12 @@ export class ClassPanel extends React.Component {
             height: '100%',
             width: '100%',
             zIndex: '9',
-            opacity: '90',
+            opacity: '0.8',
         };
 
         var AddClass =
             React.createElement('div', {
-                    //style: groundLevel
+                    //style: groundLevel,
                     className: "groundLevel"
                 },
                 React.createElement("div", {
@@ -120,7 +121,7 @@ export class ClassPanel extends React.Component {
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}),
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}),
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color7"})),
-                    React.createElement("div", {className: "buttons"},
+                    React.createElement("div", {className: "AddSectionButton"},
                         React.createElement("button", {
                             type: "button",
                             className: "DecisionButton",
