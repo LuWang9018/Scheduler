@@ -49,7 +49,7 @@ export class ClassPanel extends React.Component {
             height: '150px',
             width: '1000px',
             zIndex: '10',
-            opacity: '1.0',
+            //opacity: '1.0',
         };
 
         const groundLevel = {
@@ -59,7 +59,7 @@ export class ClassPanel extends React.Component {
             height: '100%',
             width: '100%',
             zIndex: '9',
-            opacity: '0.8',
+            //opacity: '0.8',
         };
 
         var AddClass =
@@ -72,14 +72,16 @@ export class ClassPanel extends React.Component {
                         className: "AddClassWindow",
                     },
                     //Class information
-                    React.createElement("div", {className: "AddSection", id: "ClassInfo"}, "Class Name: ",
-                        React.createElement("input", {className: "inputs", id: "ClassName"}),
+                    React.createElement("div", {className: "AddSection", id: "ClassInfo"}, "Class: ",
+                        React.createElement("input", {className: "inputs", id: "ClassName", placeholder: "Class Name"}),
                         "   ",
-                        "Class Code: ",
-                        React.createElement("input", {className: "inputs", id: "ClassCode"}),
+                        React.createElement("input", {className: "inputs", id: "ClassCode", placeholder: "Class Code"}),
                         "   ",
-                        "Section: ",
-                        React.createElement("input", {className: "inputs", id: "ClassSection"})),
+                        React.createElement("input", {
+                            className: "inputs",
+                            id: "ClassSection",
+                            placeholder: "Section"
+                        })),
                     //Time information
                     React.createElement("div", {className: "AddSection", id: "TimeInfo"}, "Start Time: ",
                         React.createElement("select", {className: "inputs", id: "StartHour"},
@@ -105,13 +107,23 @@ export class ClassPanel extends React.Component {
                         React.createElement("button", {type: "button", className: "SelectButton", id: "Sun"}, "Sun")),
                     //location information
                     React.createElement("div", {className: "AddSection", id: "PlaceInfo"}, "Location: ",
-                        React.createElement("input", {className: "inputs", id: "PlaceBuilding", value: "Building"}),
+                        React.createElement("input", {
+                            className: "inputs",
+                            id: "PlaceBuilding",
+                            placeholder: "Building",
+                            onChange: this.setField()
+                        }),
                         "   ",
-                        React.createElement("input", {className: "inputs", id: "PlaceRoom", value: "Room"}),
+                        React.createElement("input", {
+                            className: "inputs",
+                            id: "PlaceRoom",
+                            placeholder: "Room",
+                            onChange: this.setField()
+                        }),
                     ),
                     //Prof information,
                     React.createElement("div", {className: "AddSection", id: "ProfInfo"}, "Prof: ",
-                        React.createElement("input", {className: "inputs", id: "ProfName"})),
+                        React.createElement("input", {className: "inputs", id: "ProfName", placeholder: "XXX"})),
                     //Color section
                     React.createElement("div", {className: "AddSection", id: "ColorSection"}, "Color: ",
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color1"}),
@@ -133,7 +145,12 @@ export class ClassPanel extends React.Component {
                             id: "cancel"
                         }, "Cancel"))
                 ));
+
         return AddClass;
+    }
+
+    setField(enevt) {
+        return onchange(event.target.valueOf());
     }
 
     passPanel() {
