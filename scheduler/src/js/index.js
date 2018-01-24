@@ -17,7 +17,7 @@ function GenUI(){
 ReactDOM.render(
 	<div>
 		<TableGen 
-			TimeRange = {[6, 11]}
+			TimeRange = {[8, 13]}
 		/>
 	</div>,	
   document.getElementById('root')

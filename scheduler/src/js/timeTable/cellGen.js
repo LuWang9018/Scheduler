@@ -4,7 +4,7 @@ var moment = require('moment');
 import {GenTimeColumns} from "./ColumnsGen/TimeCGen";
 import {GenDayColumns} from "./ColumnsGen/DayCGen";
 import {GenClassCellForAllDays} from "./ClassGen/ClassCellGen";
-
+import {ClassPanel} from "./Pops/classPanel";
 
 export class TableGen extends Component{
 	constructor(props) {
@@ -49,7 +49,7 @@ export class TableGen extends Component{
     				},
     				],
     		CellHeight: 30,
-    		AddClassWindowOn: false	    
+    		AddClassWindowOn: true,	    
     	}    	
     }
 
@@ -58,7 +58,7 @@ export class TableGen extends Component{
 		var start = vars[0];
 		var end = vars[1];
 		var TmpTimeArr = [];
-		var time = moment('06:00 am', "HH:mm");
+		var time = moment('08:00 am', "HH:mm");
 		//time = time.add(-30, 'minutes')
 
 		for(var i = start; i <= end; i++){
@@ -88,13 +88,16 @@ export class TableGen extends Component{
     			},
     			<GenDayColumns
 	    			TimeArr={this.state.TimeArr}
-	    			onClick={props => this.handleWhiteCellClick(props)}
+	    			onClick={(i) => this.handleWhiteCellClick(i)}
 	    		/>,	    		
 	    		<GenClassCellForAllDays
 	    			Class = {this.state.Class}
 	    			form = {this.state.AddClassWindowOn}
-	    		/>    		
-    		)    		
+	    		/>  		
+    		),
+    		<ClassPanel
+    			OnOff= {this.state.AddClassWindowOn}
+    		/>     		
     	)
     }
 
@@ -103,8 +106,9 @@ export class TableGen extends Component{
 	//	OnOff: true/flase	
 	//}
     handleWhiteCellClick(props){
-    	var NewState = update(this.state, {AddClassWindowOn: {$set: props.OnOff}});
-    	this.setState(NewState);
+    	var newState = update(this.state, {AddClassWindowOn: {$set: true}});
+    	console.log(this.state.AddClassWindowOn);
+    	this.setState({AddClassWindowOn: !this.state.AddClassWindowOn});
     }
 
     render() {

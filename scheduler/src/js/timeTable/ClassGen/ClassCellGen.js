@@ -18,11 +18,12 @@ function GenClassCell(props){
 		padding: '0px 0px',
 		border: '0',
 		height: '0px',
-		width: '14%',
+		width: (100.00/7).toString()+"%",
 		'backgroundColor': 'red', 
 		color: 'black',
 		border: '0.1px solid black',
 		'boxSizing':'border-box',
+		"marginLeft":"0px",
 	};
 
 	
@@ -34,9 +35,10 @@ function GenClassCell(props){
 	var duration2 = moment.duration(timeDiff2);
 	var minutes2 = duration2.asMinutes();
 
-	divStyle.left = (DayArr.indexOf(props.Date) * 14).toString() + "%";
+	divStyle.left = ((DayArr.indexOf(props.Date) * (100.00/7))).toString() + "%";
 	divStyle.top = (60 + minutes * unityPX).toString() + "px";
 	divStyle.height = (minutes2 * unityPX).toString() + "px";
+	//divStyle.marginLeft = DayArr.indexOf(props.Date).toString() + "px";
 
 	var classCell = React.createElement("div", 
 		{

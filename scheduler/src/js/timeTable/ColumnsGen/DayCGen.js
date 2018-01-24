@@ -16,10 +16,10 @@ function GenDayCells(props){
 				time: time.format("HH:mm").toString() + " " + props.Day,
 				className: 'DataCell',
 				key : time.format("HH:mm").toString() + " " + props.Day,
-				onClick : props.onClick(true)
+				onClick : props.onClick
 			}
         )
-        
+
 		//<div key = {Time.format("HH:mm") + " " + props.Day} className="DataCell"> </div>
 	);
 	
