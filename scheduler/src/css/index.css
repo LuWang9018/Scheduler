@@ -1,3 +1,5 @@
+/*@import url("globle.css");*/
+
 :root {
 	--cell-width: calc((100%)/7);
 	--cell-height:30px;
@@ -14,8 +16,6 @@ body {
 div{
 	margin: 0px;
 	box-sizing:border-box;
-	margin-right:-1px;
-	margin-bottom:-1px;
 
 }
 
@@ -61,9 +61,13 @@ div{
 	position: relative;
 	/*background-color: #ffffff;*/
 	background-color: #ff6699;
-	border: 0.1px solid #ffffff;
+	/*border: 0.1px solid #ffffff;*/
+	border: 0.1px solid black;
 	text-align: center;
 	font-size: 18px;
+
+	margin-right:-1px;
+	margin-bottom:-1px;
 }
 
 .DataCell{
@@ -72,6 +76,9 @@ div{
 	background-color: #ffffff; 
 	position: relative;
 	color: black;
-	border: 0.1px solid #cccccc;
+	border: 0.1px solid black;
+
+	margin-right:-1px;
+	margin-bottom:-1px;
 }
 
