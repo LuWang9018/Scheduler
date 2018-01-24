@@ -13,6 +13,7 @@ Install all of these:
 	npm install --save-dev css-loader extract-text-webpack-plugin
 	npm install --save-dev file-loader
 	npm install moment --save
+	npm install immutability-helper --save
 	
 Run server:
 	npm run dev
