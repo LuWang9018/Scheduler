@@ -64,6 +64,7 @@ export class ClassPanel extends React.Component {
         var AddClass =
             React.createElement('div', {
                     //style: groundLevel
+                    className: "groundLevel"
                 },
                 React.createElement("div", {
                         //style: panelStyle,
