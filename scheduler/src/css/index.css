@@ -1,5 +1,5 @@
 :root {
-	--cell-width: 14%;
+	--cell-width: calc((100%)/7);
 	--cell-height:30px;
 	--time-width: 50px;
 
@@ -23,7 +23,8 @@ div{
 	border: 0;
 	height: 500px;
 	width: 100%;
-	background-color: #ffffff;
+	/*background-color: #ffffff;*/
+	background-color: #3399ff;
 	min-width: 500px;
 	position: relative;
 	
@@ -39,11 +40,11 @@ div{
 .TimeTableDayColumns{
     position: absolute;
     left: 50px;
-    right:2px;
+    right:0px;
 }
 
 .TimeCell{
-	padding: 0px 1px;
+	padding: 0px 5px;
 	height: var(--cell-height);
 	line-height: var(--cell-height);
 	width: var(--time-width);
@@ -58,7 +59,8 @@ div{
 	line-height: var(--cell-height);
 	/*width: var(--column-width);*/
 	position: relative;
-	background-color: #ffffff;
+	/*background-color: #ffffff;*/
+	background-color: #ff6699;
 	border: 0.1px solid #ffffff;
 	text-align: center;
 	font-size: 18px;
