@@ -111,14 +111,14 @@ export class ClassPanel extends React.Component {
                             className: "inputs",
                             id: "PlaceBuilding",
                             placeholder: "Building",
-                            onChange: this.setField()
+                            //onChange: this.setField()
                         }),
                         "   ",
                         React.createElement("input", {
                             className: "inputs",
                             id: "PlaceRoom",
                             placeholder: "Room",
-                            onChange: this.setField()
+                            //onChange: this.setField()
                         }),
                     ),
                     //Prof information,
