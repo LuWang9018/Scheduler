@@ -62,19 +62,13 @@ export class ClassPanel extends React.Component {
             //opacity: '0.8',
         };
 
-        /*
-        setField(event){
-            return this.setState();
-        }
-        */
-
         var AddClass =
             React.createElement('div', {
-                    style: groundLevel,
+                    //style: groundLevel,
                     className: "groundLevel"
                 },
                 React.createElement("div", {
-                        style: panelStyle,
+                        //style: panelStyle,
                         className: "AddClassWindow",
                     },
                     //Class information
