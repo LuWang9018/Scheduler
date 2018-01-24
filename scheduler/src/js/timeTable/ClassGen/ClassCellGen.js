@@ -8,7 +8,6 @@ function GenClassCell(props){
 				    "Sunday"];
 
 	const unityPX = 1;
-	const timeStart = moment('06:30 am', "HH:mm");
 
 	var divStyle = {
 		position: 'absolute',
@@ -25,9 +24,14 @@ function GenClassCell(props){
 		'boxSizing':'border-box',
 		"marginLeft":"0px",
 	};
+	var startTime = props.TimeRange.MinTime;
+	var timeDiff = props.Class.TimeFrom.diff(startTime);
 
-	
-	var timeDiff = props.Class.TimeFrom.diff(timeStart);
+console.log("startTime: ");
+console.log(props);
+console.log("timeDiff: ");
+console.log(timeDiff);
+
 	var duration = moment.duration(timeDiff);
 	var minutes = duration.asMinutes();
 
@@ -36,7 +40,7 @@ function GenClassCell(props){
 	var minutes2 = duration2.asMinutes();
 
 	divStyle.left = ((DayArr.indexOf(props.Date) * (100.00/7))).toString() + "%";
-	divStyle.top = (60 + minutes * unityPX).toString() + "px";
+	divStyle.top = (30 + minutes * unityPX).toString() + "px";
 	divStyle.height = (minutes2 * unityPX).toString() + "px";
 	//divStyle.marginLeft = DayArr.indexOf(props.Date).toString() + "px";
 
@@ -59,6 +63,7 @@ function GenClassCells(props){
 			Class={props.Class}
 			Date={Date}
 			key = {Date+index}
+			TimeRange= {props.TimeRange}
 		/>
 	)
 
@@ -67,7 +72,8 @@ function GenClassCells(props){
 }
 export function GenClassCellForAllDays(props){
 	var classCellDays = props.Class.map((Class, index) =>
-		<GenClassCells	
+		<GenClassCells
+			TimeRange= {props.TimeRange}	
 			Class={Class}
 			key= {Class + index}
 		/>

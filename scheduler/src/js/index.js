@@ -1,23 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {TableGen, NewTableGen} from './timeTable/cellGen.js';
 import '../css/index.css';
 
-import test from '../assets/try.jpg';
-// ========================================
-/*
-Add user setting later
-*/
-//
-function GenUI(){
-	var UI = React.createElement("")
-}
+import {TableGen, NewTableGen} from './timeTable/cellGen.js';
+import {RequestData} from './RequestData/RequestData'
 
 
 ReactDOM.render(
 	<div>
 		<TableGen 
-			TimeRange = {[8, 13]}
+			Data={RequestData()}
 		/>
 	</div>,	
   document.getElementById('root')
