@@ -37,13 +37,10 @@ export class TableGen extends Component{
 		var TimeRange = this.FindMinMaxTime({Class:props.Class})
 
 		var start = TimeRange.MinTime.clone();
-		//console.log(start);
+
 		var end = TimeRange.MaxTime.clone();
 
-		var TmpTimeArr = [];
-		//time = time.add(-30, 'minutes')
-		    	//console.log(start);
-		    	//console.log(end);  		
+		var TmpTimeArr = [];		
 
 		for(var i = start.clone(); i.isBefore(end); i.add(30, "minutes")){
 			
@@ -67,15 +64,9 @@ export class TableGen extends Component{
 			var end = props.Class[i].TimeTo.clone();
 			if(start.isBefore(min)){
 				min = start.clone();
-				//console.log("min");
-				//console.log(min);
-
 			}
 			if(end.isAfter(max)){
 				max = end.clone();
-				//console.log("end");
-				//console.log(end);
-
 			}
 		}
 
@@ -125,9 +116,14 @@ export class TableGen extends Component{
 	//	OnOff: true/flase	
 	//}
     handleWhiteCellClick(props){
-    	//var newState = update(this.state, {AddClassWindowOn: {$set: true}});
-    	//console.log(this.state.AddClassWindowOn);
-    	this.setState({AddClassWindowOn: props.OnOff});
+    	if(props.Class === null){
+    		this.setState({AddClassWindowOn: props.OnOff,
+    		               ChangingClassInfo: null});
+    	}else{
+    		this.setState({ChangingClassInfo: props.Class});
+    		this.setState({AddClassWindowOn: props.OnOff});
+    		console.log(this.state.ChangingClassInfo);
+    	}    	
     }
 
     render() {
