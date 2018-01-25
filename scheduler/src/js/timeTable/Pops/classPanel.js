@@ -3,11 +3,32 @@ import React from 'react';
 var moment = require('moment');
 
 export class ClassPanel extends React.Component {
+
+    classNames;
+    classCode;
+    classSection;
+    startHour;
+    startMint;
+    stopHour;
+    stopMint;
+    placeBuild;
+    placeRoom;
+    profName;
+
     constructor(props) {
         super(props);
 
         this.state = {
-            showUp: true
+            classNames: "",
+            classCode: "",
+            classSection: "",
+            startHour: "",
+            startMint: "",
+            stopHour: "",
+            stopMint: "",
+            placeBuild: "",
+            placeRoom: "",
+            profName: ""
         }
     }
 
@@ -50,130 +71,140 @@ export class ClassPanel extends React.Component {
             opacity: '0.7',
         };
 
-        var AddClass =
-            React.createElement("div", {},
-                //Add class panel detail
-                React.createElement("div", {
-                        //style: panelStyle,
-                        className: "AddClassWindow",
-                    },
-                    //Class information
-                    React.createElement("div", {className: "AddSection", id: "ClassInfo"}, "Class: ",
-                        React.createElement("input", {
-                            className: "inputs",
-                            id: "ClassName",
-                            placeholder: "Class Name",
-                            value: this.classNames
-                        }),
-                        "   ",
-                        React.createElement("input", {
-                            className: "inputs",
-                            id: "ClassCode",
-                            placeholder: "Class Code",
-                            value: this.classCode
-                        }),
-                        "   ",
-                        React.createElement("input", {
-                            className: "inputs",
-                            id: "ClassSection",
-                            placeholder: "Section",
-                            value: this.classSection
-                        })
-                    ),
-                    //Time information
-                    React.createElement("div", {className: "AddSection", id: "TimeInfo"}, "Start Time: ",
-                        React.createElement("select", {className: "inputs", id: "StartHour"},
-                            this.Hours()),
-                        " ",
-                        React.createElement("select", {className: "inputs", id: "StartMint"},
-                            this.Mints()),
-                        "   ",
-                        "Stop Time: ",
-                        React.createElement("select", {className: "inputs", id: "StopHour"},
-                            this.Hours()),
-                        " ",
-                        React.createElement("select", {className: "inputs", id: "StopMint"},
-                            this.Mints())),
-                    //date information
-                    React.createElement("div", {className: "AddSection", id: "DateSection"}, "Date: ",
-                        React.createElement("button", {
-                            type: "button",
-                            className: "SelectButton",
-                            id: "Mon"
-                        }, "Mon"),
-                        React.createElement("button", {
-                            type: "button",
-                            className: "SelectButton",
-                            id: "Tue"
-                        }, "Tue"),
-                        React.createElement("button", {
-                            type: "button",
-                            className: "SelectButton",
-                            id: "Wed"
-                        }, "Wed"),
-                        React.createElement("button", {
-                            type: "button",
-                            className: "SelectButton",
-                            id: "Tur"
-                        }, "Tur"),
-                        React.createElement("button", {
-                            type: "button",
-                            className: "SelectButton",
-                            id: "Fir"
-                        }, "Fir"),
-                        React.createElement("button", {
-                            type: "button",
-                            className: "SelectButton",
-                            id: "Sat"
-                        }, "Sat"),
-                        React.createElement("button", {
-                            type: "button",
-                            className: "SelectButton",
-                            id: "Sun"
-                        }, "Sun")),
-                    //location information
-                    React.createElement("div", {className: "AddSection", id: "PlaceInfo"}, "Location: ",
-                        React.createElement("input", {
-                            className: "inputs",
-                            id: "PlaceBuilding",
-                            placeholder: "Building"
-                        }),
-                        "   ",
-                        React.createElement("input", {
-                            className: "inputs",
-                            id: "PlaceRoom",
-                            placeholder: "Room"
-                        }),
-                    ),
-                    //Prof information,
-                    React.createElement("div", {className: "AddSection", id: "ProfInfo"}, "Prof: ",
-                        React.createElement("input", {className: "inputs", id: "ProfName", placeholder: "XXX"})),
-                    //Color section
-                    React.createElement("div", {className: "AddSection", id: "ColorSection",}, "Color: ",
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color1"}),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color2"}),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color3"}),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color4"}),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color7"})),
-                    //Decision Button
-                    React.createElement("div", {className: "AddSectionButton"},
-                        React.createElement("button", {
-                            type: "button",
-                            className: "DecisionButton",
-                            id: "save"
-                        }, "Save"),
-                        React.createElement("button", {
-                            type: "button",
-                            className: "DecisionButton",
-                            id: "cancel"
-                        }, "Cancel"))),
-                //gray background when panel is on
-                React.createElement('div', {
-                    //: groundLevel,
-                    className: "groundLevel"
-                }));
+        var AddClass;
+        AddClass = React.createElement("div", {},
+            //Add class panel detail
+            React.createElement("div", {
+                    //style: panelStyle,
+                    className: "AddClassWindow",
+                },
+                //Class information
+                React.createElement("div", {className: "AddSection", id: "ClassInfo"}, "Class: ",
+                    React.createElement("input", {
+                        className: "inputs",
+                        id: "ClassName",
+                        placeholder: "Class Name",
+                        value: this.classNames
+                    }),
+                    "   ",
+                    React.createElement("input", {
+                        className: "inputs",
+                        id: "ClassCode",
+                        placeholder: "Class Code",
+                        value: this.classCode
+                    }),
+                    "   ",
+                    React.createElement("input", {
+                        className: "inputs",
+                        id: "ClassSection",
+                        placeholder: "Section",
+                        value: this.classSection
+                    })
+                ),
+                //Time information
+                React.createElement("div", {className: "AddSection", id: "TimeInfo"}, "Start Time: ",
+                    React.createElement("select", {className: "inputs", id: "StartHour", value: this.startHour},
+                        this.Hours()),
+                    " ",
+                    React.createElement("select", {className: "inputs", id: "StartMint", value: this.startMint},
+                        this.Mints()),
+                    "   ",
+                    "Stop Time: ",
+                    React.createElement("select", {className: "inputs", id: "StopHour", value: this.stopHour},
+                        this.Hours()),
+                    " ",
+                    React.createElement("select", {className: "inputs", id: "StopMint", value: this.stopMint},
+                        this.Mints())),
+                //date information
+                React.createElement("div", {className: "AddSection", id: "DateSection"}, "Date: ",
+                    React.createElement("button", {
+                        type: "button",
+                        className: "SelectButton",
+                        id: "Mon"
+                    }, "Mon"),
+                    React.createElement("button", {
+                        type: "button",
+                        className: "SelectButton",
+                        id: "Tue"
+                    }, "Tue"),
+                    React.createElement("button", {
+                        type: "button",
+                        className: "SelectButton",
+                        id: "Wed"
+                    }, "Wed"),
+                    React.createElement("button", {
+                        type: "button",
+                        className: "SelectButton",
+                        id: "Tur"
+                    }, "Tur"),
+                    React.createElement("button", {
+                        type: "button",
+                        className: "SelectButton",
+                        id: "Fir"
+                    }, "Fir"),
+                    React.createElement("button", {
+                        type: "button",
+                        className: "SelectButton",
+                        id: "Sat"
+                    }, "Sat"),
+                    React.createElement("button", {
+                        type: "button",
+                        className: "SelectButton",
+                        id: "Sun"
+                    }, "Sun")),
+                //location information
+                React.createElement("div", {className: "AddSection", id: "PlaceInfo"}, "Location: ",
+                    React.createElement("input", {
+                        className: "inputs",
+                        id: "PlaceBuilding",
+                        placeholder: "Building",
+                        value: this.placeBuild
+                    }),
+                    "   ",
+                    React.createElement("input", {
+                        className: "inputs",
+                        id: "PlaceRoom",
+                        placeholder: "Room",
+                        value: this.placeRoom
+                    }),
+                ),
+                //Prof information,
+                React.createElement("div", {className: "AddSection", id: "ProfInfo"}, "Prof: ",
+                    React.createElement("input", {
+                        className: "inputs",
+                        id: "ProfName",
+                        placeholder: "XXX",
+                        value: this.profName
+                    })),
+                //Color section
+                React.createElement("div", {className: "AddSection", id: "ColorSection",}, "Color: ",
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color1"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color2"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color3"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color4"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color7"})),
+                //Decision Button
+                React.createElement("div", {className: "AddSectionButton"},
+                    React.createElement("button", {
+                        type: "button",
+                        className: "DecisionButton",
+                        id: "save",
+                        //onClick: saveContent()
+                    }, "Save"),
+                    React.createElement("button", {
+                        type: "button",
+                        className: "DecisionButton",
+                        id: "cancel",
+                        onClick: this.props.onClick
+                    }, "Cancel"))),
+            //gray background when panel is on
+            React.createElement('div', {
+                //style: groundLevel,
+                className: "groundLevel",
+                onClick: this.props.onClick
+            }));
 
         return AddClass;
     }
