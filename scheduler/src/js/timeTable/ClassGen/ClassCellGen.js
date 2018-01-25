@@ -2,7 +2,7 @@ import React, { Component }  from 'react';
 var moment = require('moment');
 
 
-function GenClassCell(props){
+function GenClassCells(props){
 	const DayArr = ["Monday", "Tuesday", "Wednesday",
 				    "Thursday", "Friday", "Saturday",
 				    "Sunday"];
@@ -44,40 +44,57 @@ function GenClassCell(props){
 	divStyle.height = (minutes2 * unityPX).toString() + "px";
 	//divStyle.marginLeft = DayArr.indexOf(props.Date).toString() + "px";
 
-	var classCell = React.createElement("div", 
+	var classCells = React.createElement("div", 
 		{
 			style:divStyle,
-			key:props.Class.Name + " " + props.Date
+			key:props.Class.Name + " ",
+			onClick: props.onClick
 		},
 		props.Class.Name + ' ' + props.Class.Code + ' ' + minutes2
 	)
 
-	return classCell;
-}
-
-
-function GenClassCells(props){
-
-	var classCells = props.Class.Date.map((Date, index) =>
-		<GenClassCell	
-			Class={props.Class}
-			Date={Date}
-			key = {Date+index}
-			TimeRange= {props.TimeRange}
-		/>
-	)
-
-
 	return classCells;
 }
-export function GenClassCellForAllDays(props){
-	var classCellDays = props.Class.map((Class, index) =>
-		<GenClassCells
+
+
+class GenClassForAllDay extends Component{
+	constructor(props) {
+    	super(props);
+    	
+    }
+
+	ClassForAllDay() {
+
+		const ClassForAllDay = 
+		this.props.Class.Date.map((Date, index) =>
+			<GenClassCells	
+				Class={this.props.Class}
+				Date={Date}
+				key = {Date+index}
+				TimeRange= {this.props.TimeRange}
+				onClick = {(i) => this.props.onClick({OnOff: true,
+													  Class: this.props.Class})}
+			/>
+		);
+
+		return ClassForAllDay;
+	}
+
+	render(){
+		return this.ClassForAllDay();
+	}
+	
+}
+
+export function GenAllClasses(props){
+	var AllClasses = props.Class.map((Class, index) =>
+		<GenClassForAllDay
 			TimeRange= {props.TimeRange}	
 			Class={Class}
 			key= {Class + index}
+			onClick = {(i) => props.onClick(i)}
 		/>
 	)
 
-	return classCellDays;
+	return AllClasses;
 }
