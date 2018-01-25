@@ -63,13 +63,21 @@ input {
 	width: 50px;
 }
 
+/*div fo save and cansel button*/
 .AddSectionButton{
 	width: 120px;
-	height: 30px;
+	height: 20px;
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
 }
+
+/*Save and cansol button patten*/
+.AddSectionButton .DecisionButton{
+	width: 60px;
+    height: 20px;
+}
+
 
 .AddSection#DateSection .SelectButton{
 	width: 50px;
@@ -103,6 +111,7 @@ input {
 
 }
 
+/*Save and cancel buttom*/
 .DecisionButton#save:hover{
 	background-color: #ff0000;
 }
@@ -114,3 +123,4 @@ input {
 .DecisionButton#save:active{
 	background-color: #000000;
 }
+

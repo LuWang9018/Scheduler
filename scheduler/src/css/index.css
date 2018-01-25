@@ -3,7 +3,7 @@
 :root {
 	--cell-width: calc((100%)/7);
 	--cell-height: 31px;
-	--time-width: 50px;
+	--time-width: 51px;
 
 }
 
@@ -20,13 +20,13 @@ div{
 }
 
 .TimeTable{
-	border: 0;
-	height: 500px;
+	/*top: 0px;*/
+    /*height: 500px;*/
 	width:100%;
 	/*background-color: #ffffff;*/
 	background-color: #3399ff;
 	min-width: 500px;
-	position: relative;
+	position: absolute;
 }
 
 .Cellcolumns{
@@ -81,55 +81,9 @@ div{
 	margin-bottom:-1px;
 }
 
-.AddClassWindow{
-    position: absolute;
-/*    left: 5px;
-    right:5px;*/
-	background-color: #66ff33; 
-	top: 0;
-	bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    /*width: 450px;*/
-    width: 450px;
-    height: 400px;
-}
+/*css for AddClassWindow*/
+@import url("AddClassWindow.css");
 
-.AddClassWindow div{
-	height: 50px;
-}
 
-input {
-    border: none;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
-    background-color: #66ff33; 
-}
-
-.AddSection#ClassInfo{
-	margin-top: 30px;
-}
-
-.AddSection#ClassInfo .inputs{
-	width: 50px;
-}
-
-.AddSection#PlaceInfo .inputs{
-	width: 50px;
-}
-
-.AddSection#TimeInfo .inputs{
-	width: 50px;
-}
-
-.AddSectionButton{
-	width: 120px;
-	height: 30px;
-	position: absolute;
-	bottom: 10px;
-	right: 10px;
-
-}
 
 
