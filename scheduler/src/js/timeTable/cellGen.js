@@ -27,7 +27,7 @@ export class TableGen extends Component{
     		Class: props.Data.Class,
 
     		CellHeight: 30,
-    		AddClassWindowOn: true,	    
+    		AddClassWindowOn: false,	    
     	}    	
     }
 
@@ -112,6 +112,7 @@ export class TableGen extends Component{
     		),
     		<ClassPanel
     			OnOff= {this.state.AddClassWindowOn}
+    			onClick={(i) => this.handleWhiteCellClick(i)}
     		/>     		
     	)
     }
@@ -123,7 +124,7 @@ export class TableGen extends Component{
     handleWhiteCellClick(props){
     	var newState = update(this.state, {AddClassWindowOn: {$set: true}});
     	//console.log(this.state.AddClassWindowOn);
-    	this.setState({AddClassWindowOn: !this.state.AddClassWindowOn});
+    	this.setState({AddClassWindowOn: props.OnOff});
     }
 
     render() {
