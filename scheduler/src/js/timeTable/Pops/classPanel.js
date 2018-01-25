@@ -6,6 +6,7 @@ export class ClassPanel extends React.Component {
     constructor(props) {
         super(props);
 
+        /*
         this.state = {
             classNames: "",
             classCode: "",
@@ -20,6 +21,7 @@ export class ClassPanel extends React.Component {
             classProf: "",
             //color: "",
         }
+        */
     }
 
     Hours() {
@@ -44,29 +46,26 @@ export class ClassPanel extends React.Component {
 
     createPanel() {
         const panelStyle = {
-            backgroundColor: '#7FFFD4',
-            position: 'center',
-            height: '150px',
-            width: '1000px',
+            backgroundColor: '#7fffd4',
+            position: 'absolute',
+            height: '300px',
+            width: '600px',
             zIndex: '10',
-            //opacity: '1.0',
         };
 
         const groundLevel = {
             backgroundColor: '#A9A9A9',
-            position: 'absolute',
+            position: 'relative',
             borderTop: '50px',
-            height: '100%',
-            width: '100%',
+            height: '500px',
+            width: '793px',
             zIndex: '9',
-            //opacity: '0.8',
+            opacity: '0.7',
         };
 
         var AddClass =
-            React.createElement('div', {
-                    //style: groundLevel,
-                    className: "groundLevel"
-                },
+            React.createElement("div", {},
+                //Add class panel detail
                 React.createElement("div", {
                         //style: panelStyle,
                         className: "AddClassWindow",
@@ -77,8 +76,7 @@ export class ClassPanel extends React.Component {
                             className: "inputs",
                             id: "ClassName",
                             placeholder: "Class Name",
-                            value: this.state.classNames,
-                            //onChange: this.setField(event)
+                            value: this.classNames
                         }),
                         "   ",
                         React.createElement("input", {
@@ -111,13 +109,41 @@ export class ClassPanel extends React.Component {
                             this.Mints())),
                     //date information
                     React.createElement("div", {className: "AddSection", id: "DateSection"}, "Date: ",
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "Mon"}, "Mon"),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "Tue"}, "Tue"),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "Wed"}, "Wed"),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "Tur"}, "Tur"),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "Fir"}, "Fir"),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "Sat"}, "Sat"),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "Sun"}, "Sun")),
+                        React.createElement("button", {
+                            type: "button",
+                            className: "SelectButton",
+                            id: "Mon"
+                        }, "Mon"),
+                        React.createElement("button", {
+                            type: "button",
+                            className: "SelectButton",
+                            id: "Tue"
+                        }, "Tue"),
+                        React.createElement("button", {
+                            type: "button",
+                            className: "SelectButton",
+                            id: "Wed"
+                        }, "Wed"),
+                        React.createElement("button", {
+                            type: "button",
+                            className: "SelectButton",
+                            id: "Tur"
+                        }, "Tur"),
+                        React.createElement("button", {
+                            type: "button",
+                            className: "SelectButton",
+                            id: "Fir"
+                        }, "Fir"),
+                        React.createElement("button", {
+                            type: "button",
+                            className: "SelectButton",
+                            id: "Sat"
+                        }, "Sat"),
+                        React.createElement("button", {
+                            type: "button",
+                            className: "SelectButton",
+                            id: "Sun"
+                        }, "Sun")),
                     //location information
                     React.createElement("div", {className: "AddSection", id: "PlaceInfo"}, "Location: ",
                         React.createElement("input", {
@@ -144,6 +170,7 @@ export class ClassPanel extends React.Component {
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}),
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}),
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color7"})),
+                    //Decision Button
                     React.createElement("div", {className: "AddSectionButton"},
                         React.createElement("button", {
                             type: "button",
@@ -154,9 +181,12 @@ export class ClassPanel extends React.Component {
                             type: "button",
                             className: "DecisionButton",
                             id: "cancel"
-                        }, "Cancel"))
-                ))
-        ;
+                        }, "Cancel"))),
+                //gray background when panel is on
+                React.createElement('div', {
+                    //style: groundLevel,
+                    className: "groundLevel"
+                }));
 
         return AddClass;
     }
