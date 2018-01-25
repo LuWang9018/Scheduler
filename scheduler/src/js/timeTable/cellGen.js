@@ -3,7 +3,7 @@ import update from 'immutability-helper';
 var moment = require('moment');
 import {GenTimeColumns} from "./ColumnsGen/TimeCGen";
 import {GenDayColumns} from "./ColumnsGen/DayCGen";
-import {GenClassCellForAllDays} from "./ClassGen/ClassCellGen";
+import {GenAllClasses} from "./ClassGen/ClassCellGen";
 import {ClassPanel} from "./Pops/classPanel";
 
 export class TableGen extends Component{
@@ -26,8 +26,9 @@ export class TableGen extends Component{
     		//Define a fromate later
     		Class: props.Data.Class,
 
-    		CellHeight: 30,
-    		AddClassWindowOn: false,	    
+    		//CellHeight: 30,
+    		AddClassWindowOn: false,
+    		ChangingClassInfo: null	    
     	}    	
     }
 
@@ -104,15 +105,17 @@ export class TableGen extends Component{
 	    			TimeArr={this.state.TimeArr}
 	    			onClick={(i) => this.handleWhiteCellClick(i)}
 	    		/>,	    		
-	    		<GenClassCellForAllDays
+	    		<GenAllClasses
 	    			TimeRange={this.state.TimeRange}
 	    			Class = {this.state.Class}
 	    			form = {this.state.AddClassWindowOn}
+	    			onClick={(i) => this.handleWhiteCellClick(i)}
 	    		/>  		
     		),
     		<ClassPanel
+    			ChangingClassInfo = {this.state.ChangingClassInfo}
     			OnOff= {this.state.AddClassWindowOn}
-    			onClick={(i) => this.handleWhiteCellClick(i)}
+    			onClick={(props) => this.handleWhiteCellClick(props)}
     		/>     		
     	)
     }
@@ -122,7 +125,7 @@ export class TableGen extends Component{
 	//	OnOff: true/flase	
 	//}
     handleWhiteCellClick(props){
-    	var newState = update(this.state, {AddClassWindowOn: {$set: true}});
+    	//var newState = update(this.state, {AddClassWindowOn: {$set: true}});
     	//console.log(this.state.AddClassWindowOn);
     	this.setState({AddClassWindowOn: props.OnOff});
     }
