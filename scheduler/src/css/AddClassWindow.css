@@ -107,20 +107,26 @@ input {
 	right: 10px;
 }
 
-/*Save and cansol button patten*/
-.AddSectionButton .DecisionButton{
-	width: 60px;
-    height: 20px;
-}
-
-
+/*Date SelectButton*/
 .AddSection#DateSection .SelectButton{
 	width: 50px;
 	height: 30px;
 	text-align: center;
 	margin-right:-1px;
 }
+.AddSection#DateSection button{
+	border: 0;
+	background-color: white;
+}
+.AddSection#DateSection button:hover{
+	border: 0;
+	background-color: #66cc00;
+}
+.AddSection#DateSection button:focus{
+	background-color: #4d9900;
+}
 
+/*ColorSection button*/
 .AddSection#ColorSection .SelectButton{
 	margin-right: 10px;
 	width: 20px;
@@ -129,9 +135,36 @@ input {
 	border-radius: 50%;
 }
 
-.SelectButton#color1{
-	background-color:black;
+.SelectButton#color1 button{
+	border:0;
+	background-color:#00ccff;
 }
+.SelectButton#color1 button:hover{
+	border: 1px black;
+	border-radius: 50%;
+	background-color:#00ccff;
+}
+
+.SelectButton#color2 button{
+	background-color:#00ccff;
+}
+.SelectButton#color3 button{
+	background-color:#00ccff;
+}
+.SelectButton#color4 button{
+	background-color:#00ccff;
+}
+.SelectButton#color5 button{
+	background-color:#00ccff;
+}
+.SelectButton#color6 button{
+	background-color:#00ccff;
+}
+.SelectButton#color7 button{
+	background-color:#00ccff;
+}
+
+
 
 .groundLevel{
 	width:100%;
@@ -146,8 +179,13 @@ input {
 
 }
 
-/*Save and cancel buttom*/
-.DecisionButton#save:hover{
+/*Save and cansol button patten*/
+.AddSectionButton .DecisionButton{
+	width: 60px;
+    height: 20px;
+}
+/*/*Save and cancel buttom*/
+/*.DecisionButton#save:hover{
 	background-color: #ff0000;
 }
 
@@ -157,5 +195,7 @@ input {
 
 .DecisionButton#save:active{
 	background-color: #000000;
-}
+}*/
+
+/*Day selection button*/
 
