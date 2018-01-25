@@ -9,69 +9,83 @@ import {ClassPanel} from "./Pops/classPanel";
 export class TableGen extends Component{
 	constructor(props) {
     	super(props);
-    	this.state = {    		
+    	this.state = {  
     		//display time from xx:xx to yy:yy
     		//TODO
     		//change Time format later!    		
-    		TimeRange: [props.TimeRange[0], props.TimeRange[1]],
+    		TimeRange: this.FindMinMaxTime(props.Data),
     		
     		//A time array 
     		//eg: 6:00, 6:30 .....
-    		TimeArr : this.InitTime(props.TimeRange),
+    		TimeArr : this.InitTime({Class: props.Data.Class
+    								}),
 
     		//Class list
     		//TODO
     		//should get from server
     		//Define a fromate later
-    		Class: [{Name: "Eng",
-    				 Code: 101,
-    				 Section: "001",
-    				 TimeFrom: moment('06:40 am', "HH:mm"),
-    				 TimeTo: moment('07:30 am', "HH:mm"),
-    				 Date: ["Monday", "Wednesday", "Friday"],
-    				 LocationB: ["AAA"],
-    				 LocationR: ["111"],
-    				 Prof: "SB",
-    				 Type: ["LEC"], 
-    				 Color: ["red"],
-    				},
-    				{Name: "Math",
-    				 Code: 102,
-    				 Section: "001",
-    				 TimeFrom: moment('9:30 am', "HH:mm"),
-    				 TimeTo: moment('11:00 pm', "HH:mm"),
-    				 Date: ["Tuesday", "Thursday"],
-    				 LocationB: ["AAA"],
-    				 LocationR: ["111"],
-    				 Prof: "SB",
-    				 Type: ["LEC"], 
-    				 Color: ["red"],    				 
-    				},
-    				],
+    		Class: props.Data.Class,
+
     		CellHeight: 30,
     		AddClassWindowOn: true,	    
     	}    	
     }
 
-	InitTime(vars){
+	InitTime(props){
 
-		var start = vars[0];
-		var end = vars[1];
+		var TimeRange = this.FindMinMaxTime({Class:props.Class})
+
+		var start = TimeRange.MinTime.clone();
+		//console.log(start);
+		var end = TimeRange.MaxTime.clone();
+
 		var TmpTimeArr = [];
-		var time = moment('08:00 am', "HH:mm");
 		//time = time.add(-30, 'minutes')
+		    	//console.log(start);
+		    	//console.log(end);  		
 
-		for(var i = start; i <= end; i++){
+		for(var i = start.clone(); i.isBefore(end); i.add(30, "minutes")){
 			
-			var TmpTime = moment(time);
-			TmpTimeArr.push(TmpTime);
-			time = time.add(30, 'minutes');
-			var TmpTime2 = moment(time);
-			TmpTimeArr.push(TmpTime2);
-			time = time.add(30, 'minutes');
-			//console.log()
+			var tmp = moment().hour(i.hour()).minute(i.minute());
+			TmpTimeArr.push(tmp);
+			//console.log(tmp);
+
 		}
+		
 		return TmpTimeArr
+	}
+
+	FindMinMaxTime(props){
+
+		var min = moment('10:00 am', 'HH:mm A');
+		var max = moment('04:30 pm', 'HH:mm A');
+
+
+		for(var i = 0; i < props.Class.length; i++){
+			var start = props.Class[i].TimeFrom.clone();
+			var end = props.Class[i].TimeTo.clone();
+			if(start.isBefore(min)){
+				min = start.clone();
+				//console.log("min");
+				//console.log(min);
+
+			}
+			if(end.isAfter(max)){
+				max = end.clone();
+				//console.log("end");
+				//console.log(end);
+
+			}
+		}
+
+		var remainder = min.minute() % 30;
+
+		min.subtract(remainder, 'minutes');
+
+		remainder = 30 - max.minute() % 30;
+		max.add(remainder, "minutes").format("HH:mm A");
+
+		return {MinTime: min, MaxTime:max}
 	}
 
     CreateTimeCells(){
@@ -91,6 +105,7 @@ export class TableGen extends Component{
 	    			onClick={(i) => this.handleWhiteCellClick(i)}
 	    		/>,	    		
 	    		<GenClassCellForAllDays
+	    			TimeRange={this.state.TimeRange}
 	    			Class = {this.state.Class}
 	    			form = {this.state.AddClassWindowOn}
 	    		/>  		
@@ -107,7 +122,7 @@ export class TableGen extends Component{
 	//}
     handleWhiteCellClick(props){
     	var newState = update(this.state, {AddClassWindowOn: {$set: true}});
-    	console.log(this.state.AddClassWindowOn);
+    	//console.log(this.state.AddClassWindowOn);
     	this.setState({AddClassWindowOn: !this.state.AddClassWindowOn});
     }
 

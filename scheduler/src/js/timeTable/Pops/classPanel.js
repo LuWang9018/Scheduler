@@ -5,20 +5,21 @@ var moment = require('moment');
 export class ClassPanel extends React.Component {
     constructor(props) {
         super(props);
-        /*
+
         this.state = {
-            startTime: '',
-            stopTime: '',
-            dateTime: '',
-            className: '',
-            classCode: '',
-            classSection: '',
-            classLocation: '',
-            profName: '',
-            classType: '',
-            color: '',
-        };
-       */
+            classNames: "",
+            classCode: "",
+            classSection: "",
+            startTimeHour: "",
+            startTimeMints: "",
+            stopTimeHour: "",
+            stopTimeMints: "",
+            //classDate: "",
+            placeBuild: "",
+            placeRoom: "",
+            classProf: "",
+            //color: "",
+        }
     }
 
     Hours() {
@@ -32,7 +33,6 @@ export class ClassPanel extends React.Component {
     Mints() {
         var mints = [];
         let j = 0;
-        //0 5 10 15 20 25 30 35 40 45 50 55
         for (let i = 0; i < 60; i++) {
             if ((i % 5) === 0) {
                 mints[j] = React.createElement("option", {key: j, value: i}, i);
@@ -49,7 +49,7 @@ export class ClassPanel extends React.Component {
             height: '150px',
             width: '1000px',
             zIndex: '10',
-            opacity: '1.0',
+            //opacity: '1.0',
         };
 
         const groundLevel = {
@@ -59,7 +59,7 @@ export class ClassPanel extends React.Component {
             height: '100%',
             width: '100%',
             zIndex: '9',
-            opacity: '0.8',
+            //opacity: '0.8',
         };
 
         var AddClass =
@@ -72,14 +72,29 @@ export class ClassPanel extends React.Component {
                         className: "AddClassWindow",
                     },
                     //Class information
-                    React.createElement("div", {className: "AddSection", id: "ClassInfo"}, "Class Name: ",
-                        React.createElement("input", {className: "inputs", id: "ClassName"}),
+                    React.createElement("div", {className: "AddSection", id: "ClassInfo"}, "Class: ",
+                        React.createElement("input", {
+                            className: "inputs",
+                            id: "ClassName",
+                            placeholder: "Class Name",
+                            value: this.state.classNames,
+                            //onChange: this.setField(event)
+                        }),
                         "   ",
-                        "Class Code: ",
-                        React.createElement("input", {className: "inputs", id: "ClassCode"}),
+                        React.createElement("input", {
+                            className: "inputs",
+                            id: "ClassCode",
+                            placeholder: "Class Code",
+                            value: this.classCode
+                        }),
                         "   ",
-                        "Section: ",
-                        React.createElement("input", {className: "inputs", id: "ClassSection"})),
+                        React.createElement("input", {
+                            className: "inputs",
+                            id: "ClassSection",
+                            placeholder: "Section",
+                            value: this.classSection
+                        })
+                    ),
                     //Time information
                     React.createElement("div", {className: "AddSection", id: "TimeInfo"}, "Start Time: ",
                         React.createElement("select", {className: "inputs", id: "StartHour"},
@@ -105,13 +120,21 @@ export class ClassPanel extends React.Component {
                         React.createElement("button", {type: "button", className: "SelectButton", id: "Sun"}, "Sun")),
                     //location information
                     React.createElement("div", {className: "AddSection", id: "PlaceInfo"}, "Location: ",
-                        React.createElement("input", {className: "inputs", id: "PlaceBuilding", value: "Building"}),
+                        React.createElement("input", {
+                            className: "inputs",
+                            id: "PlaceBuilding",
+                            placeholder: "Building"
+                        }),
                         "   ",
-                        React.createElement("input", {className: "inputs", id: "PlaceRoom", value: "Room"}),
+                        React.createElement("input", {
+                            className: "inputs",
+                            id: "PlaceRoom",
+                            placeholder: "Room"
+                        }),
                     ),
                     //Prof information,
                     React.createElement("div", {className: "AddSection", id: "ProfInfo"}, "Prof: ",
-                        React.createElement("input", {className: "inputs", id: "ProfName"})),
+                        React.createElement("input", {className: "inputs", id: "ProfName", placeholder: "XXX"})),
                     //Color section
                     React.createElement("div", {className: "AddSection", id: "ColorSection"}, "Color: ",
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color1"}),
@@ -132,7 +155,9 @@ export class ClassPanel extends React.Component {
                             className: "DecisionButton",
                             id: "cancel"
                         }, "Cancel"))
-                ));
+                ))
+        ;
+
         return AddClass;
     }
 
@@ -147,109 +172,4 @@ export class ClassPanel extends React.Component {
     render() {
         return this.passPanel();
     }
-
-
-    /*
-    this.changeStartTime() = this.changeStartTime.bind(this);
-    this.changeStopTime() = this.changeStopTime.bind(this);
-    this.changeDateTime() = this.changeDateTime.bind(this);
-    this.changeClassName() = this.changeClassName.bind(this);
-    this.changeClassCode() = this.changeClassCode.bind(this);
-    this.changeClassSection() = this.changeClassSection.bind(this);
-    this.changeClassLocation() = this.changeClassLocation.bind(this);
-    this.changeProfName() = this.changeProfName.bind(this);
-    this.changeClassType() = this.changeClassType.bind(this);
-    this.changeColor() = this.changeColor.bind(this);
-    this.saveClass() = this.saveClass.bind(this);
-    //this.deleteClass() = this.deleteClass().bind(this);
-    //this.cancleClass() = this.cancelClass().bind(this);
 }
-
-changeStartTime() {
-    //TODO
-}
-
-changeStopTime() {
-    //TODO
-}
-
-changeDateTime() {
-    //TODO
-}
-
-changeClassName() {
-    //TODO
-}
-
-changeClassCode() {
-    //TODO
-}
-
-changeClassSection() {
-    //TODO
-}
-
-changeClassLocation() {
-    //TODO
-}
-
-changeProfName() {
-    //TODO
-}
-
-changeClassType() {
-    //TODO
-}
-
-changeColor() {
-    //TODO
-}
-
-saveClass() {
-    //TODO
-}
-*/
-
-    /*
-    deleteClass() {
-        //TODO
-        //delete a class
-    }
-
-    cancelClass() {
-        //TODO
-        //close the pop window and do nothing changed
-    }
-    */
-}
-
-/*
-function panelClass(startTime, stopTime, className, classCode) {
-    const panelStyle = {
-        backgroundColor: 'white',
-        position: 'center',
-        height: '100px',
-        width: '100px',
-        zIndex: '10',
-    };
-
-    return React.createElement("div", {style: panelStyle},
-        React.createElement("div", {},
-            "Start Time: ",
-            React.createElement(""),
-            "\t",
-            "Stop Time: ",
-            React.createElement("")),
-        "\n",
-        React.createElement("div", {},
-            "Class Name: ",
-            React.createElement(""),
-            "\t",
-            "Class Code",
-            React.createElement("")),
-        React.createElement("div", {},
-            React.createElement(""),
-            React.createElement(""))
-    )
-}           
-*/
