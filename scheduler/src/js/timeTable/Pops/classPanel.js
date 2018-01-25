@@ -54,7 +54,7 @@ export class ClassPanel extends React.Component {
             React.createElement("div", {},
                 //Add class panel detail
                 React.createElement("div", {
-                        style: panelStyle,
+                        //style: panelStyle,
                         className: "AddClassWindow",
                     },
                     //Class information
@@ -149,14 +149,14 @@ export class ClassPanel extends React.Component {
                     React.createElement("div", {className: "AddSection", id: "ProfInfo"}, "Prof: ",
                         React.createElement("input", {className: "inputs", id: "ProfName", placeholder: "XXX"})),
                     //Color section
-                    React.createElement("div", {className: "AddSection", id: "ColorSection"}, "Color: ",
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color1"}, " "),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color2"}, " "),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color3"}, " "),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color4"}, " "),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}, " "),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}, " "),
-                        React.createElement("button", {type: "button", className: "SelectButton", id: "color7"}, " ")),
+                    React.createElement("div", {className: "AddSection", id: "ColorSection",}, "Color: ",
+                        React.createElement("button", {type: "button", className: "SelectButton", id: "color1"}),
+                        React.createElement("button", {type: "button", className: "SelectButton", id: "color2"}),
+                        React.createElement("button", {type: "button", className: "SelectButton", id: "color3"}),
+                        React.createElement("button", {type: "button", className: "SelectButton", id: "color4"}),
+                        React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}),
+                        React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}),
+                        React.createElement("button", {type: "button", className: "SelectButton", id: "color7"})),
                     //Decision Button
                     React.createElement("div", {className: "AddSectionButton"},
                         React.createElement("button", {
@@ -171,7 +171,7 @@ export class ClassPanel extends React.Component {
                         }, "Cancel"))),
                 //gray background when panel is on
                 React.createElement('div', {
-                    style: groundLevel,
+                    //: groundLevel,
                     className: "groundLevel"
                 }));
 
