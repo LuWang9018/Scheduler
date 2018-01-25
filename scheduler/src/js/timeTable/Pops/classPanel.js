@@ -80,7 +80,8 @@ export class ClassPanel extends React.Component {
                     //style: panelStyle,
                     className: "AddClassWindow"
                 },
-                React.createElement("div", {className: "panelTitle"}, "New Class"),
+                React.createElement("div", {className: "panelTitle"},
+                    React.createElement("div", {className: "titleText"}, "New Class")),
                 //Class information
                 React.createElement("div", {className: "AddSection", id: "ClassInfo"}, "Class: ",
                     React.createElement("input", {
