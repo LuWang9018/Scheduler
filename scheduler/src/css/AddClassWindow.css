@@ -17,15 +17,14 @@ div{
     background-color: white; 
     box-shadow: 10px 10px 5px rgba(136, 136, 136,0.5);
     z-index: 10; 
+ 
+    border: 1px rgba(136, 136, 136,0.5);
+    border-radius: 10px 10px 10px 10px;
 }
 
 /*AddClassWindow*/
-div.ext-box { display: table; width:100%;}
-div.int-box { 
-	top: 0;
-	bottom: 0; 
-	margin: auto;
-}
+div.ext-box { display: table; width:100%; }
+div.int-box { top: 0; bottom: 0; margin: auto; }
 
 .AddClassWindow div{
 	height: 50px;
@@ -40,15 +39,20 @@ input {
     height: 20px;
 }
 
-.AddSection#ClassInfo{
-	margin-top: 10px;
-}
-
 .AddClassWindow .panelTitle{
 	width: 100%;
 	position: relative;
 	background-color: #99cc00;
 	margin-left:0px;
+	border: 1px rgba(136, 136, 136,0.5);
+    border-radius: 10px 10px 0px 0px;
+}
+
+.panelTitle .ext-box { display: table; width:100%; }
+.panelTitle .int-box { top: 0; bottom: 0; margin: auto; }
+
+.AddSection#ClassInfo{
+	margin-top: 10px;
 }
 
 .AddSection#ClassInfo .inputs{
