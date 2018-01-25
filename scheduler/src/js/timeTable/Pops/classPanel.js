@@ -3,33 +3,21 @@ import React from 'react';
 var moment = require('moment');
 
 export class ClassPanel extends React.Component {
-
-    classNames;
-    classCode;
-    classSection;
-    startHour;
-    startMint;
-    stopHour;
-    stopMint;
-    placeBuild;
-    placeRoom;
-    profName;
-
     constructor(props) {
         super(props);
 
         this.state = {
-            classNames: "",
-            classCode: "",
-            classSection: "",
-            startHour: "",
-            startMint: "",
-            stopHour: "",
-            stopMint: "",
-            placeBuild: "",
-            placeRoom: "",
-            profName: ""
-        }
+            classNames: this.props.className,
+            classCode: this.props.classCode,
+            classSection: this.props.classSection,
+            startHour: this.props.startHour,
+            startMint: this.props.startMint,
+            stopHour: this.props.stopHour,
+            stopMint: this.props.stopMint,
+            placeBuild: this.props.placeBuild,
+            placeRoom: this.props.placeRoom,
+            profName: this.props.profName,
+        };
     }
 
     Hours() {
@@ -56,7 +44,7 @@ export class ClassPanel extends React.Component {
         const panelStyle = {
             backgroundColor: '#7fffd4',
             position: 'absolute',
-            height: '300px',
+            height: '400px',
             width: '600px',
             zIndex: '10',
         };
@@ -72,12 +60,13 @@ export class ClassPanel extends React.Component {
         };
 
         var AddClass;
-        AddClass = React.createElement("div", {},
+        AddClass = React.createElement("div", {className: "windowPanel"},
             //Add class panel detail
             React.createElement("div", {
                     //style: panelStyle,
-                    className: "AddClassWindow",
+                    className: "AddClassWindow"
                 },
+                React.createElement("div", {className: "panelTitle"}, "New Class"),
                 //Class information
                 React.createElement("div", {className: "AddSection", id: "ClassInfo"}, "Class: ",
                     React.createElement("input", {
@@ -191,7 +180,7 @@ export class ClassPanel extends React.Component {
                         type: "button",
                         className: "DecisionButton",
                         id: "save",
-                        //onClick: saveContent()
+                        onClick: this.onToggle()
                     }, "Save"),
                     React.createElement("button", {
                         type: "button",
@@ -219,5 +208,14 @@ export class ClassPanel extends React.Component {
 
     render() {
         return this.passPanel();
+    }
+
+    onToggle(values, changes) {
+        switch (changes) {
+            case "changeClassNames":
+                this.setState({classNames: values.target.value});
+                console.log("Class name is: " + this.classNames);
+                break;
+        }
     }
 }
