@@ -6,23 +6,37 @@ export class ClassPanel extends React.Component {
     constructor(props) {
         super(props);
 
-        //TODO
-        //props.changeClassInfo
-        //if it has value then keep or save nothing
-        this.state = {
-            classNames: this.props.Name,
-            classCode: this.props.Code,
-            classSection: this.props.Section,
-            startHour: this.props.TimeFromH,
-            startMint: this.props.TimeFromMin,
-            stopHour: this.props.TimeToH,
-            stopMint: this.props.TimeToMin,
-            placeBuild: this.props.LocationB,
-            placeRoom: this.props.LocationR,
-            profName: this.props.Prof,
-            classType: this.props.Type,
-            classColor: this.props.Color,
-        };
+        if (this.props.ChangingClassInfo !== null) {
+            this.state = {
+                classNames: this.props.Name,
+                classCode: this.props.Code,
+                classSection: this.props.Section,
+                startHour: this.props.TimeFromH,
+                startMint: this.props.TimeFromMin,
+                stopHour: this.props.TimeToH,
+                stopMint: this.props.TimeToMin,
+                placeBuild: this.props.LocationB,
+                placeRoom: this.props.LocationR,
+                profName: this.props.Prof,
+                classType: this.props.Type,
+                classColor: this.props.Color
+            };
+        } else {
+            this.state = {
+                classNames: "",
+                classCode: "",
+                classSection: "",
+                startHour: "",
+                startMint: "",
+                stopHour: "",
+                stopMint: "",
+                placeBuild: "",
+                placeRoom: "",
+                profName: "",
+                classType: "",
+                classColor: ""
+            }
+        }
 
         console.log("Class Name is: " + this.classNames);
         console.log("Class Code is: " + this.classCode);
@@ -42,6 +56,7 @@ export class ClassPanel extends React.Component {
         for (let i = 0; i < 60; i++) {
             if ((i % 5) === 0) {
                 mints[j] = React.createElement("option", {key: j, value: i}, i);
+                j++;
             }
         }
         return mints;
@@ -108,7 +123,10 @@ export class ClassPanel extends React.Component {
                 React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}),
                 React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}),
                 React.createElement("button", {type: "button", className: "SelectButton", id: "color7"})),
-            React.createElement(GenDecisionButton, {onClick: this.props.onClick}),
+            <GenDecisionButton
+                ChangingClassInfo={this.state.ChangingClassInfo}
+                onClick={(props) => this.onToggle(props)}
+            />,
             //Add gray background
             React.createElement('div', {
                 className: "groundLevel",
@@ -123,6 +141,11 @@ export class ClassPanel extends React.Component {
             return null;
         }
     };
+
+    onToggle(props) {
+        this.setState({ChangingClassInfo: props.ChangingClassInfo});
+        this.props.onClick({OnOff: !props.OnOff});
+    }
 
     render() {
         return this.passPanel();
@@ -144,7 +167,7 @@ function GenSaveButton(props) {
     return React.createElement("button", {
             className: "DecisionButton",
             id: "save",
-            onClick: props.onClick
+        onClick: props.onClick,
         }, "Save"
     );
 }
