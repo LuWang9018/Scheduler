@@ -4,7 +4,7 @@ var moment = require('moment');
 import {GenTimeColumns} from "./ColumnsGen/TimeCGen";
 import {GenDayColumns} from "./ColumnsGen/DayCGen";
 import {GenAllClasses} from "./ClassGen/ClassCellGen";
-import {ClassPanel} from "./Pops/classPanel";
+import {ClassPanel} from "./Pops/ClassPanel";
 
 export class TableGen extends Component{
 	constructor(props) {
@@ -81,6 +81,10 @@ export class TableGen extends Component{
 	}
 
     CreateTimeCells(){
+    	const currentChangingClassInfo = this.state.ChangingClassInfo;
+    	console.log("currentChangingClassInfo");
+    	console.log(currentChangingClassInfo);
+    	
     	return React.createElement("div", 
     		{
     			className: "TimeTable"
@@ -103,13 +107,27 @@ export class TableGen extends Component{
 	    			onClick={(i) => this.handleWhiteCellClick(i)}
 	    		/>  		
     		),
+    		//this.GenClassEdit()
     		<ClassPanel
-    			ChangingClassInfo = {this.state.ChangingClassInfo}
-    			OnOff= {this.state.AddClassWindowOn}
-    			onClick={(props) => this.handleWhiteCellClick(props)}
-    		/>     		
+				ChangingClassInfo = {currentChangingClassInfo}
+				OnOff= {this.state.AddClassWindowOn}
+				onClick={(props) => this.handleWhiteCellClick(props)}
+			/>
     	)
     }
+
+/*
+    GenClassEdit(){
+
+    	if(this.state.AddClassWindowOn === true){
+			return <ClassPanel
+				ChangingClassInfo = {this.state.ChangingClassInfo}
+				OnOff= {this.state.AddClassWindowOn}
+				onClick={(props) => this.handleWhiteCellClick(props)}
+			/> 
+		}
+    }
+*/
 
 	//turn add class window on/off
 	//props: {
@@ -120,9 +138,8 @@ export class TableGen extends Component{
     		this.setState({AddClassWindowOn: props.OnOff,
     		               ChangingClassInfo: null});
     	}else{
-    		this.setState({ChangingClassInfo: props.Class});
-    		this.setState({AddClassWindowOn: props.OnOff});
-    		console.log(this.state.ChangingClassInfo);
+    		this.setState({ChangingClassInfo: props.Class,
+    				       AddClassWindowOn: props.OnOff});
     	}    	
     }
 

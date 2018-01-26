@@ -37,7 +37,8 @@ export function GenDayColumns(props){
 			<GenDayCells 
 				Day={Day} 
 				TimeArr={props.TimeArr}	
-				onClick={() => props.onClick({OnOff: true})}			
+				onClick={() => props.onClick({OnOff: true,
+											  Class: null})}			
 			/>
 		)
 	);
