@@ -65,8 +65,8 @@ export class ClassPanel extends React.Component {
     //Add whole panel
     createPanel() {
         //Add class panel detail
-        return React.createElement("div", {className: "AddClassWindow"},
-            React.createElement("div", {className: "classDetail"},
+        return React.createElement("div", {},
+            React.createElement("div", {className: "AddClassWindow"},
                 //Title information
                 React.createElement("div", {className: "panelTitle"},
                     React.createElement("div", {className: "TitleTitle"},
@@ -150,7 +150,7 @@ export class ClassPanel extends React.Component {
                 className: "groundLevel",
                 onClick: this.props.onClick
             })
-        );
+        )
     };
 
     passPanel() {
