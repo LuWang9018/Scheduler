@@ -13,7 +13,7 @@ div{
     margin: auto;
     background-color: #66ff33; 
     width: 450px;
-    height: 450px;
+    height: 600px;
     background-color: white; 
     box-shadow: 10px 10px 5px rgba(136, 136, 136,0.5);
     z-index: 10; 
@@ -27,10 +27,10 @@ div.ext-box { display: table; width:100%; }
 div.int-box { top: 0; bottom: 0; margin: auto; }
 
 /*AddClassWindow all div*/
-.AddClassWindow div{
+/*.AddClassWindow div{
 	height: 50px;
 	margin-left: 10px;
-}
+}*/
 
 /*All input box */
 input {
@@ -67,6 +67,10 @@ input {
 /*AddSectiion ClassInfo div position*/
 .AddSection#ClassInfo{
 	margin-top: 10px;
+}
+
+.AddSection#ClassInfo .classTitle{
+	width: 30px
 }
 
 /*AddSection ClassInfo Input box dimensions*/
@@ -167,8 +171,8 @@ input {
 
 
 .groundLevel{
-	width:100%;
-	height:100%;
+	width: 100%;
+	height: 100%;
 	/*background-color: #ffffff;*/
 	background-color: rgba(128, 128, 128, 0.5);
 	position: fixed;
