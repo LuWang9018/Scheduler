@@ -29,7 +29,7 @@ export class TableGen extends Component{
     		//CellHeight: 30,
     		AddClassWindowOn: false,
     		ChangingClassInfo: null	    
-    	}    	
+    	};    	
     }
 
 	InitTime(props){
@@ -60,14 +60,20 @@ export class TableGen extends Component{
 
 
 		for(var i = 0; i < props.Class.length; i++){
-			var start = props.Class[i].TimeFrom.clone();
-			var end = props.Class[i].TimeTo.clone();
-			if(start.isBefore(min)){
-				min = start.clone();
+			
+			for(var p = 0; p < props.Class[i].TimeFrom.length; p++){
+				var start = props.Class[i].TimeFrom[p].clone();
+				if(start.isBefore(min)){
+					min = start.clone();
+				}
 			}
-			if(end.isAfter(max)){
-				max = end.clone();
+			for(var p = 0; p < props.Class[i].TimeTo.length; p++){
+				var end = props.Class[i].TimeTo[p].clone();			
+				if(end.isAfter(max)){
+					max = end.clone();
+				}			
 			}
+
 		}
 
 		var remainder = min.minute() % 30;
@@ -82,8 +88,8 @@ export class TableGen extends Component{
 
     CreateTimeCells(){
     	const currentChangingClassInfo = this.state.ChangingClassInfo;
-    	console.log("currentChangingClassInfo");
-    	console.log(currentChangingClassInfo);
+    	//console.log("currentChangingClassInfo");
+    	//console.log(currentChangingClassInfo);
     	
     	return React.createElement("div", 
     		{
@@ -98,19 +104,19 @@ export class TableGen extends Component{
     			},
     			<GenDayColumns
 	    			TimeArr={this.state.TimeArr}
-	    			onClick={(i) => this.handleWhiteCellClick(i)}
+	    			onClick={(props) => this.handleWhiteCellClick(props)}
 	    		/>,	    		
 	    		<GenAllClasses
 	    			TimeRange={this.state.TimeRange}
 	    			Class = {this.state.Class}
 	    			form = {this.state.AddClassWindowOn}
-	    			onClick={(i) => this.handleWhiteCellClick(i)}
+	    			onClick={(props) => this.handleWhiteCellClick(props)}
 	    		/>  		
     		),
     		//this.GenClassEdit()
     		<ClassPanel
 				ChangingClassInfo = {currentChangingClassInfo}
-				OnOff= {this.state.AddClassWindowOn}
+				AddClassWindowOn= {this.state.AddClassWindowOn}
 				onClick={(props) => this.handleWhiteCellClick(props)}
 			/>
     	)
@@ -134,13 +140,10 @@ export class TableGen extends Component{
 	//	OnOff: true/flase	
 	//}
     handleWhiteCellClick(props){
-    	if(props.Class === null){
-    		this.setState({AddClassWindowOn: props.OnOff,
-    		               ChangingClassInfo: null});
-    	}else{
-    		this.setState({ChangingClassInfo: props.Class,
-    				       AddClassWindowOn: props.OnOff});
-    	}    	
+    	console.log("handleWhiteCellClick");
+    	console.log(props);
+    	this.setState({AddClassWindowOn: props.AddClassWindowOn,
+    				   ChangingClassInfo: props.Class}); 	
     }
 
     render() {

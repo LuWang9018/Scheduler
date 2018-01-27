@@ -25,7 +25,7 @@ function GenClassCells(props){
 		"marginLeft":"0px",
 	};
 	var startTime = props.TimeRange.MinTime;
-	var timeDiff = props.Class.TimeFrom.diff(startTime);
+	var timeDiff = props.Class.TimeFrom[0].diff(startTime);
 
 // console.log("startTime: ");
 // console.log(props);
@@ -35,7 +35,7 @@ function GenClassCells(props){
 	var duration = moment.duration(timeDiff);
 	var minutes = duration.asMinutes();
 
-	var timeDiff2 = props.Class.TimeTo.diff(props.Class.TimeFrom);
+	var timeDiff2 = props.Class.TimeTo[0].diff(props.Class.TimeFrom[0]);
 	var duration2 = moment.duration(timeDiff2);
 	var minutes2 = duration2.asMinutes();
 
@@ -56,6 +56,32 @@ function GenClassCells(props){
 	return classCells;
 }
 
+class GenAClassForATimeRange extends Component{
+	constructor(props) {
+    	super(props);
+    	
+    }
+
+    GenAClassForATimeRange(){
+		const GenAClassForATimeRange = 
+		this.props.Class.Date[this.props.index].map((Date, index) =>
+			<GenClassCells	
+				Class={this.props.Class}
+				Date={Date}
+				key = {Date+index}
+				TimeRange= {this.props.TimeRange}
+				onClick = {() => this.props.onClick({AddClassWindowOn: true,
+													  Class: this.props.Class})}
+			/>
+		);   
+
+		return GenAClassForATimeRange;
+    }
+
+    render(){
+		return this.GenAClassForATimeRange();
+	}
+}
 
 class GenClassForAllDay extends Component{
 	constructor(props) {
@@ -67,13 +93,15 @@ class GenClassForAllDay extends Component{
 
 		const ClassForAllDay = 
 		this.props.Class.Date.map((Date, index) =>
-			<GenClassCells	
+			<GenAClassForATimeRange	
 				Class={this.props.Class}
 				Date={Date}
 				key = {Date+index}
 				TimeRange= {this.props.TimeRange}
-				onClick = {(i) => this.props.onClick({OnOff: true,
-													  Class: this.props.Class})}
+				index= {index}
+				onClick = {(i) => this.props.onClick({AddClassWindowOn: true,
+													  Class: this.props.Class
+													  })}
 			/>
 		);
 

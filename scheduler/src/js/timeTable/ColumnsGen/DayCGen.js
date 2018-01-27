@@ -1,24 +1,49 @@
 import React, { Component }  from 'react';
 var moment = require('moment');
 
+function GendayCell(props){
+
+	var DayCell = React.createElement("div",
+		{
+			time: props.time.format("HH:mm").toString() + " " + props.Day,
+			className: 'DataCell',
+			key : props.time.format("HH:mm").toString() + " " + props.Day,
+			onClick : props.onClick
+		}
+    )
+
+	return DayCell;
+}
+
+
 function GenDayCells(props){
 
-    const buttonStyle = {
-        position: 'relative',
-        height: '20px',
-        width: '70px',
-        //opacity: '100',
-    };
 
-	var DayCells = props.TimeArr.map((time) =>
-        React.createElement("div",
-			{
-				time: time.format("HH:mm").toString() + " " + props.Day,
-				className: 'DataCell',
-				key : time.format("HH:mm").toString() + " " + props.Day,
-				onClick : props.onClick
-			}
-        )
+	var DayCells = props.TimeArr.map(
+		function(time){
+			var classtimed = {Name: "",
+						 Code: '',
+						 Section: "",
+						 TimeFrom: [time],
+						 TimeTo: [moment('00:00 am', "HH:mm A")],
+						 Date: [[]],
+						 LocationB: [],
+						 LocationR: [],
+						 Prof: "",
+						 Type: [""], 
+						 Color: [""],
+						};
+
+			var cell = <GendayCell
+				key = {time} 
+				time = {time} 
+				onClick = {() => props.onClick({AddClassWindowOn: true,
+																Class: classtimed})}
+			/>
+
+			return cell;
+		}
+
 
 		//<div key = {Time.format("HH:mm") + " " + props.Day} className="DataCell"> </div>
 	);
@@ -31,14 +56,15 @@ export function GenDayColumns(props){
 				    "Thursday", "Friday", "Saturday",
 				    "Sunday"];
 
+
+
 	var DayColumns = DayArr.map((Day) => 
 		React.createElement("div", {className: "Cellcolumns", key: Day+"Columns"},
 			<div key = {Day} className="DayCell">{Day}</div>,
 			<GenDayCells 
 				Day={Day} 
 				TimeArr={props.TimeArr}	
-				onClick={() => props.onClick({OnOff: true,
-											  Class: null})}			
+				onClick={(i) => props.onClick(i)}			
 			/>
 		)
 	);

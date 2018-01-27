@@ -2,45 +2,65 @@ import React from 'react';
 
 var moment = require('moment');
 
+
+function GenSaveButtons(props) {
+    return React.createElement("div", {},
+        <GenSaveButton
+            onClick={() => props.onClick({AddClassWindowOn: false})}
+        />
+    )
+}
+
+function GenCancelButtons(props) {
+    return React.createElement("div", {},
+        <GenCancelButton
+            onClick={() => props.onClick({AddClassWindowOn: false})}
+        />
+    )
+}
+
+function GenSaveButton(props) {
+    return React.createElement("button", {
+            className: "DecisionButton",
+            id: "save",
+            onClick: props.onClick,
+        }, "Save"
+    );
+}
+
+function GenCancelButton(props) {
+    return React.createElement("button", {
+            className: "DecisionButton",
+            id: "cancel",
+            onClick: props.onClick
+        }, "Cancel"
+    );
+}
+
+
+
 export class ClassPanel extends React.Component {
     constructor(props) {
         super(props);
-
-        if (this.props.ChangingClassInfo !== null) {
-            this.state = {
-                classNames: this.props.Name,
-                classCode: this.props.Code,
-                classSection: this.props.Section,
-                startHour: this.props.TimeFromH,
-                startMint: this.props.TimeFromMin,
-                stopHour: this.props.TimeToH,
-                stopMint: this.props.TimeToMin,
-                placeBuild: this.props.LocationB,
-                placeRoom: this.props.LocationR,
-                profName: this.props.Prof,
-                classType: this.props.Type,
-                classColor: this.props.Color
-            };
-        } else {
-            this.state = {
-                classNames: "",
-                classCode: "",
-                classSection: "",
-                startHour: "",
-                startMint: "",
-                stopHour: "",
-                stopMint: "",
-                placeBuild: "",
-                placeRoom: "",
-                profName: "",
-                classType: "",
-                classColor: ""
-            }
+        console.log("constructor")
+        console.log(props)
+        this.state = {
+            Name: "",
+            Code: "",
+            Section: "",
+            TimeFrom: [moment("00:00 am", "HH:mm a")],
+            TimeTo: [moment("00:00 am", "HH:mm a")],
+            Date:[[""]],
+            LocationB: [""],
+            LocationR: [""],
+            Prof: "",
+            Type: [""],
+            Color: ["red"],
         }
-
-        console.log("Class Name is: " + this.classNames);
-        console.log("Class Code is: " + this.classCode);
+        
     }
+
+
 
     Hours() {
         const hour = [];
@@ -64,6 +84,7 @@ export class ClassPanel extends React.Component {
 
     //Add whole panel
     createPanel() {
+        var Class = this.props.ChangingClassInfo;
         //Add class panel detail
         return React.createElement("div", {},
             React.createElement("div", {className: "AddClassWindow"},
@@ -85,10 +106,10 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "AddSection", id: "TimeInfo"},
                     React.createElement("div", {className: "StartTime"}, "Start Time: "),
                     React.createElement("div", {className: "StartTimeInput"},
-                        React.createElement("select", {className: "inputs", id: "StartHour", value: this.startHour},
+                        React.createElement("select", {className: "inputs", id: "StartHour", value: Class.TimeFrom[0].hour()},
                             this.Hours()),
                         " ",
-                        React.createElement("select", {className: "inputs", id: "StartMint", value: this.startMint},
+                        React.createElement("select", {className: "inputs", id: "StartMint", value: this.state.TimeFrom[0].minute()},
                             this.Mints())),
                     "   ",
                     React.createElement("div", {className: "StopTime"}, "Stop Time: "),
@@ -138,13 +159,16 @@ export class ClassPanel extends React.Component {
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color7"}))
                 ),
                 React.createElement("div", {className: "AddSectionButton"},
+                    
                     <GenSaveButtons
                         ChangingClassInfo={this.state.ChangingClassInfo}
                         onClick={(props) => this.onToggle(props)}
                     />,
                     <GenCancelButtons
-                        onClick={this.props.onClick}
-                    />)),
+                        onClick={() => this.props.onClick({AddClassWindowOn: false,
+                                                           Action: "Cancle"})}
+                    />)
+                ),
             //Add gray background
             React.createElement('div', {
                 className: "groundLevel",
@@ -152,9 +176,44 @@ export class ClassPanel extends React.Component {
             })
         )
     };
-
+/*
+    UpdateState(){
+        if(this.props.ChangingClassInfo === null){
+            this.setState(
+                {Name: "",
+                 Code: null,
+                 Section: "",
+                 TimeFrom: [],
+                 TimeTo: [],
+                 Date: [],
+                 LocationB: [],
+                 LocationR: [],
+                 Prof: "",
+                 Type: [""], 
+                 Color: [""],
+                } 
+            );
+        }else{
+            this.setState(
+                {Name: this.props.ChangingClassInfo.Name,
+                 Code: this.props.ChangingClassInfo.Code,
+                 Section: this.props.ChangingClassInfo.Section,
+                 TimeFrom: this.props.ChangingClassInfo.TimeFrom,
+                 TimeTo: this.props.ChangingClassInfo.TimeTo,
+                 Date: this.props.ChangingClassInfo.Date,
+                 LocationB: this.props.ChangingClassInfo.LocationB,
+                 LocationR: this.props.ChangingClassInfo.LocationR,
+                 Prof: this.props.ChangingClassInfo.Prof,
+                 Type: this.props.ChangingClassInfo.Type, 
+                 Color: this.props.ChangingClassInfo.Color,
+                } 
+            );
+        }
+    }
+*/
     passPanel() {
-        if (this.props.OnOff) {
+
+        if (this.props.AddClassWindowOn) {
             return this.createPanel();
         } else {
             return null;
@@ -163,7 +222,7 @@ export class ClassPanel extends React.Component {
 
     onToggle(props) {
         this.setState({ChangingClassInfo: props.ChangingClassInfo});
-        this.props.onClick({OnOff: false});
+        this.props.onClick({AddClassWindowOn: false});
         console.log("The updated class info is: " + this.state.ChangingClassInfo);
     }
 
@@ -172,36 +231,3 @@ export class ClassPanel extends React.Component {
     }
 }
 
-function GenSaveButtons(props) {
-    return React.createElement("div", {},
-        <GenSaveButton
-            onClick={() => props.onClick({OnOff: false})}
-        />
-    )
-}
-
-function GenCancelButtons(props) {
-    return React.createElement("div", {},
-        <GenCancelButton
-            onClick={() => props.onClick({OnOff: false})}
-        />
-    )
-}
-
-function GenSaveButton(props) {
-    return React.createElement("button", {
-            className: "DecisionButton",
-            id: "save",
-        onClick: props.onClick,
-        }, "Save"
-    );
-}
-
-function GenCancelButton(props) {
-    return React.createElement("button", {
-            className: "DecisionButton",
-            id: "cancel",
-            onClick: props.onClick
-        }, "Cancel"
-    );
-}
