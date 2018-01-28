@@ -2,8 +2,10 @@
 
 :root {
 	--cell-width: calc((100%)/7);
-	--cell-height: 31px;
-	--time-width: 51px;
+	--cell-height: 5vh;
+	--day-height: 5vh;
+	--time-width: 50px;
+	--whpersent:20%;
 
 }
 
@@ -23,6 +25,7 @@ div{
 	/*top: 0px;*/
     /*height: 500px;*/
 	width:100%;
+	height:100%;
 	background-color: #ffffff;
 	/*background-color: #3399ff;*/
 	min-width: 500px;
@@ -30,7 +33,7 @@ div{
 }
 
 .Cellcolumns{
-	display:inline;	
+	display:inline-block;	
 	float: left;
 	width: var(--cell-width);
 
@@ -38,8 +41,9 @@ div{
 
 .TimeTableDayColumns{
     position: absolute;
-    left: 50px;
-    right:2px;
+    left: var(--time-width);
+    right:1px;
+	height:100%;
 }
 
 .TimeCell{
@@ -51,22 +55,23 @@ div{
 	top: calc(var(--cell-height)/(-2));
     text-align: right;
     font-size: 12px;
+    margin-bottom:-1px;
 }
 
+
 .DayCell{
-	height: var(--cell-height);
+	height: var(--day-height);
 	line-height: var(--cell-height);
 	/*width: var(--column-width);*/
 	position: relative;
 	background-color: #ffffff;
 
 	/*background-color: #ff6699;*/
-	/*border: 0.1px solid black;*/
-
-	/*border: 0.1px solid #ffffff;*/
+	/*border: 1px solid black;*/
+	/*border: 1px solid #ffffff;*/
 	
 	text-align: center;
-	font-size: 18px;
+	font-size: 16px;
 
 	margin-right:-1px;
 	margin-bottom:-1px;
@@ -74,15 +79,21 @@ div{
 
 .DataCell{
 	height: var(--cell-height);
-	/*width: var(--column-width);*/
 	background-color: #ffffff; 
 	position: relative;
 	color: black;
-	border: 1px solid #bfbfbf;
+	border: 1px solid black;
+	/*#bfbfbf;*/
 
 	margin-right:-1px;
 	margin-bottom:-1px;
 }
+
+/*@media screen and (min-width: 2000px) {
+    .DateCell {
+        height: 60px;
+    }
+}*/
 
 /*css for AddClassWindow*/
 @import url("AddClassWindow.css");
