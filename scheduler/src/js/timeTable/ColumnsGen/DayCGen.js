@@ -18,27 +18,27 @@ function GendayCell(props){
 
 function GenDayCells(props){
 
-
 	var DayCells = props.TimeArr.map(
 		function(time){
 			var classtimed = {Name: "",
-						 Code: '',
-						 Section: "",
-						 TimeFrom: [time],
-						 TimeTo: [moment('00:00 am', "HH:mm A")],
-						 Date: [[]],
-						 LocationB: [],
-						 LocationR: [],
-						 Prof: "",
-						 Type: [""], 
-						 Color: [""],
-						};
+							  Code: '',
+							  Section: "",
+							  TimeFrom: [time],
+							  TimeTo: [moment('00:00 am', "HH:mm A")],
+							  Date: [[props.Day]],
+							  LocationB: [""],
+							  LocationR: [""],
+							  Prof: "",
+							  Type: [""], 
+							  Color: [""],
+							 };
 
 			var cell = <GendayCell
 				key = {time} 
 				time = {time} 
 				onClick = {() => props.onClick({AddClassWindowOn: true,
-																Class: classtimed})}
+												Class: classtimed
+												})}
 			/>
 
 			return cell;

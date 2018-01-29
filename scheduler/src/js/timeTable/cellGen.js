@@ -114,7 +114,7 @@ export class TableGen extends Component{
 	    		/>  		
     		),
     		//this.GenClassEdit()
-    		<ClassPanel
+			<ClassPanel
 				ChangingClassInfo = {currentChangingClassInfo}
 				AddClassWindowOn= {this.state.AddClassWindowOn}
 				onClick={(props) => this.handleWhiteCellClick(props)}
@@ -142,9 +142,44 @@ export class TableGen extends Component{
     handleWhiteCellClick(props){
     	console.log("handleWhiteCellClick");
     	console.log(props);
-    	this.setState({AddClassWindowOn: props.AddClassWindowOn,
-    				   ChangingClassInfo: props.Class}); 	
+
+    	var Class = {
+            Name: '',
+            Code: '',
+            Section: "",
+            TimeFrom: [moment("00:00 am", "HH:mm a")],
+            TimeTo: [moment("00:00 am", "HH:mm a")],
+            Date:[[""]],
+            LocationB: [""],
+            LocationR: [""],
+            Prof: "",
+            Type: [""],
+            Color: ["red"],
+        };
+
+
+    	if(props.Class !== undefined){
+	    	this.setState({AddClassWindowOn: props.AddClassWindowOn,
+	    				   ChangingClassInfo: props.Class});    		
+    	}else{
+	    	this.setState({AddClassWindowOn: props.AddClassWindowOn,
+	    				   ChangingClassInfo: Class});    
+    	}
+
+    	if(props.Situation !== undefined){
+    		if(props.Situation === "Change"){
+    			this.props.UpdateData(props.Class);    			
+    		}else if(props.Situation === "Add"){
+    			this.props.AddData(props.Class); 
+    		}
+    		console.log("RequestData");
+    		console.log(this.props.RequestData());
+
+    		var Class = this.props.RequestData();
+    		this.setState({Class: Class.Class});
+    	}
     }
+
 
     render() {
 		return this.CreateTimeCells()

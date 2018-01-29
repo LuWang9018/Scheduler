@@ -1,9 +1,9 @@
 todo:
 Lu:
 
-define JSON
+
 cell new line
-alignment
-on click
+fix change location
+fix time and day
 ...
 

@@ -6,7 +6,20 @@ var moment = require('moment');
 function GenSaveButtons(props) {
     return React.createElement("div", {},
         <GenSaveButton
-            onClick={() => props.onClick({AddClassWindowOn: false})}
+            onClick={function(i){
+
+                var TMPClass = props.Class;
+                var Situation = TMPClass.Situation;
+                delete TMPClass.Situation;
+                
+                if(!TMPClass.Changed){
+                    Situation = "Cancle";
+                }
+                delete TMPClass.Changed;     
+                return props.onClick({AddClassWindowOn: false,
+                                      Class: TMPClass,
+                                      Situation: Situation})
+            }}
         />
     )
 }
@@ -20,11 +33,13 @@ function GenCancelButtons(props) {
 }
 
 function GenSaveButton(props) {
-    return React.createElement("button", {
+    return React.createElement("button", 
+        {
             className: "DecisionButton",
             id: "save",
             onClick: props.onClick,
-        }, "Save"
+        }, 
+        "Save"
     );
 }
 
@@ -42,11 +57,11 @@ function GenCancelButton(props) {
 export class ClassPanel extends React.Component {
     constructor(props) {
         super(props);
-        console.log("constructor")
-        console.log(props)
+        //console.log("constructor");
+        //console.log(props);
         this.state = {
-            Name: "",
-            Code: "",
+            Name: '',
+            Code: '',
             Section: "",
             TimeFrom: [moment("00:00 am", "HH:mm a")],
             TimeTo: [moment("00:00 am", "HH:mm a")],
@@ -56,11 +71,29 @@ export class ClassPanel extends React.Component {
             Prof: "",
             Type: [""],
             Color: ["red"],
-        }
-        
+            Situation: "Cancle",
+            Changed: false,
+        };
+
+        //bind handler
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
+    componentWillReceiveProps(nextProps){
+        if(nextProps.ChangingClassInfo.Name !== ""){
+            this.setState(nextProps.ChangingClassInfo);
+            this.setState({Situation:"Change"});
+            
+        }else{
+            //console.log(nextProps)
 
+            this.setState(nextProps.ChangingClassInfo);
+            this.setState({Situation:"Add"});
+        }
+        console.log("nextProps")
+        console.log(nextProps)
+        //this.setState(nextProps.situation);
+    }
 
     Hours() {
         const hour = [];
@@ -82,10 +115,32 @@ export class ClassPanel extends React.Component {
         return mints;
     }
 
+    
+    handleInputChange(event) {
+
+        const target = event.target;
+        var value = target.value;
+        const name = target.name;
+
+
+        //console.log(name)
+
+        this.setState({
+            [name]: value,
+            Changed: true,
+        });
+
+        //console.log(this.state)
+    }  
+
+
     //Add whole panel
     createPanel() {
-        var Class = this.props.ChangingClassInfo;
+        var Class = this.state;
+        console.log("Updete panel contents");
+        console.log(Class);
         //Add class panel detail
+
         return React.createElement("div", {},
             React.createElement("div", {className: "AddClassWindow"},
                 //Title information
@@ -95,12 +150,31 @@ export class ClassPanel extends React.Component {
                 //Class information
                 React.createElement("div", {className: "AddSection", id: "ClassInfo"},
                     React.createElement("div", {className: "classTitle"}, "Class: "),
-                    React.createElement("div", {className: "classInput"},
-                        <input className="inputs" id="ClassName" placeholder="Class Name"/>,
-                        "   ",
-                        <input className="inputs" id="ClassCode" placeholder="Class Code"/>,
-                        "   ",
-                        <input className="inputs" id="ClassSection" placeholder="Section"/>)
+                    React.createElement("div", {className: "classInp ut"},
+                        <input 
+                            className="inputs" 
+                            id="ClassName"
+                            name="Name" 
+                            placeholder="Class Name"
+                            value={this.state.Name === "" ? null : this.state.Name}
+                            onChange={this.handleInputChange}
+                        />,                        
+                        <input 
+                            className="inputs"
+                            id="ClassCode" 
+                            name="Code"
+                            placeholder="Class Code"
+                            value={this.state.Code === "" ? null : this.state.Code}
+                            onChange={this.handleInputChange}
+                        />,
+                        <input 
+                            className="inputs" 
+                            id="ClassSection" 
+                            name="Section"
+                            placeholder="Section"
+                            value={this.state.Section === "" ? null : this.state.Section}
+                            onChange={this.handleInputChange}
+                        />)
                 ),
                 //Time information
                 React.createElement("div", {className: "AddSection", id: "TimeInfo"},
@@ -109,15 +183,15 @@ export class ClassPanel extends React.Component {
                         React.createElement("select", {className: "inputs", id: "StartHour", value: Class.TimeFrom[0].hour()},
                             this.Hours()),
                         " ",
-                        React.createElement("select", {className: "inputs", id: "StartMint", value: this.state.TimeFrom[0].minute()},
+                        React.createElement("select", {className: "inputs", id: "StartMint", value: Class.TimeFrom[0].minute()},
                             this.Mints())),
                     "   ",
                     React.createElement("div", {className: "StopTime"}, "Stop Time: "),
                     React.createElement("div", {className: "StopTimeInput"},
-                        React.createElement("select", {className: "inputs", id: "StopHour", value: this.stopHour},
+                        React.createElement("select", {className: "inputs", id: "StopHour", value: Class.TimeTo[0].hour()},
                             this.Hours()),
                         " ",
-                        React.createElement("select", {className: "inputs", id: "StopMint", value: this.stopMint},
+                        React.createElement("select", {className: "inputs", id: "StopMint", value: Class.TimeTo[0].minute()},
                             this.Mints()))
                 ),
                 //date information
@@ -136,15 +210,35 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "AddSection", id: "PlaceInfo"},
                     React.createElement("div", {className: "LocationTitle"}, "Location: "),
                     React.createElement("div", {className: "classLocationInput"},
-                        <input className="inputs" id="PlaceBuilding" placeholder="Building"/>,
-                        "   ",
-                        <input className="inputs" id="PlaceRoom" placeholder="Room"/>)
+                        <input 
+                            className="inputs" 
+                            id="PlaceBuilding" 
+                            name="LocationB"
+                            placeholder="Building"
+                            value={Class.LocationB[0] === "" ? null : Class.LocationB[0]}
+                            onChange={this.handleInputChange}
+                        />,
+                        <input 
+                            className="inputs" 
+                            id="PlaceRoom" 
+                            name="LocationR"
+                            placeholder="Room"
+                            value={Class.LocationR[0] === "" ? null : Class.LocationR[0]}
+                            onChange={this.handleInputChange}
+                        />)
                 ),
                 //Add prof name
                 React.createElement("div", {className: "AddSection", id: "ProfInfo"},
                     React.createElement("div", {className: "ProfTitle"}, "Prof: "),
                     React.createElement("div", {className: "profInfoInput"},
-                        <input className="inputs" id="ProfName" placeholder="XXX"/>)
+                        <input 
+                            className="inputs" 
+                            id="ProfName"
+                            name="Prof" 
+                            placeholder="Prof Name"
+                            value={Class.Prof === "" ? null : Class.Prof}
+                            onChange={this.handleInputChange}
+                        />)
                 ),
                 //Add color section
                 React.createElement("div", {className: "AddSection", id: "ColorSection",},
@@ -161,8 +255,8 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "AddSectionButton"},
                     
                     <GenSaveButtons
-                        ChangingClassInfo={this.state.ChangingClassInfo}
-                        onClick={(props) => this.onToggle(props)}
+                        Class={this.state}
+                        onClick={(i) => this.props.onClick(i)}
                     />,
                     <GenCancelButtons
                         onClick={() => this.props.onClick({AddClassWindowOn: false,
