@@ -50,7 +50,9 @@ function GenClassCells(props){
 			key:props.Class.Name + " ",
 			onClick: props.onClick
 		},
-		props.Class.Name + ' ' + props.Class.Code + ' ' + minutes2
+		props.Class.Name + props.Class.Code + '-' + props.Class.Section,
+		<br />,
+		props.Class.LocationB + props.Class.LocationR
 	)
 
 	return classCells;
