@@ -18,24 +18,24 @@ function GenClassCells(props){
 		border: '0',
 		height: '0px',
 		width: (100.00/7).toString()+"%",
-		'backgroundColor': 'red', 
+		'backgroundColor': props.Class.Color[props.index], 
 		color: 'black',
 		border: '0.1px solid black',
 		'boxSizing':'border-box',
 		"marginLeft":"0px",
 	};
 	var startTime = props.TimeRange.MinTime;
-	var timeDiff = props.Class.TimeFrom[0].diff(startTime);
+	var timeDiff = props.Class.TimeFrom[props.index].diff(startTime);
 
-// console.log("startTime: ");
-// console.log(props);
-// console.log("timeDiff: ");
-// console.log(timeDiff);
+console.log("startTime: ");
+console.log(startTime);
+console.log("timeDiff: ");
+console.log(timeDiff);
 
 	var duration = moment.duration(timeDiff);
 	var minutes = duration.asMinutes();
 
-	var timeDiff2 = props.Class.TimeTo[0].diff(props.Class.TimeFrom[0]);
+	var timeDiff2 = props.Class.TimeTo[props.index].diff(props.Class.TimeFrom[props.index]);
 	var duration2 = moment.duration(timeDiff2);
 	var minutes2 = duration2.asMinutes();
 
@@ -50,9 +50,12 @@ function GenClassCells(props){
 			key:props.Class.Name + " ",
 			onClick: props.onClick
 		},
-		props.Class.Name + props.Class.Code + '-' + props.Class.Section,
+		props.Class.Name +
+		props.Class.Code + '-' + 
+		props.Class.Section + ' ('+
+		props.Class.Type[props.index] + ')',
 		<br />,
-		props.Class.LocationB + props.Class.LocationR
+		props.Class.LocationB[props.index] + props.Class.LocationR[props.index]
 	)
 
 	return classCells;
@@ -74,6 +77,7 @@ class GenAClassForATimeRange extends Component{
 				TimeRange= {this.props.TimeRange}
 				onClick = {() => this.props.onClick({AddClassWindowOn: true,
 													  Class: this.props.Class})}
+				index={this.props.index}
 			/>
 		);   
 
@@ -87,9 +91,8 @@ class GenAClassForATimeRange extends Component{
 
 class GenClassForAllDay extends Component{
 	constructor(props) {
-    	super(props);
-    	
-    }
+		super(props);		
+	}
 
 	ClassForAllDay() {
 
@@ -112,8 +115,7 @@ class GenClassForAllDay extends Component{
 
 	render(){
 		return this.ClassForAllDay();
-	}
-	
+	}	
 }
 
 export function GenAllClasses(props){
