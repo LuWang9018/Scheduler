@@ -1,0 +1,19 @@
+Reference:
+	Tut:
+		https://stanko.github.io/webpack-babel-react-revisited/
+
+Install all of these:
+	npm install
+	npm install -g create-react-app
+	npm install --save-dev webpack
+	npm install --save-dev webpack-dev-server
+	npm install --save-dev html-webpack-plugin
+	npm install --save-dev babel-core babel-loader babel-preset-env babel-preset-react
+	npm install --save react react-dom
+	npm install --save-dev css-loader extract-text-webpack-plugin
+	npm install --save-dev file-loader
+	npm install moment --save
+	npm install immutability-helper --save
+	
+Run server:
+	npm run dev
