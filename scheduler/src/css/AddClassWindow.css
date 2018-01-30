@@ -5,7 +5,6 @@ div{
 
 .AddClassWindow{
     position: fixed;
-	
 	top: 0;
 	bottom: 0;
     left: 0;
@@ -13,33 +12,35 @@ div{
     margin: auto;
     background-color: #66ff33; 
     width: 50vw;
-    min-width: 450px;
+    /*min-width: 450px;*/
     height: 80vh;
     background-color: white; 
     box-shadow: 10px 10px 5px rgba(136, 136, 136,0.5);
     z-index: 10; 
- 
+    font-size: 2.5vh;
     border: 1px rgba(136, 136, 136,0.5);
     border-radius: 10px 10px 10px 10px;
 }
 
-/*AddClassWindow*/
-/*div.ext-box { display: table; width:100%; }*/
-/*div.int-box { top: 0; bottom: 0; margin: auto; }*/
-
-/*AddClassWindow all div*/
-/*.AddClassWindow div{
-	height: 50px;
-	margin-left: 10px;
-}*/
-
-/*All input box */
 input {
     border: none;
     border-bottom: 1px solid black;
     border-right: 1px solid black;
     background-color: white; 
-    height: 20px;
+    height: 4vh;
+    font-size:3vh;
+}
+
+select {
+    height: 4vh;
+    font-size:3vh;
+}
+
+button{
+    height: 4vh;
+    width: 4vh;
+    font-size:3vh;
+
 }
 
 /*panelTitle propertie*/
@@ -89,12 +90,6 @@ input {
 	width: 60px;
 }
 
-/*AddSection TimeInfo Input box dimensions*/
-.AddSection#TimeInfo select{
-	background: transparent;
-    font-size: 14px;
-    height: 25px;
-}
 
 .AddSection#TimeInfo option{
 	background: transparent;
@@ -103,13 +98,17 @@ input {
     margin-top: 5px; 
 }
 
+
 /*div fo save and cansel button*/
 .AddClassWindow .AddSectionButton{
-	width: 120px;
-	height: 20px;
 	position: absolute;
 	bottom: 10px;
 	right: 10px;
+}
+
+.AddSectionButton div{
+	display:inline-block;	
+	float: left;
 }
 
 /*Date SelectButton*/
@@ -134,8 +133,6 @@ input {
 /*ColorSection button*/
 .AddSection#ColorSection .SelectButton{
 	margin-right: 10px;
-	width: 20px;
-	height: 20px;
 	text-align: center;
 	border-radius: 50%;
 }
@@ -171,6 +168,8 @@ input {
 
 
 
+
+
 .groundLevel{
 	width: 100%;
 	height: 100%;
@@ -189,18 +188,12 @@ input {
 	width: 60px;
     height: 20px;
 }
-/*/*Save and cancel buttom*/
-/*.DecisionButton#save:hover{
-	background-color: #ff0000;
+
+
+@media screen and (max-device-width:414px){ 
+	.AddClassWindow{
+	    width: 100vw;
+	    height: 100vh;
+	} 
 }
-
-.DecisionButton#save:focus{
-	background-color: #00ff00;
-}
-
-.DecisionButton#save:active{
-	background-color: #000000;
-}*/
-
-/*Day selection button*/
 
