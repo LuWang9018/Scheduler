@@ -84,8 +84,9 @@ div{
 
 .DataCell{
 	height: var(--cell-height);
+	width: var(--cell-width);
 	background-color: #ffffff; 
-	position: relative;
+	position: absolute;
 	color: black;
 	border: 1px solid black;
 	/*#bfbfbf;*/
