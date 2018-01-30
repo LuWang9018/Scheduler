@@ -2,13 +2,18 @@ import React, { Component }  from 'react';
 var moment = require('moment');
 
 function GendayCell(props){
+	var divStyle = {
+		top: ((props.index + 1) * 5).toString() + '%',
+	};
+
 
 	var DayCell = React.createElement("div",
 		{
 			time: props.time.format("HH:mm").toString() + " " + props.Day,
 			className: 'DataCell',
 			key : props.time.format("HH:mm").toString() + " " + props.Day,
-			onClick : props.onClick
+			onClick : props.onClick,
+			style:divStyle,
 		}
     )
 
@@ -19,7 +24,7 @@ function GendayCell(props){
 function GenDayCells(props){
 
 	var DayCells = props.TimeArr.map(
-		function(time){
+		function(time, index){
 			var classtimed = {Name: "",
 							  Code: '',
 							  Section: "",
@@ -35,7 +40,8 @@ function GenDayCells(props){
 
 			var cell = <GendayCell
 				key = {time} 
-				time = {time} 
+				time = {time}
+				index = {index} 
 				onClick = {() => props.onClick({AddClassWindowOn: true,
 												Class: classtimed
 												})}
