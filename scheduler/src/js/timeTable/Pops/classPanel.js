@@ -60,12 +60,13 @@ export class ClassPanel extends React.Component {
         //console.log("constructor");
         //console.log(props);
         this.state = {
-            Name: '',
-            Code: '',
+            Name: "",
+            Code: "",
             Section: "",
             TimeFrom: [moment("00:00 am", "HH:mm a")],
             TimeTo: [moment("00:00 am", "HH:mm a")],
             Date: [[""]],
+            bColor: "#ffffff",
             LocationB: [""],
             LocationR: [""],
             Prof: "",
@@ -78,16 +79,13 @@ export class ClassPanel extends React.Component {
         //bind handler
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
+        this.handleDateSelect = this.handleDateSelect.bind(this);
     }
 
     static Hours() {
         const hour = [];
         for (let i = 0; i < 24; i++) {
-            if (i < 10) {
-                hour[i] = React.createElement("option", {key: i, value: ("0" + i)}, i);
-            } else {
-                hour[i] = React.createElement("option", {key: i, value: i}, i);
-            }
+            hour[i] = React.createElement("option", {key: i, value: i}, i);
         }
         return hour;
     }
@@ -97,11 +95,7 @@ export class ClassPanel extends React.Component {
         let j = 0;
         for (let i = 0; i < 60; i++) {
             if ((i % 5) === 0) {
-                if (i < 10) {
-                    mints[j] = React.createElement("option", {key: j, value: ("0" + i)}, i);
-                } else {
-                    mints[j] = React.createElement("option", {key: j, value: i}, i);
-                }
+                mints[j] = React.createElement("option", {key: j, value: i}, i);
                 j++;
             }
         }
@@ -146,27 +140,25 @@ export class ClassPanel extends React.Component {
         const name = event.target.name;
         const value = event.target.value;
 
-        console.log("Select: " + name + ", " + value);
-
         switch (name) {
             case "StartHour":
                 this.setState({
-                    value: this.TimeFrom[0].setHours(value), Changed: true,
+                    [name]: value, value: this.state.TimeFrom[0].hour(value), Changed: true,
                 });
                 break;
             case "StartMint":
                 this.setState({
-                    value: this.TimeFrom[0].setMinutes(value), Changed: true,
+                    [name]: value, value: this.state.TimeFrom[0].minute(value), Changed: true,
                 });
                 break;
             case "StopHour":
                 this.setState({
-                    value: this.TimeTo[0].setHours(value), Changed: true,
+                    [name]: value, value: this.state.TimeTo[0].hour(value), Changed: true,
                 });
                 break;
             case "StopMint":
                 this.setState({
-                    value: this.TimeTo[0].setMinutes(value), Changed: true,
+                    [name]: value, value: this.state.TimeTo[0].minute(value), Changed: true,
                 });
                 break;
         }
@@ -174,6 +166,36 @@ export class ClassPanel extends React.Component {
         console.log(this.state);
     }
 
+    handleDateSelect(event) {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        console.log("DateInput: " + name + "," + value + "," + event.target.disabled);
+
+        if (event.target.disabled) {
+            this.state.Date.splice(this.state.Date.indexOf(value), 1);
+            this.state.Date.sort();
+            this.setState({
+                Date: this.state.Date,
+                disabled: false,
+                Changed: true,
+                bColor: "#ffffff",
+            });
+            console.log("disable: " + this.state.disabled)
+        } else {
+            this.state.Date.push([value]);
+            this.state.Date.sort();
+            this.setState({
+                Date: this.state.Date,
+                disabled: true,
+                Changed: true,
+                bColor: "#ff0000",
+            });
+            console.log("able: " + this.state.disabled)
+        }
+
+        console.log("Date: " + this.state.Date);
+    }
 
     //Add whole panel
     createPanel() {
@@ -253,13 +275,41 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "AddSection", id: "DateSection"},
                     React.createElement("div", {className: "DateTime"}, "Date: "),
                     React.createElement("div", {className: "DateTimeInput"},
-                        <button className="SelectButton" id="Mon">{"Mon"}</button>,
-                        <button className="SelectButton" id="Tue">{"Tue"}</button>,
-                        <button className="SelectButton" id="Wed">{"Wed"}</button>,
-                        <button className="SelectButton" id="Thu">{"Thu"}</button>,
-                        <button className="SelectButton" id="Fri">{"Fri"}</button>,
-                        <button className="SelectButton" id="Sat">{"Sat"}</button>,
-                        <button className="SelectButton" id="Sun">{"Sun"}</button>)
+                        <button className="SelectButton" id="Mon" name="Mon"
+                                value="Monday"
+                                disabled={!this.state.Date.includes(["Monday"])}
+                                style={{backgroundColor: this.state.bColor}}
+                                onClick={this.handleDateSelect}>{"Mon"}</button>,
+                        <button className="SelectButton" id="Tue" name="Tue"
+                                value="Tuesday"
+                                disabled={!this.state.Date.includes(["Tuesday"])}
+                                style={{backgroundColor: this.state.bColor}}
+                                onClick={this.handleDateSelect}>{"Tue"}</button>,
+                        <button className="SelectButton" id="Wed" name="Wed"
+                                value="Wednesday"
+                                disabled={!this.state.Date.includes(["Wednesday"])}
+                                style={{backgroundColor: this.state.bColor}}
+                                onClick={this.handleDateSelect}>{"Wed"}</button>,
+                        <button className="SelectButton" id="Thu" name="Thu"
+                                value="Thursday"
+                                disabled={!this.state.Date.includes(["Thursday"])}
+                                style={{backgroundColor: this.state.bColor}}
+                                onClick={this.handleDateSelect}>{"Thu"}</button>,
+                        <button className="SelectButton" id="Fri" name="Fri"
+                                value="Friday"
+                                disabled={!this.state.Date.includes(["Friday"])}
+                                style={{backgroundColor: this.state.bColor}}
+                                onClick={this.handleDateSelect}>{"Fri"}</button>,
+                        <button className="SelectButton" id="Sat" name="Sat"
+                                value="Saturday"
+                                disabled={!this.state.Date.includes(["Saturday"])}
+                                style={{backgroundColor: this.state.bColor}}
+                                onClick={this.handleDateSelect}>{"Sat"}</button>,
+                        <button className="SelectButton" id="Sun" name="Sun"
+                                value="Sunday"
+                                disabled={!this.state.Date.includes(["Sunday"])}
+                                style={{backgroundColor: this.state.bColor}}
+                                onClick={this.handleDateSelect}>{"Sun"}</button>)
                 ),
                 //location information
                 React.createElement("div", {className: "AddSection", id: "PlaceInfo"},
@@ -308,7 +358,6 @@ export class ClassPanel extends React.Component {
                         React.createElement("button", {type: "button", className: "SelectButton", id: "color7"}))
                 ),
                 React.createElement("div", {className: "AddSectionButton"},
-
                     <GenSaveButtons
                         Class={this.state}
                         onClick={(i) => this.props.onClick(i)}
@@ -329,7 +378,6 @@ export class ClassPanel extends React.Component {
     };
 
     passPanel() {
-
         if (this.props.AddClassWindowOn) {
             return this.createPanel();
         } else {
