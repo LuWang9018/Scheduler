@@ -53,12 +53,10 @@ function GenCancelButton(props) {
     );
 }
 
-
 export class ClassPanel extends React.Component {
     constructor(props) {
         super(props);
-        //console.log("constructor");
-        //console.log(props);
+
         this.state = {
             Name: "",
             Code: "",
@@ -66,7 +64,6 @@ export class ClassPanel extends React.Component {
             TimeFrom: [moment("00:00 am", "HH:mm a")],
             TimeTo: [moment("00:00 am", "HH:mm a")],
             Date: [[""]],
-            bColor: "#ffffff",
             LocationB: [""],
             LocationR: [""],
             Prof: "",
@@ -102,24 +99,46 @@ export class ClassPanel extends React.Component {
         return mints;
     }
 
+    DateButtons() {
+        const day = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const daysList = [];
+        let bColor = "#ffffff";
+        const buttonColor = "#ff0000";
+
+        console.log(this.state.Date);
+
+        for (let i = 0; i < days.length; i++) {
+            if (this.state.Date.includes([[days[i]]])) {
+                bColor = buttonColor;
+            }
+            daysList[i] = React.createElement("button", {
+                className: "SelectButton",
+                id: day[i],
+                name: day[i],
+                value: days[i],
+                key: i,
+                style: {backgroundColor: bColor},
+                onClick: this.handleDateSelect
+            }, day[i]);
+        }
+
+        console.log("daysList: " + daysList);
+
+        return daysList;
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.ChangingClassInfo.Name !== "") {
             this.setState(nextProps.ChangingClassInfo);
             this.setState({Situation: "Change"});
-
         } else {
-            //console.log(nextProps)
-
             this.setState(nextProps.ChangingClassInfo);
             this.setState({Situation: "Add"});
         }
-        //console.log("nextProps")
-        //console.log(nextProps)
-        //this.setState(nextProps.situation);
     }
 
     handleInputChange(event) {
-
         const target = event.target;
         const value = target.value;
         const name = target.name;
@@ -136,29 +155,28 @@ export class ClassPanel extends React.Component {
     }
 
     handleSelectChange(event) {
-
         const name = event.target.name;
         const value = event.target.value;
 
         switch (name) {
             case "StartHour":
                 this.setState({
-                    [name]: value, value: this.state.TimeFrom[0].hour(value), Changed: true,
+                    value: this.state.TimeFrom[0].hour(value), Changed: true,
                 });
                 break;
             case "StartMint":
                 this.setState({
-                    [name]: value, value: this.state.TimeFrom[0].minute(value), Changed: true,
+                    value: this.state.TimeFrom[0].minute(value), Changed: true,
                 });
                 break;
             case "StopHour":
                 this.setState({
-                    [name]: value, value: this.state.TimeTo[0].hour(value), Changed: true,
+                    value: this.state.TimeTo[0].hour(value), Changed: true,
                 });
                 break;
             case "StopMint":
                 this.setState({
-                    [name]: value, value: this.state.TimeTo[0].minute(value), Changed: true,
+                    value: this.state.TimeTo[0].minute(value), Changed: true,
                 });
                 break;
         }
@@ -170,28 +188,26 @@ export class ClassPanel extends React.Component {
         const name = event.target.name;
         const value = event.target.value;
 
-        console.log("DateInput: " + name + "," + value + "," + event.target.disabled);
+        console.log("DateInput: " + name + "," + value + "," + event.target);
 
-        if (event.target.disabled) {
+        if (event.target.enabled) {
             this.state.Date.splice(this.state.Date.indexOf(value), 1);
             this.state.Date.sort();
             this.setState({
                 Date: this.state.Date,
-                disabled: false,
                 Changed: true,
-                bColor: "#ffffff",
+                backgroundColor: "#ffffff",
             });
-            console.log("disable: " + this.state.disabled)
+            console.log("disable: " + this.state.enabled)
         } else {
             this.state.Date.push([value]);
             this.state.Date.sort();
             this.setState({
                 Date: this.state.Date,
-                disabled: true,
                 Changed: true,
-                bColor: "#ff0000",
+                backgroundColor: "#ff0000",
             });
-            console.log("able: " + this.state.disabled)
+            console.log("able: " + this.state.enabled)
         }
 
         console.log("Date: " + this.state.Date);
@@ -219,7 +235,7 @@ export class ClassPanel extends React.Component {
                             id="ClassName"
                             name="Name"
                             placeholder="Class Name"
-                            value={this.state.Name === "" ? null : this.state.Name}
+                            value={this.state.Name}
                             onChange={this.handleInputChange}
                         />,
                         <input
@@ -227,7 +243,7 @@ export class ClassPanel extends React.Component {
                             id="ClassCode"
                             name="Code"
                             placeholder="Class Code"
-                            value={this.state.Code === "" ? null : this.state.Code}
+                            value={this.state.Code}
                             onChange={this.handleInputChange}
                         />,
                         <input
@@ -235,7 +251,7 @@ export class ClassPanel extends React.Component {
                             id="ClassSection"
                             name="Section"
                             placeholder="Section"
-                            value={this.state.Section === "" ? null : this.state.Section}
+                            value={this.state.Section}
                             onChange={this.handleInputChange}
                         />)
                 ),
@@ -275,41 +291,44 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "AddSection", id: "DateSection"},
                     React.createElement("div", {className: "DateTime"}, "Date: "),
                     React.createElement("div", {className: "DateTimeInput"},
+                        /*
                         <button className="SelectButton" id="Mon" name="Mon"
                                 value="Monday"
-                                disabled={!this.state.Date.includes(["Monday"])}
+                                inlist={this.state.Date.includes(["Monday"])}
                                 style={{backgroundColor: this.state.bColor}}
                                 onClick={this.handleDateSelect}>{"Mon"}</button>,
                         <button className="SelectButton" id="Tue" name="Tue"
                                 value="Tuesday"
-                                disabled={!this.state.Date.includes(["Tuesday"])}
+                                inlist={!this.state.Date.includes(["Tuesday"])}
                                 style={{backgroundColor: this.state.bColor}}
                                 onClick={this.handleDateSelect}>{"Tue"}</button>,
                         <button className="SelectButton" id="Wed" name="Wed"
                                 value="Wednesday"
-                                disabled={!this.state.Date.includes(["Wednesday"])}
+                                inlist={!this.state.Date.includes(["Wednesday"])}
                                 style={{backgroundColor: this.state.bColor}}
                                 onClick={this.handleDateSelect}>{"Wed"}</button>,
                         <button className="SelectButton" id="Thu" name="Thu"
                                 value="Thursday"
-                                disabled={!this.state.Date.includes(["Thursday"])}
+                                inlist={!this.state.Date.includes(["Thursday"])}
                                 style={{backgroundColor: this.state.bColor}}
                                 onClick={this.handleDateSelect}>{"Thu"}</button>,
                         <button className="SelectButton" id="Fri" name="Fri"
                                 value="Friday"
-                                disabled={!this.state.Date.includes(["Friday"])}
+                                inlist={!this.state.Date.includes(["Friday"])}
                                 style={{backgroundColor: this.state.bColor}}
                                 onClick={this.handleDateSelect}>{"Fri"}</button>,
                         <button className="SelectButton" id="Sat" name="Sat"
                                 value="Saturday"
-                                disabled={!this.state.Date.includes(["Saturday"])}
+                                inlist={!this.state.Date.includes(["Saturday"])}
                                 style={{backgroundColor: this.state.bColor}}
                                 onClick={this.handleDateSelect}>{"Sat"}</button>,
                         <button className="SelectButton" id="Sun" name="Sun"
                                 value="Sunday"
-                                disabled={!this.state.Date.includes(["Sunday"])}
+                                inlist={!this.state.Date.includes(["Sunday"])}
                                 style={{backgroundColor: this.state.bColor}}
                                 onClick={this.handleDateSelect}>{"Sun"}</button>)
+                                */
+                        this.DateButtons())
                 ),
                 //location information
                 React.createElement("div", {className: "AddSection", id: "PlaceInfo"},
@@ -320,7 +339,7 @@ export class ClassPanel extends React.Component {
                             id="PlaceBuilding"
                             name="LocationB"
                             placeholder="Building"
-                            value={Class.LocationB[0] === "" ? null : Class.LocationB[0]}
+                            value={this.state.LocationB[0]}
                             onChange={this.handleInputChange}
                         />,
                         <input
@@ -328,7 +347,7 @@ export class ClassPanel extends React.Component {
                             id="PlaceRoom"
                             name="LocationR"
                             placeholder="Room"
-                            value={Class.LocationR[0] === "" ? null : Class.LocationR[0]}
+                            value={this.state.LocationR[0]}
                             onChange={this.handleInputChange}
                         />)
                 ),
@@ -341,7 +360,7 @@ export class ClassPanel extends React.Component {
                             id="ProfName"
                             name="Prof"
                             placeholder="Prof Name"
-                            value={Class.Prof === "" ? null : Class.Prof}
+                            value={this.state.Prof}
                             onChange={this.handleInputChange}
                         />)
                 ),
