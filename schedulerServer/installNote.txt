@@ -1,0 +1,5 @@
+npm install --save-dev babel-cli babel-preset-env
+npm install --save-dev mocha chai
+npm install --save immutable
+npm install --save-dev chai-immutable
+
