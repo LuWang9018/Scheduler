@@ -66,29 +66,19 @@ function findDate(dates, day) {
 }
 
 function addDate(dates, day) {
-    dates.push([day]);
+    dates[0].push(day);
 
     return dates;
 }
 
 function deleteDate(dates, day) {
-    let newDate = [];
-
-    for (let i = 0; i < dates.length; i++) {
-        if (dates[i].indexOf(day) !== -1) {
-            dates[i].splice(0, 1);
+    for (let i = 0; i < dates[0].length; i++) {
+        if (dates[0].indexOf(day) !== -1) {
+            dates[0].splice(dates[0].indexOf(day), 1);
         }
     }
 
-    let newIndex = 0;
-    for (let j = 0; j < dates.length; j++) {
-        if (isNaN(dates[j])) {
-            newDate[newIndex] = dates[j];
-            newIndex++;
-        }
-    }
-
-    return newDate;
+    return dates;
 }
 
 export class ClassPanel extends React.Component {
@@ -324,7 +314,7 @@ export class ClassPanel extends React.Component {
                             id="PlaceBuilding"
                             name="LocationB"
                             placeholder="Building"
-                            value={this.state.LocationB[0]}
+                            value={this.state.LocationB}
                             onChange={this.handleInputChange}
                         />,
                         <input
@@ -332,7 +322,7 @@ export class ClassPanel extends React.Component {
                             id="PlaceRoom"
                             name="LocationR"
                             placeholder="Room"
-                            value={this.state.LocationR[0]}
+                            value={this.state.LocationR}
                             onChange={this.handleInputChange}
                         />)
                 ),
