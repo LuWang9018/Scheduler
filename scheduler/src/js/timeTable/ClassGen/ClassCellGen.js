@@ -27,10 +27,10 @@ function GenClassCells(props){
 	var startTime = props.TimeRange.MinTime;
 	var timeDiff = props.Class.TimeFrom[props.index].diff(startTime);
 
-console.log("startTime: ");
-console.log(startTime);
-console.log("timeDiff: ");
-console.log(timeDiff);
+// console.log("startTime: ");
+// console.log(startTime);
+// console.log("timeDiff: ");
+// console.log(timeDiff);
 
 	var duration = moment.duration(timeDiff);
 	var minutes = duration.asMinutes();
