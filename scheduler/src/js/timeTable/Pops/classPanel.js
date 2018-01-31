@@ -53,6 +53,44 @@ function GenCancelButton(props) {
     );
 }
 
+function findDate(dates, day) {
+    let found = false;
+
+    for (let i = 0; i < dates.length; i++) {
+        if (dates[i].includes(day)) {
+            return true;
+        }
+    }
+
+    return found;
+}
+
+function addDate(dates, day) {
+    dates.push([day]);
+
+    return dates;
+}
+
+function deleteDate(dates, day) {
+    let newDate = [];
+
+    for (let i = 0; i < dates.length; i++) {
+        if (dates[i].indexOf(day) !== -1) {
+            dates[i].splice(0, 1);
+        }
+    }
+
+    let newIndex = 0;
+    for (let j = 0; j < dates.length; j++) {
+        if (isNaN(dates[j])) {
+            newDate[newIndex] = dates[j];
+            newIndex++;
+        }
+    }
+
+    return newDate;
+}
+
 export class ClassPanel extends React.Component {
     constructor(props) {
         super(props);
@@ -104,17 +142,16 @@ export class ClassPanel extends React.Component {
         const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
         const daysList = [];
         let bColor = "#ffffff";
-        const buttonColor = "#ff0000";
 
-        console.log(this.state.Date);
-
-        for (let i = 0; i < days.length; i++) {
-            if (this.state.Date.includes([[days[i]]])) {
-                bColor = buttonColor;
+        for (let i = 0; i < 7; i++) {
+            if (findDate(this.state.Date, days[i])) {
+                bColor = "#ff0000";
+            } else {
+                bColor = "#ffffff";
             }
             daysList[i] = React.createElement("button", {
                 className: "SelectButton",
-                id: day[i],
+                id: days[i],
                 name: day[i],
                 value: days[i],
                 key: i,
@@ -122,8 +159,6 @@ export class ClassPanel extends React.Component {
                 onClick: this.handleDateSelect
             }, day[i]);
         }
-
-        console.log("daysList: " + daysList);
 
         return daysList;
     }
@@ -143,15 +178,10 @@ export class ClassPanel extends React.Component {
         const value = target.value;
         const name = target.name;
 
-
-        console.log("Input: " + name + ", " + value);
-
         this.setState({
             [name]: value,
             Changed: true,
         });
-
-        console.log(this.state)
     }
 
     handleSelectChange(event) {
@@ -180,37 +210,29 @@ export class ClassPanel extends React.Component {
                 });
                 break;
         }
-
-        console.log(this.state);
     }
 
     handleDateSelect(event) {
-        const name = event.target.name;
         const value = event.target.value;
 
-        console.log("DateInput: " + name + "," + value + "," + event.target);
+        console.log("DateNow: " + this.state.Date);
+        console.log("valueNow: " + value);
 
-        if (event.target.enabled) {
-            this.state.Date.splice(this.state.Date.indexOf(value), 1);
-            this.state.Date.sort();
+        if (findDate(this.state.Date, value)) {
+            let newDate1 = deleteDate(this.state.Date, value);
             this.setState({
-                Date: this.state.Date,
+                Date: newDate1,
                 Changed: true,
                 backgroundColor: "#ffffff",
             });
-            console.log("disable: " + this.state.enabled)
         } else {
-            this.state.Date.push([value]);
-            this.state.Date.sort();
+            let newDate2 = addDate(this.state.Date, value);
             this.setState({
-                Date: this.state.Date,
+                Date: newDate2,
                 Changed: true,
                 backgroundColor: "#ff0000",
             });
-            console.log("able: " + this.state.enabled)
         }
-
-        console.log("Date: " + this.state.Date);
     }
 
     //Add whole panel
@@ -291,43 +313,6 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "AddSection", id: "DateSection"},
                     React.createElement("div", {className: "DateTime"}, "Date: "),
                     React.createElement("div", {className: "DateTimeInput"},
-                        /*
-                        <button className="SelectButton" id="Mon" name="Mon"
-                                value="Monday"
-                                inlist={this.state.Date.includes(["Monday"])}
-                                style={{backgroundColor: this.state.bColor}}
-                                onClick={this.handleDateSelect}>{"Mon"}</button>,
-                        <button className="SelectButton" id="Tue" name="Tue"
-                                value="Tuesday"
-                                inlist={!this.state.Date.includes(["Tuesday"])}
-                                style={{backgroundColor: this.state.bColor}}
-                                onClick={this.handleDateSelect}>{"Tue"}</button>,
-                        <button className="SelectButton" id="Wed" name="Wed"
-                                value="Wednesday"
-                                inlist={!this.state.Date.includes(["Wednesday"])}
-                                style={{backgroundColor: this.state.bColor}}
-                                onClick={this.handleDateSelect}>{"Wed"}</button>,
-                        <button className="SelectButton" id="Thu" name="Thu"
-                                value="Thursday"
-                                inlist={!this.state.Date.includes(["Thursday"])}
-                                style={{backgroundColor: this.state.bColor}}
-                                onClick={this.handleDateSelect}>{"Thu"}</button>,
-                        <button className="SelectButton" id="Fri" name="Fri"
-                                value="Friday"
-                                inlist={!this.state.Date.includes(["Friday"])}
-                                style={{backgroundColor: this.state.bColor}}
-                                onClick={this.handleDateSelect}>{"Fri"}</button>,
-                        <button className="SelectButton" id="Sat" name="Sat"
-                                value="Saturday"
-                                inlist={!this.state.Date.includes(["Saturday"])}
-                                style={{backgroundColor: this.state.bColor}}
-                                onClick={this.handleDateSelect}>{"Sat"}</button>,
-                        <button className="SelectButton" id="Sun" name="Sun"
-                                value="Sunday"
-                                inlist={!this.state.Date.includes(["Sunday"])}
-                                style={{backgroundColor: this.state.bColor}}
-                                onClick={this.handleDateSelect}>{"Sun"}</button>)
-                                */
                         this.DateButtons())
                 ),
                 //location information
