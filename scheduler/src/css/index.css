@@ -3,19 +3,13 @@
 :root {
 	
 	--cell-width: calc((100%)/7);
-	--cell-height: 5vh;
-	--day-height: 5vh;
+	--cell-height: 3vh;
+	--day-height: 3vh;
 	--min-height: 3vw;
-	/*pc*/
 	--time-width: 7vh;
+
 	--font-size-time: 2vh;
-	--min-font-size-time:2vw;
 	--font-size-day: 2vw;
-	--min-font-size-time:2vh;
-	/*cellphone*/
-	--time-width-cp: 75px;
-	--font-size-cp: 24px;
-    
 }
 
 body {
@@ -102,10 +96,13 @@ div{
 	margin-bottom:-1px;
 }
 
-@media screen and (max-device-width:414px){ 
-	:root{--font-size-day: 30px; --font-size-time: 30px; --time-width: 80px;} 
+@media screen and (max-device-width:500px){ 
+	:root{--font-size-day: 40px; --font-size-time: 30px; --time-width: 80px; --cell-height: 5vh; --day-height: 5vh;} 
 }
 
+@media screen and (max-device-height:600px){ 
+	:root{--font-size-time: 15px;--time-width: 80px;} 
+}
 
 
 /*css for AddClassWindow*/
