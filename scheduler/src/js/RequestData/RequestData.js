@@ -52,13 +52,13 @@ export function UpdateData(props){
 export function AddData(props){
 	console.log("add called");
 	console.log(props);
-	props.TimeFrom = [moment('11:30 am', "HH:mm A")]
-	props.TimeTo = [moment('12:30 pm', "HH:mm A")]
-	props.Date = [["Monday"]]
-	props.LocationB = ["AAA"]
-	props.LocationR = ["AAA"]
-	console.log(props);
-
+	// props.TimeFrom = [moment('11:30 am', "HH:mm A")]
+	// props.TimeTo = [moment('12:30 pm', "HH:mm A")]
+	// props.Date = [["Monday"]]
+	// props.LocationB = ["AAA"]
+	// props.LocationR = ["AAA"]
+	// console.log(props);
+	props.Color = ["Red"]
 	Data.Class.push(props);
 
 	console.log(Data);
