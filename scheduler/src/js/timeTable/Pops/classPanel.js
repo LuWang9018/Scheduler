@@ -1,4 +1,5 @@
 import React from 'react';
+import {TabContent, TabLink, Tabs} from 'react-tabs-redux';
 
 const moment = require('moment');
 
@@ -99,6 +100,7 @@ export class ClassPanel extends React.Component {
             Color: ["red"],
             Situation: "Cancel",
             Changed: false,
+            Tabs: [[""]],
         };
 
         //bind handler
@@ -134,6 +136,14 @@ export class ClassPanel extends React.Component {
             type[i] = React.createElement("option", {key: i, value: types[i]}, types[i]);
         }
         return type;
+    }
+
+    //TODO
+    tab() {
+        const tab = [];
+
+
+        return tab;
     }
 
     DateButtons() {
@@ -221,6 +231,16 @@ export class ClassPanel extends React.Component {
         }
     }
 
+    //TODO
+    handleTabAdd() {
+
+    }
+
+    //TODO
+    handleTabDelete() {
+
+    }
+
     handleDateSelect(event) {
         const value = event.target.value;
 
@@ -242,6 +262,142 @@ export class ClassPanel extends React.Component {
                 backgroundColor: "#ff0000",
             });
         }
+    }
+
+    //Tabs
+    tabs() {
+        let name = "";
+
+        if (this.state.Name === "" || null) {
+            name = "New Class";
+        } else {
+            name = this.state.Name + this.state.Code;
+        }
+
+        return React.createElement("div", {className: "Tab"},
+            <Tabs className="Tabs">
+                <div>
+                    <TabLink to="tab1" className="tab">
+                        {name}
+                    </TabLink>
+
+                    <TabLink to="deleteButton" className="deleteButton">
+                        <button className="tabDeleteButton"
+                                onChange={this.handleTabDelete}>{"x"}</button>
+                    </TabLink>
+
+                    <TabLink to="addButton" className="addButton">
+                        <button className="tabAddButton"
+                                onChange={this.handleTabAdd}>{"+"}</button>
+                    </TabLink>
+                </div>
+
+                <div>
+                    <TabContent for="tab1" className="content">
+                        {this.createDetailPanel()}
+                    </TabContent>
+                </div>
+            </Tabs>
+        )
+            ;
+    }
+
+    //Class detail information
+    createDetailPanel() {
+        return React.createElement("div", {className: "classDetail"},
+            //Time information
+            React.createElement("div", {className: "AddSection", id: "TimeInfo"},
+                React.createElement("div", {className: "startTime"},
+                    React.createElement("div", {className: "StartTime"}, "Start Time: "),
+                    React.createElement("div", {className: "StartTimeInput"},
+                        <select className="inputs" id="StartHour" name="StartHour"
+                                value={this.state.TimeFrom[0].hour()}
+                                onChange={this.handleSelectChange}>
+                            {ClassPanel.Hours()}
+                        </select>,
+                        "   ",
+                        <select className="inputs" id="StartMint" name="StartMint"
+                                value={this.state.TimeFrom[0].minute()}
+                                onChange={this.handleSelectChange}>
+                            {ClassPanel.Mints()}
+                        </select>
+                    )),
+                "       -       ",
+                React.createElement("div", {className: "stopTime"},
+                    React.createElement("div", {className: "StopTime"}, "Stop Time: "),
+                    React.createElement("div", {className: "StopTimeInput"},
+                        <select className="inputs" id="StopHour" name="StopHour"
+                                value={this.state.TimeTo[0].hour()}
+                                onChange={this.handleSelectChange}>
+                            {ClassPanel.Hours()}
+                        </select>,
+                        "   ",
+                        <select className="inputs" id="StopMint" name="StopMint"
+                                value={this.state.TimeTo[0].minute()}
+                                onChange={this.handleSelectChange}>
+                            {ClassPanel.Mints()}
+                        </select>
+                    )),
+            ),
+            //date information
+            React.createElement("div", {className: "AddSection", id: "DateSection"},
+                React.createElement("div", {className: "DateTime"}, "Date: "),
+                React.createElement("div", {className: "DateTimeInput"},
+                    this.DateButtons())
+            ),
+            //class type
+            React.createElement("div", {className: "classType"}, "Class Type: ",
+                <select className="inputs" id="classType" name="classType"
+                        value={this.state.Type[0]}
+                        onChange={this.handleSelectChange}>
+                    {ClassPanel.Types()}
+                </select>),
+            //location information
+            React.createElement("div", {className: "AddSection", id: "PlaceInfo"},
+                React.createElement("div", {className: "LocationTitle"}, "Location: "),
+                React.createElement("div", {className: "classLocationInput"},
+                    <input
+                        className="inputs"
+                        id="PlaceBuilding"
+                        name="LocationB"
+                        placeholder="Building"
+                        value={this.state.LocationB}
+                        onChange={this.handleInputChange}
+                    />,
+                    <input
+                        className="inputs"
+                        id="PlaceRoom"
+                        name="LocationR"
+                        placeholder="Room"
+                        value={this.state.LocationR}
+                        onChange={this.handleInputChange}
+                    />)
+            ),
+            //Add prof name
+            React.createElement("div", {className: "AddSection", id: "ProfInfo"},
+                React.createElement("div", {className: "ProfTitle"}, "Prof: "),
+                React.createElement("div", {className: "profInfoInput"},
+                    <input
+                        className="inputs"
+                        id="ProfName"
+                        name="Prof"
+                        placeholder="Prof Name"
+                        value={this.state.Prof}
+                        onChange={this.handleInputChange}
+                    />)
+            ),
+            //Add color section
+            React.createElement("div", {className: "AddSection", id: "ColorSection",},
+                React.createElement("div", {className: "ColorTitle"}, "Color: "),
+                React.createElement("div", {className: "colorInput"},
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color1"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color2"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color3"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color4"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}),
+                    React.createElement("button", {type: "button", className: "SelectButton", id: "color7"}))
+            ));
     }
 
     //Add whole panel
@@ -288,100 +444,15 @@ export class ClassPanel extends React.Component {
                             onChange={this.handleInputChange}
                         />)
                 ),
-                //Class detail information
-                React.createElement("div", {className: "classDetail"},
-                    //Time information
-                    React.createElement("div", {className: "AddSection", id: "TimeInfo"},
-                        React.createElement("div", {className: "startTime"},
-                            React.createElement("div", {className: "StartTime"}, "Start Time: "),
-                            React.createElement("div", {className: "StartTimeInput"},
-                                <select className="inputs" id="StartHour" name="StartHour"
-                                        value={this.state.TimeFrom[0].hour()}
-                                        onChange={this.handleSelectChange}>
-                                    {ClassPanel.Hours()}
-                                </select>,
-                                "   ",
-                                <select className="inputs" id="StartMint" name="StartMint"
-                                        value={this.state.TimeFrom[0].minute()}
-                                        onChange={this.handleSelectChange}>
-                                    {ClassPanel.Mints()}
-                                </select>
-                            )),
-                        "       -       ",
-                        React.createElement("div", {className: "stopTime"},
-                            React.createElement("div", {className: "StopTime"}, "Stop Time: "),
-                            React.createElement("div", {className: "StopTimeInput"},
-                                <select className="inputs" id="StopHour" name="StopHour"
-                                        value={this.state.TimeTo[0].hour()}
-                                        onChange={this.handleSelectChange}>
-                                    {ClassPanel.Hours()}
-                                </select>,
-                                "   ",
-                                <select className="inputs" id="StopMint" name="StopMint"
-                                        value={this.state.TimeTo[0].minute()}
-                                        onChange={this.handleSelectChange}>
-                                    {ClassPanel.Mints()}
-                                </select>
-                            )),
-                    ),
-                    //date information
-                    React.createElement("div", {className: "AddSection", id: "DateSection"},
-                        React.createElement("div", {className: "DateTime"}, "Date: "),
-                        React.createElement("div", {className: "DateTimeInput"},
-                            this.DateButtons())
-                    ),
-                    //class type
-                    React.createElement("div", {className: "classType"}, "Class Type: ",
-                        <select className="inputs" id="classType" name="classType"
-                                value={this.state.Type[0]}
-                                onChange={this.handleSelectChange}>
-                            {ClassPanel.Types()}
-                        </select>),
-                    //location information
-                    React.createElement("div", {className: "AddSection", id: "PlaceInfo"},
-                        React.createElement("div", {className: "LocationTitle"}, "Location: "),
-                        React.createElement("div", {className: "classLocationInput"},
-                            <input
-                                className="inputs"
-                                id="PlaceBuilding"
-                                name="LocationB"
-                                placeholder="Building"
-                                value={this.state.LocationB}
-                                onChange={this.handleInputChange}
-                            />,
-                            <input
-                                className="inputs"
-                                id="PlaceRoom"
-                                name="LocationR"
-                                placeholder="Room"
-                                value={this.state.LocationR}
-                                onChange={this.handleInputChange}
-                            />)
-                    ),
-                    //Add prof name
-                    React.createElement("div", {className: "AddSection", id: "ProfInfo"},
-                        React.createElement("div", {className: "ProfTitle"}, "Prof: "),
-                        React.createElement("div", {className: "profInfoInput"},
-                            <input
-                                className="inputs"
-                                id="ProfName"
-                                name="Prof"
-                                placeholder="Prof Name"
-                                value={this.state.Prof}
-                                onChange={this.handleInputChange}
-                            />)
-                    ),
-                    //Add color section
-                    React.createElement("div", {className: "AddSection", id: "ColorSection",},
-                        React.createElement("div", {className: "ColorTitle"}, "Color: "),
-                        React.createElement("div", {className: "colorInput"},
-                            React.createElement("button", {type: "button", className: "SelectButton", id: "color1"}),
-                            React.createElement("button", {type: "button", className: "SelectButton", id: "color2"}),
-                            React.createElement("button", {type: "button", className: "SelectButton", id: "color3"}),
-                            React.createElement("button", {type: "button", className: "SelectButton", id: "color4"}),
-                            React.createElement("button", {type: "button", className: "SelectButton", id: "color5"}),
-                            React.createElement("button", {type: "button", className: "SelectButton", id: "color6"}),
-                            React.createElement("button", {type: "button", className: "SelectButton", id: "color7"}))
+                React.createElement("div", {className: "tabTitle"},
+                    React.createElement("div", {className: "tabButton"},
+                        //Class Detail tabs
+                        this.tabs()
+                        /*
+                        //Add tab button
+                        <button className="tabAddButton"
+                                onChange={this.handleTabAdd}>{"Add Class"}</button>
+                        */
                     ),
                 ),
                 //Save and Cancel button
@@ -398,12 +469,15 @@ export class ClassPanel extends React.Component {
                     />)
             ),
             //Add gray background
-            React.createElement('div', {
-                className: "groundLevel",
-                onClick: this.props.onClick
-            })
+            React.createElement(
+                'div', {
+                    className: "groundLevel",
+                    onClick: this.props.onClick
+                }
+            )
         )
-    };
+    }
+    ;
 
     passPanel() {
         if (this.props.AddClassWindowOn) {
@@ -411,7 +485,8 @@ export class ClassPanel extends React.Component {
         } else {
             return null;
         }
-    };
+    }
+    ;
 
     render() {
         return this.passPanel();
