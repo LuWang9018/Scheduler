@@ -14,6 +14,7 @@ Install all of these:
 	npm install --save-dev file-loader
 	npm install moment --save
 	npm install immutability-helper --save
+	npm install --save socket.io-client
 	
 Run server:
 	npm run dev
