@@ -75,18 +75,23 @@ button{
 }
 
 .AddSection#TimeInfo .startTime{
-	position: relative;
-	display:inline-block;	
+	position: relative;	
 	float: left;
-	width: 200px;
+	width: 40%;
 }
 
 .AddSection#TimeInfo .stopTime{
-	position: relative;
-    display:inline-block;	
+	position: relative;	
 	float: left;
-	width: 200px;
+	width: 40%;
 }
+
+
+.AddSection#DateSection{
+	clear:left;
+}
+
+
 
 
 /*AddSectiion ClassInfo div position*/
