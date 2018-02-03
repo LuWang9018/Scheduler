@@ -58,14 +58,34 @@ button{
 }
 
 .panelTitle .TitleTitle{
+    position: absolute;
     top: 0;
 	bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
-    position: absolute;
+    width: 100%;
+    height: calc((100%)*(0.7));
 	text-align: center;
-	font-size:100%;
+	font-size: calc((8vh)*0.7);
+}
+
+.AddSection#ClassInfo .classTitle{
+	width: 100%;
+}
+
+.AddSection#TimeInfo .startTime{
+	position: relative;
+	display:inline-block;	
+	float: left;
+	width: 200px;
+}
+
+.AddSection#TimeInfo .stopTime{
+	position: relative;
+    display:inline-block;	
+	float: left;
+	width: 200px;
 }
 
 
@@ -74,9 +94,6 @@ button{
 	margin-top: 10px;
 }
 
-.AddSection#ClassInfo .classTitle{
-	width: 30px
-}
 
 /*AddSection ClassInfo Input box dimensions*/
 .AddSection#ClassInfo .inputs{
