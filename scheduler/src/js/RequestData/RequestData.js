@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 var moment = require('moment');
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8092');
+
 
 var Data = {    				
 	//Class list
@@ -39,6 +42,11 @@ var Data = {
 }
 
 export function RequestData(props){
+
+  socket.on('news', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
 
 	return Data
 
