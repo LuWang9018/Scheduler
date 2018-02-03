@@ -100,13 +100,15 @@ export class ClassPanel extends React.Component {
             Color: ["red"],
             Situation: "Cancel",
             Changed: false,
-            Tabs: [[""]],
+            Tabs: [],
         };
 
         //bind handler
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleDateSelect = this.handleDateSelect.bind(this);
+        this.handleTabAdd = this.handleTabAdd().bind(this);
+        this.handleTabDelete = this.handleTabDelete().bind(this);
     }
 
     static Hours() {
@@ -136,14 +138,6 @@ export class ClassPanel extends React.Component {
             type[i] = React.createElement("option", {key: i, value: types[i]}, types[i]);
         }
         return type;
-    }
-
-    //TODO
-    tab() {
-        const tab = [];
-
-
-        return tab;
     }
 
     DateButtons() {
@@ -233,7 +227,24 @@ export class ClassPanel extends React.Component {
 
     //TODO
     handleTabAdd() {
+        let newTab = [
+            this.state.Name,
+            this.state.Code,
+            this.state.TimeFrom,
+            this.state.TimeTo,
+            this.state.Date,
+            this.state.Type,
+            this.state.LocationB,
+            this.state.LocationR,
+            this.state.Prof,
+            this.state.Color
+        ];
 
+        this.state.Tabs.push(newTabs);
+
+        this.setState({
+            Tabs: this.state.Tabs,
+        });
     }
 
     //TODO
@@ -264,42 +275,59 @@ export class ClassPanel extends React.Component {
         }
     }
 
-    //Tabs
-    tabs() {
-        let name = "";
+    tabAddButton() {
+        return React.createElement("TabLink", {to: "newTabs"},
+            <button className="tabAddButton" onClick={this.handleTabAdd}>
+                {"+"}
+            </button>);
+    }
 
-        if (this.state.Name === "" || null) {
-            name = "New Class";
-        } else {
-            name = this.state.Name + this.state.Code;
+    tabTitle() {
+        let numbers = this.state.Tabs.length;
+        let tab = "";
+
+        for (let i = 0; i < numbers; i++) {
+            tab[i] = React.createElement("TabLink", {to: "tab" + numbers, className: "tab"},
+                "Time" + numbers,
+                <button className="tabDeleteButton"
+                        onClick={this.handleTabDelete}>{"x"}</button>);
         }
+
+        tab.push(this.tabAddButton());
+
+        return tab;
+    }
+
+    tabContent() {
+
+    }
+
+    //When Save button click, update current tab count number to this.state
+    //otherwise, update current tab count number when new tab is created
+    newTabs() {
+        let numbers = this.state.Tabs.length;
 
         return React.createElement("div", {className: "Tab"},
             <Tabs className="Tabs">
                 <div>
-                    <TabLink to="tab1" className="tab">
-                        {name}
-                    </TabLink>
-
-                    <TabLink to="deleteButton" className="deleteButton">
-                        <button className="tabDeleteButton"
-                                onChange={this.handleTabDelete}>{"x"}</button>
-                    </TabLink>
-
-                    <TabLink to="addButton" className="addButton">
-                        <button className="tabAddButton"
-                                onChange={this.handleTabAdd}>{"+"}</button>
-                    </TabLink>
+                    {this.tabTitle()}
                 </div>
 
                 <div>
-                    <TabContent for="tab1" className="content">
+                    <TabContent for={"tab" + numbers} className="content">
                         {this.createDetailPanel()}
                     </TabContent>
                 </div>
             </Tabs>
-        )
-            ;
+        );
+    }
+
+    tabs() {
+        if (this.state.Tabs !== "" || null) {
+            return;
+        }
+
+        return this.newTabs();
     }
 
     //Class detail information
@@ -315,14 +343,12 @@ export class ClassPanel extends React.Component {
                                 onChange={this.handleSelectChange}>
                             {ClassPanel.Hours()}
                         </select>,
-                        "   ",
                         <select className="inputs" id="StartMint" name="StartMint"
                                 value={this.state.TimeFrom[0].minute()}
                                 onChange={this.handleSelectChange}>
                             {ClassPanel.Mints()}
                         </select>
                     )),
-                "       -       ",
                 React.createElement("div", {className: "stopTime"},
                     React.createElement("div", {className: "StopTime"}, "Stop Time: "),
                     React.createElement("div", {className: "StopTimeInput"},
@@ -331,7 +357,6 @@ export class ClassPanel extends React.Component {
                                 onChange={this.handleSelectChange}>
                             {ClassPanel.Hours()}
                         </select>,
-                        "   ",
                         <select className="inputs" id="StopMint" name="StopMint"
                                 value={this.state.TimeTo[0].minute()}
                                 onChange={this.handleSelectChange}>
@@ -448,11 +473,6 @@ export class ClassPanel extends React.Component {
                     React.createElement("div", {className: "tabButton"},
                         //Class Detail tabs
                         this.tabs()
-                        /*
-                        //Add tab button
-                        <button className="tabAddButton"
-                                onChange={this.handleTabAdd}>{"Add Class"}</button>
-                        */
                     ),
                 ),
                 //Save and Cancel button
@@ -477,7 +497,6 @@ export class ClassPanel extends React.Component {
             )
         )
     }
-    ;
 
     passPanel() {
         if (this.props.AddClassWindowOn) {
@@ -486,7 +505,6 @@ export class ClassPanel extends React.Component {
             return null;
         }
     }
-    ;
 
     render() {
         return this.passPanel();
