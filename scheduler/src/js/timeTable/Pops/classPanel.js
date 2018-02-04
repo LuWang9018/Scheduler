@@ -411,19 +411,6 @@ export class ClassPanel extends React.Component {
                         onChange={this.handleInputChange}
                     />)
             ),
-            //Add prof name
-            React.createElement("div", {className: "AddSection", id: "ProfInfo"},
-                React.createElement("div", {className: "ProfTitle"}, "Prof: "),
-                React.createElement("div", {className: "profInfoInput"},
-                    <input
-                        className="inputs"
-                        id="ProfName"
-                        name="Prof"
-                        placeholder="Prof Name"
-                        value={this.state.Prof}
-                        onChange={this.handleInputChange}
-                    />)
-            ),
             //Add color section
             React.createElement("div", {className: "AddSection", id: "ColorSection",},
                 React.createElement("div", {className: "ColorTitle"}, "Color: "),
@@ -484,6 +471,19 @@ export class ClassPanel extends React.Component {
                 ),
                 //Class Detail tabs
                 this.newTabs(),
+                //Add prof name
+                React.createElement("div", {className: "AddSection", id: "ProfInfo"},
+                    React.createElement("div", {className: "ProfTitle"}, "Prof: "),
+                    React.createElement("div", {className: "profInfoInput"},
+                        <input
+                            className="inputs"
+                            id="ProfName"
+                            name="Prof"
+                            placeholder="Prof Name"
+                            value={this.state.Prof}
+                            onChange={this.handleInputChange}
+                        />)
+                ),
                 //Save and Cancel button
                 React.createElement("div", {className: "AddSectionButton"},
                     <GenSaveButtons
