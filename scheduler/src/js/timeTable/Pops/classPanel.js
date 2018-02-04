@@ -332,17 +332,15 @@ export class ClassPanel extends React.Component {
     //When Save button click, update current tab count number to this.state
     //otherwise, update current tab count number when new tab is created
     newTabs() {
-        return React.createElement("div", {className: "Tab"},
-            <Tabs className="Tabs">
-                <div>
-                    {this.tabTitle()}
-                </div>
+        return <Tabs className="Tabs">
+            <div>
+                {this.tabTitle()}
+            </div>
 
-                <div>
-                    {this.tabContent()}
-                </div>
-            </Tabs>
-        );
+            <div>
+                {this.tabContent()}
+            </div>
+        </Tabs>;
     }
 
     //Class detail information
@@ -484,12 +482,8 @@ export class ClassPanel extends React.Component {
                             onChange={this.handleInputChange}
                         />)
                 ),
-                React.createElement("div", {className: "tabTitle"},
-                    React.createElement("div", {className: "tabButton"},
-                        //Class Detail tabs
-                        this.newTabs()
-                    ),
-                ),
+                //Class Detail tabs
+                this.newTabs(),
                 //Save and Cancel button
                 React.createElement("div", {className: "AddSectionButton"},
                     <GenSaveButtons
