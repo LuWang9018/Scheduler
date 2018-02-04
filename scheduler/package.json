@@ -10,7 +10,8 @@
     "react-dom": "^16.2.0",
     "react-json-table": "^0.1.1",
     "react-scripts": "1.0.17",
-    "react-tabs-redux": "^2.0.1"
+    "react-tabs-redux": "^2.0.1",
+    "socket.io-client": "^2.0.4"
   },
   "scripts": {
     "start": "react-scripts start",

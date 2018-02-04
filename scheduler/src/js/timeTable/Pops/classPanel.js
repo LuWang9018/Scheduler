@@ -55,7 +55,7 @@ function GenCancelButton(props) {
 }
 
 function findDate(dates, day) {
-    let found = false;
+    const found = false;
 
     for (let i = 0; i < dates.length; i++) {
         if (dates[i].includes(day)) {
@@ -100,19 +100,20 @@ export class ClassPanel extends React.Component {
             Color: ["red"],
             Situation: "Cancel",
             Changed: false,
-            Tabs: [],
+            Tabs: [[""]],
         };
 
         //bind handler
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleDateSelect = this.handleDateSelect.bind(this);
-        this.handleTabAdd = this.handleTabAdd().bind(this);
-        this.handleTabDelete = this.handleTabDelete().bind(this);
+        this.handleTabAdd = this.handleTabAdd.bind(this);
+        this.handleTabDelete = this.handleTabDelete.bind(this);
+
     }
 
     static Hours() {
-        const hour = [];
+        const hour = [""];
         for (let i = 0; i < 24; i++) {
             hour[i] = React.createElement("option", {key: i, value: i}, i);
         }
@@ -120,7 +121,7 @@ export class ClassPanel extends React.Component {
     }
 
     static Mints() {
-        const mints = [];
+        const mints = [""];
         let j = 0;
         for (let i = 0; i < 60; i++) {
             if ((i % 5) === 0) {
@@ -132,7 +133,7 @@ export class ClassPanel extends React.Component {
     }
 
     static Types() {
-        const type = [];
+        const type = [""];
         const types = ["Lec", "Tut", "Lab"];
         for (let i = 0; i < types.length; i++) {
             type[i] = React.createElement("option", {key: i, value: types[i]}, types[i]);
@@ -143,7 +144,7 @@ export class ClassPanel extends React.Component {
     DateButtons() {
         const day = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
         const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-        const daysList = [];
+        const daysList = [""];
         let bColor = "#ffffff";
 
         for (let i = 0; i < 7; i++) {
@@ -191,8 +192,6 @@ export class ClassPanel extends React.Component {
         const name = event.target.name;
         const value = event.target.value;
 
-        console.log("Name: " + name + ", Value: " + value);
-
         switch (name) {
             case "StartHour":
                 this.setState({
@@ -225,38 +224,61 @@ export class ClassPanel extends React.Component {
         }
     }
 
-    //TODO
     handleTabAdd() {
-        let newTab = [
-            this.state.Name,
-            this.state.Code,
+
+        const oldTab = [
             this.state.TimeFrom,
             this.state.TimeTo,
             this.state.Date,
-            this.state.Type,
             this.state.LocationB,
             this.state.LocationR,
             this.state.Prof,
-            this.state.Color
+            this.state.Type,
+            this.state.Color,
         ];
 
-        this.state.Tabs.push(newTabs);
+        console.log(this.state.Tabs);
+
+        if (this.state.Tabs.length === 0) {
+            this.state.Tabs[0] = oldTab;
+        } else {
+            this.state.Tabs[this.state.Tabs.length - 1] = oldTab;
+        }
+
+        console.log(this.state.Tabs);
+
+        this.state.Tabs.push([""]);
+
+        console.log(this.state.Tabs);
 
         this.setState({
-            Tabs: this.state.Tabs,
+            Tabs: this.state.Tabs
         });
+
+        console.log(this.state.Tabs);
     }
 
-    //TODO
-    handleTabDelete() {
+    handleTabDelete(event) {
 
+        console.log(event.target.name);
+
+        console.log(this.state.Tabs);
+
+        this.state.Tabs.splice(event.target.name, 1);
+
+        if (this.state.Tabs.length === 0) {
+            this.state.Tabs.push([""]);
+        }
+
+        console.log(this.state.Tabs);
+
+        this.setState({
+            Tabs: this.state.Tabs
+        });
     }
 
     handleDateSelect(event) {
         const value = event.target.value;
-
-        console.log("DateNow: " + this.state.Date);
-        console.log("valueNow: " + value);
 
         if (findDate(this.state.Date, value)) {
             let newDate1 = deleteDate(this.state.Date, value);
@@ -275,38 +297,41 @@ export class ClassPanel extends React.Component {
         }
     }
 
-    tabAddButton() {
-        return React.createElement("TabLink", {to: "newTabs"},
-            <button className="tabAddButton" onClick={this.handleTabAdd}>
-                {"+"}
-            </button>);
-    }
-
     tabTitle() {
-        let numbers = this.state.Tabs.length;
-        let tab = "";
+        const numbers = this.state.Tabs.length;
+        const tab = [""];
 
         for (let i = 0; i < numbers; i++) {
-            tab[i] = React.createElement("TabLink", {to: "tab" + numbers, className: "tab"},
-                "Time" + numbers,
-                <button className="tabDeleteButton"
-                        onClick={this.handleTabDelete}>{"x"}</button>);
+            tab[i] = <TabLink to={"tab" + (i + 1)} className="tab" key={i}>
+                {"Time" + (i + 1)}
+                <button className="tabDeleteButton" name={i}
+                        onClick={this.handleTabDelete}>{"x"}</button>
+            </TabLink>;
         }
 
-        tab.push(this.tabAddButton());
+        tab.push(<TabLink to={"tab" + (numbers + 1)} className="tab" key={numbers}>
+            <button className="tabAddButton" onClick={this.handleTabAdd}>{"+"}</button>
+        </TabLink>);
 
         return tab;
     }
 
     tabContent() {
+        const numbers = this.state.Tabs.length;
+        const tab = [""];
 
+        for (let i = 0; i < numbers; i++) {
+            tab[i] = <TabContent for={"tab" + (i + 1)} className="content" key={i}>
+                {this.createDetailPanel()}
+            </TabContent>;
+        }
+
+        return tab;
     }
 
     //When Save button click, update current tab count number to this.state
     //otherwise, update current tab count number when new tab is created
     newTabs() {
-        let numbers = this.state.Tabs.length;
-
         return React.createElement("div", {className: "Tab"},
             <Tabs className="Tabs">
                 <div>
@@ -314,20 +339,10 @@ export class ClassPanel extends React.Component {
                 </div>
 
                 <div>
-                    <TabContent for={"tab" + numbers} className="content">
-                        {this.createDetailPanel()}
-                    </TabContent>
+                    {this.tabContent()}
                 </div>
             </Tabs>
         );
-    }
-
-    tabs() {
-        if (this.state.Tabs !== "" || null) {
-            return;
-        }
-
-        return this.newTabs();
     }
 
     //Class detail information
@@ -472,7 +487,7 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "tabTitle"},
                     React.createElement("div", {className: "tabButton"},
                         //Class Detail tabs
-                        this.tabs()
+                        this.newTabs()
                     ),
                 ),
                 //Save and Cancel button
