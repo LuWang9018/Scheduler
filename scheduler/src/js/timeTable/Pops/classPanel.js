@@ -302,16 +302,12 @@ export class ClassPanel extends React.Component {
         const tab = [""];
 
         for (let i = 0; i < numbers; i++) {
-            tab[i] = <TabLink to={"tab" + (i + 1)} className="tab" key={i}>
+            tab[i] = <TabLink to={"tab" + (i + 1)} className="tab" key={i} tabIndex={i}>
                 {"Time" + (i + 1)}
                 <button className="tabDeleteButton" name={i}
                         onClick={this.handleTabDelete}>{"x"}</button>
             </TabLink>;
         }
-
-        tab.push(<TabLink to={"tab" + (numbers + 1)} className="tab" key={numbers}>
-            <button className="tabAddButton" onClick={this.handleTabAdd}>{"+"}</button>
-        </TabLink>);
 
         return tab;
     }
@@ -321,7 +317,7 @@ export class ClassPanel extends React.Component {
         const tab = [""];
 
         for (let i = 0; i < numbers; i++) {
-            tab[i] = <TabContent for={"tab" + (i + 1)} className="content" key={i}>
+            tab[i] = <TabContent for={"tab" + (i + 1)} className="content" key={i} tabIndex={i}>
                 {this.createDetailPanel()}
             </TabContent>;
         }
@@ -332,12 +328,16 @@ export class ClassPanel extends React.Component {
     //When Save button click, update current tab count number to this.state
     //otherwise, update current tab count number when new tab is created
     newTabs() {
-        return <Tabs className="Tabs">
-            <div>
+        return <Tabs className="Tabs" renderActiveTabContentOnly={true}>
+            <div className="tabButton">
                 {this.tabTitle()}
+                <TabLink to={"tab" + (this.state.Tabs.length + 1)} className="tab" key={this.state.Tabs.length}
+                         tabIndex={this.state.Tabs.length}>
+                    <button className="tabAddButton" onClick={this.handleTabAdd}>{"+"}</button>
+                </TabLink>
             </div>
 
-            <div>
+            <div className="tabContent">
                 {this.tabContent()}
             </div>
         </Tabs>;
