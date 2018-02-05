@@ -282,11 +282,12 @@ export class ClassPanel extends React.Component {
 
     handleTabClose(removedIndex) {
         let newTabs = this.state.Tabs;
-        newTabs.splice(removedIndex, 1);
 
-        newTabs[newTabs.length - 1].active = true;
-
-        this.setState({Tabs: newTabs});
+        if (removedIndex !== 0) {
+            newTabs.splice(removedIndex, 1);
+            newTabs[newTabs.length - 1].active = true;
+            this.setState({Tabs: newTabs});
+        }
     }
 
     newTabs() {
