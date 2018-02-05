@@ -1,5 +1,5 @@
-import React from "react";
-import Tabs from "react-draggable-tabs";
+import React from 'react';
+import {TabContent, TabLink, Tabs} from 'react-tabs-redux';
 
 const moment = require('moment');
 
@@ -100,17 +100,15 @@ export class ClassPanel extends React.Component {
             Color: ["red"],
             Situation: "Cancel",
             Changed: false,
-            Tabs: [""],
+            Tabs: [[""]],
         };
 
         //bind handler
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleDateSelect = this.handleDateSelect.bind(this);
-        this.handleTabMove = this.handleTabMove.bind(this);
-        this.handleTabSelect = this.handleTabSelect.bind(this);
         this.handleTabAdd = this.handleTabAdd.bind(this);
-        this.handleTabClose = this.handleTabClose.bind(this);
+        this.handleTabDelete = this.handleTabDelete.bind(this);
 
     }
 
@@ -246,72 +244,112 @@ export class ClassPanel extends React.Component {
         }
     }
 
-    handleTabMove(dragIndex, hoverIndex) {
-        let newTabs = this.state.Tabs;
+    handleTabAdd() {
 
-        newTabs.splice(hoverIndex, 0, newTabs.splice(dragIndex, 1)[0]);
+        const oldTab = [
+            this.state.TimeFrom,
+            this.state.TimeTo,
+            this.state.Date,
+            this.state.LocationB,
+            this.state.LocationR,
+            this.state.Prof,
+            this.state.Type,
+            this.state.Color,
+            false,
+        ];
 
-        this.setState({Tabs: newTabs});
-    }
+        console.log(this.state.Tabs);
 
-    handleTabSelect(selectedIndex, selectedID) {
-        const newTabs = this.state.Tabs;
-
-        for (let i = 0; i < newTabs.length; i++) {
-            newTabs[i].active = newTabs[i].id === selectedID;
+        if (this.state.Tabs.length === 0) {
+            this.state.Tabs[0] = oldTab;
+        } else {
+            this.state.Tabs[this.state.Tabs.length - 1] = oldTab;
         }
 
-        this.setState({Tabs: newTabs});
-    }
+        console.log(this.state.Tabs);
 
-    handleTabAdd() {
-        let newTabs = this.state.Tabs;
-        const count = "Time " + (newTabs[newTabs.length - 1].id + 1);
+        this.state.Tabs.push(["", "", "", "", "", "", "", "", true]);
 
-        newTabs[newTabs.length - 1].active = false;
+        console.log(this.state.Tabs);
 
-        newTabs.push({
-            id: (newTabs[newTabs.length - 1].id + 1),
-            content: count,
-            active: true,
-            display: this.createDetailPanel()
+        this.setState({
+            Tabs: this.state.Tabs
         });
 
-        this.setState({Tabs: newTabs});
+        console.log(this.state.Tabs);
     }
 
-    handleTabClose(removedIndex) {
-        let newTabs = this.state.Tabs;
-        newTabs.splice(removedIndex, 1);
+    handleTabDelete(event) {
 
-        newTabs[newTabs.length - 1].active = true;
+        console.log(event.target.name);
 
-        this.setState({Tabs: newTabs});
-    }
+        console.log(this.state.Tabs);
 
-    newTabs() {
-        if (this.state.Tabs[0] === "") {
-            this.state.Tabs[0] = {
-                id: 1,
-                content: "Time 1",
-                active: true,
-                display: this.createDetailPanel()
-            };
+        this.state.Tabs.splice(event.target.name, 1);
+
+        if (this.state.Tabs.length === 0) {
+            this.state.Tabs.push([""]);
         }
 
-        const activeTab = this.state.Tabs.filter(tab => tab.active === true);
+        console.log(this.state.Tabs);
 
-        return <div className="tabs">
-            <Tabs
-                moveTab={this.handleTabMove}
-                selectTab={this.handleTabSelect}
-                closeTab={this.handleTabClose}
-                tabs={this.state.Tabs}
-            >
-                <button onClick={this.handleTabAdd}>+</button>
-            </Tabs>
-            {activeTab.length !== 0 ? activeTab[0].display : ""}
-        </div>;
+        this.setState({
+            Tabs: this.state.Tabs
+        });
+    }
+
+    tabTitle() {
+        const numbers = this.state.Tabs.length;
+        const tab = [""];
+
+        for (let i = 0; i < numbers; i++) {
+            if (numbers !== 0 && this.state.Tabs[i][8]) {
+                tab[i] = <TabLink to={"tab" + (i + 1)} className="tab" key={i} tabIndex={i} default>
+                    {"Time" + (i + 1)}
+                    <button className="tabDeleteButton" name={i}
+                            onClick={this.handleTabDelete}>{"x"}</button>
+                </TabLink>;
+            } else {
+                tab[i] = <TabLink to={"tab" + (i + 1)} className="tab" key={i} tabIndex={i}>
+                    {"Time" + (i + 1)}
+                    <button className="tabDeleteButton" name={i}
+                            onClick={this.handleTabDelete}>{"x"}</button>
+                </TabLink>;
+            }
+        }
+
+        return tab;
+    }
+
+    tabContent() {
+        const numbers = this.state.Tabs.length;
+        const tab = [""];
+
+        for (let i = 0; i < numbers; i++) {
+            tab[i] = <TabContent for={"tab" + (i + 1)} className="content" key={i} tabIndex={i}>
+                {this.createDetailPanel()}
+            </TabContent>;
+        }
+
+        return tab;
+    }
+
+    //When Save button click, update current tab count number to this.state
+    //otherwise, update current tab count number when new tab is created
+    newTabs() {
+        return <Tabs className="Tabs" renderActiveTabContentOnly={true}>
+            <div className="tabButton">
+                {this.tabTitle()}
+                <TabLink to={"tab" + (this.state.Tabs.length + 1)} className="tab" key={this.state.Tabs.length}
+                         tabIndex={this.state.Tabs.length}>
+                    <button className="tabAddButton" onClick={this.handleTabAdd}>{"+"}</button>
+                </TabLink>
+            </div>
+
+            <div className="tabContent">
+                {this.tabContent()}
+            </div>
+        </Tabs>;
     }
 
     //Class detail information

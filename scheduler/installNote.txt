@@ -15,7 +15,7 @@ Install all of these:
 	npm install moment --save
 	npm install immutability-helper --save
 	npm install --save socket.io-client
-	npm install react-tabs-redux
+	npm install react-panels
 	
 Run server:
 	npm run dev
