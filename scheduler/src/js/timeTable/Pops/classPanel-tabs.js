@@ -1,5 +1,5 @@
 import React from "react";
-import {Tab, Tabs} from "react-draggable-tab";
+import Tabs from "react-draggable-tabs";
 
 const moment = require('moment');
 
@@ -265,17 +265,19 @@ export class ClassPanel extends React.Component {
     }
 
     handleTabAdd() {
-        const key = "newTab" + Date.now();
-        let newTab = (<Tab key={key} title="untitled" {...this.makeListeners(key)}>
-            <div>
-                {this.createDetailPanel()}
-            </div>
-        </Tab>);
-        let newTabs = this.state.Tabs.concat([newTab]);
-        this.setState({
-            Tabs: newTabs,
-            selectedTab: key
+        let newTabs = this.state.Tabs;
+        const count = "Time " + (newTabs[newTabs.length - 1].id + 1);
+
+        newTabs[newTabs.length - 1].active = false;
+
+        newTabs.push({
+            id: (newTabs[newTabs.length - 1].id + 1),
+            content: count,
+            active: true,
+            display: this.createDetailPanel()
         });
+
+        this.setState({Tabs: newTabs});
     }
 
     handleTabClose(removedIndex) {
@@ -298,15 +300,18 @@ export class ClassPanel extends React.Component {
             };
         }
 
+        const activeTab = this.state.Tabs.filter(tab => tab.active === true);
+
         return <div className="tabs">
             <Tabs
-                selectedTab={this.state.selectedTab ? this.state.selectedTab : "tab2"}
-                onTabSelect={this.handleTabSelect}
-                onTabClose={this.handleTabClose}
-                onTabAddButtonClick={this.handleTabAdd}
-                onTabPositionChange={this.handleTabMove}
+                moveTab={this.handleTabMove}
+                selectTab={this.handleTabSelect}
+                closeTab={this.handleTabClose}
                 tabs={this.state.Tabs}
-            />
+            >
+                <button onClick={this.handleTabAdd}>+</button>
+            </Tabs>
+            {activeTab.length !== 0 ? activeTab[0].display : ""}
         </div>;
     }
 
