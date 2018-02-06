@@ -43,10 +43,13 @@ var Data = {
 
 export function RequestData(props){
 
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
+	socket.on('Hello', function (msg) {
+		console.log(msg);
+		socket.emit('RequestData', { my: 'data' });
+		socket.on('Data', function(data){
+			console.log(data)
+		})
+	});
 
 	return Data
 

@@ -5,3 +5,5 @@ npm install --save-dev chai-immutable
 npm install moment
 npm install --save redux
 npm install --save socket.io
+npm install mysql
+npm install -g nodemon
