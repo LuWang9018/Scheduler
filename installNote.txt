@@ -14,7 +14,7 @@ Install all of these:
 	npm install --save-dev file-loader
 	npm install moment --save
 	npm install immutability-helper --save
-	npm install react-draggable-tab
+	npm install react-draggable-tabs --save
 	
 Run server:
 	npm run dev

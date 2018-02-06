@@ -100,7 +100,7 @@ export class ClassPanel extends React.Component {
             Color: ["red"],
             Situation: "Cancel",
             Changed: false,
-            Tabs: [""],
+            Tabs: [""]
         };
 
         //bind handler
@@ -177,6 +177,15 @@ export class ClassPanel extends React.Component {
             this.setState(nextProps.ChangingClassInfo);
             this.setState({Situation: "Add"});
         }
+
+        this.setState({
+            /*TimeFrom: nextProps.TimeFrom,
+            TimeTo: nextProps.TimeTo,
+            Date: nextProps.Date,*/
+            LocationB: nextProps.LocationB,
+            LocationR: nextProps.LocationR,
+            Color: nextProps.Color
+        });
     }
 
     handleInputChange(event) {
@@ -220,7 +229,8 @@ export class ClassPanel extends React.Component {
                 this.state.Type.push(value);
 
                 this.setState({
-                    value: value, Changed: true
+                    value: value, Changed: true,
+                    changeTab: true
                 });
                 break;
         }
@@ -251,7 +261,9 @@ export class ClassPanel extends React.Component {
 
         newTabs.splice(hoverIndex, 0, newTabs.splice(dragIndex, 1)[0]);
 
-        this.setState({Tabs: newTabs});
+        this.setState({
+            Tabs: newTabs
+        });
     }
 
     handleTabSelect(selectedIndex, selectedID) {
@@ -261,7 +273,9 @@ export class ClassPanel extends React.Component {
             newTabs[i].active = newTabs[i].id === selectedID;
         }
 
-        this.setState({Tabs: newTabs});
+        this.setState({
+            Tabs: newTabs
+        });
     }
 
     handleTabAdd() {
@@ -279,7 +293,9 @@ export class ClassPanel extends React.Component {
 
         newTabs.push(newTab);
 
-        this.setState({Tabs: newTabs});
+        this.setState({
+            Tabs: newTabs
+        });
     }
 
     handleTabClose(removedIndex) {
@@ -288,7 +304,10 @@ export class ClassPanel extends React.Component {
         if (removedIndex !== 0) {
             newTabs.splice(removedIndex, 1);
             newTabs[newTabs.length - 1].active = true;
-            this.setState({Tabs: newTabs});
+            this.setState({
+                Tabs: newTabs,
+                changeTab: true
+            });
         }
     }
 
@@ -490,8 +509,6 @@ export class ClassPanel extends React.Component {
     }
 
     render() {
-        console.log();
         return this.passPanel();
     }
 }
-
