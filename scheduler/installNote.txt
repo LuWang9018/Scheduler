@@ -15,7 +15,7 @@ Install all of these:
 	npm install moment --save
 	npm install immutability-helper --save
 	npm install --save socket.io-client
-	npm install react-panels
+	npm install react-draggable-tabs --save
 	
 Run server:
 	npm run dev
