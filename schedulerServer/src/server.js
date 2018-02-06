@@ -29,6 +29,7 @@ function GetClass(){
 
 
 export function startServer(store) {
+<<<<<<< HEAD
 
 	const io = new Server().attach(8092);
 
@@ -73,3 +74,25 @@ export function startServer(store) {
 		});
 	});
 }
+=======
+  const io = new Server().attach(8090);
+
+  store.subscribe(
+    () => io.emit('state', store.getState().toJS())
+  );
+
+  io.on('connection', (socket) => {
+  	console.log("connection")
+
+  	store.dispatch({
+	  type: 'GET_CLASS_DATA'
+	});
+
+    socket.emit('state', store.getState()
+
+    );
+    socket.on('action', store.dispatch.bind(store));
+  });
+
+}
+>>>>>>> 74abd919d7b8040673ab052834a3edc866b8adbd

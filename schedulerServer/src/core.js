@@ -6,13 +6,30 @@ var Data = {
 	//TODO
 	//should get from server
 	//Define a fromate later
-	Class: "1"      	
+	Class: [
+			{Name: "Eng",
+			 Code: 101,
+			 Section: "001",
+			 TimeFrom: [moment('06:10 am', "HH:mm A"),
+			            moment('08:10 am', "HH:mm A")],
+			 TimeTo: [moment('07:30 am', "HH:mm A"),
+			 		  moment('9:10 am', "HH:mm A")],
+			 Date: [["Monday", "Wednesday", "Friday"],
+			        ["Monday", "Wednesday"]],
+			 LocationB: ["MC", "MC"],
+			 LocationR: ["3003", "3006"],
+			 Prof: "SB",
+			 Type: ["LEC", "TUT"], 
+			 Color: ["Red", "Green"],
+			}
+		],   	
 }
 
 export const INITIAL_STATE = Map();
 
-export function GetClassData(state, action){
-	return Data;
+export function GetClassData(state){
+	console.log("core")
+	return state.set('ClassInfo', Data.Class);
 }
 
 

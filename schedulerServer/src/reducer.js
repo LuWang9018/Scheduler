@@ -1,4 +1,4 @@
-import {setEntries, next, vote, INITIAL_STATE} from './core';
+import {setEntries, next, vote, INITIAL_STATE, GetClassData} from './core';
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -10,7 +10,8 @@ export default function reducer(state = INITIAL_STATE, action) {
     return state.update('vote',
                         voteState => vote(voteState, action.entry));
   case 'GET_CLASS_DATA':
-  	return GetClassData(state, action);
+  	console.log("reducer")
+  	return GetClassData(state);
   }
   return state;
 }

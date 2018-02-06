@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 var moment = require('moment');
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8092');
+const socket = openSocket('http://localhost:8090');
 
 
 var Data = {    				
@@ -43,6 +43,7 @@ var Data = {
 
 export function RequestData(props){
 
+<<<<<<< HEAD
 	socket.on('Hello', function (msg) {
 		console.log(msg);
 		socket.emit('RequestData', { my: 'data' });
@@ -50,6 +51,12 @@ export function RequestData(props){
 			console.log(data)
 		})
 	});
+=======
+  socket.on('state', function (data) {
+    console.log(data);
+    socket.emit('my other event', { my: 'data' });
+  });
+>>>>>>> 74abd919d7b8040673ab052834a3edc866b8adbd
 
 	return Data
 
