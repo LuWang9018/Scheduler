@@ -5,8 +5,11 @@ npm install --save-dev chai-immutable
 npm install moment
 npm install --save redux
 npm install --save socket.io
-<<<<<<< HEAD
 npm install mysql
-=======
->>>>>>> 74abd919d7b8040673ab052834a3edc866b8adbd
 npm install -g nodemon
+
+
+Windows:
+cd ~/Desktop/Scheduler/schedulerServer/
+
+Mac:

@@ -9,8 +9,7 @@
     ]
   },
   "scripts": {
-    "babel-node": "babel-node index.js",
-    "start": "nodemon --exec npm run babel-node -- ./index.js",
+    "start": "nodemon ./index.js --exec babel-node --presets babel-preset-env",    
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js  --recursive",
     "test:watch": "npm run test -- --watch"
   },

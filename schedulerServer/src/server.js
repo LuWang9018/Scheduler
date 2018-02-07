@@ -29,9 +29,8 @@ function GetClass(){
 
 
 export function startServer(store) {
-<<<<<<< HEAD
 
-	const io = new Server().attach(8092);
+	const io = new Server().attach(8090);
 
 
 	db.connect(function(err){
@@ -47,25 +46,21 @@ export function startServer(store) {
 	io.on('connection', function (socket) {
 
 		socket.emit('Hello', { Msg: 'Connect Success' });
-		db.query('SELECT * FROM Classes')
-	            .on('result', function(data){
-	                // Push results onto the notes array
-	                notes.push(data)
-	            })
-	            .on('end', function(){
-	                // Only emit notes after query has been completed
-	                socket.emit('Data', notes)
-	            })
+
+
 	            
 		socket.on('RequestData', function(msg) {
-			var note = [];
-	        // Decrease the socket count on a disconnect, emit
+			var notes = [];
+			db.query('SELECT * FROM Classes')
+			.on('result', function(data){
+                // Push results onto the notes array
+                notes.push(data)
+            })
+            .on('end', function(){
+                // Only emit notes after query has been completed
+                socket.emit('Data', notes)
+            })
 
-	        
-	        //console.log("Data");
-	        //console.log(GetClass());
-	        
-	        //io.sockets.emit('Data', {Data: 123})
 	    })
 
 		
@@ -74,25 +69,4 @@ export function startServer(store) {
 		});
 	});
 }
-=======
-  const io = new Server().attach(8090);
 
-  store.subscribe(
-    () => io.emit('state', store.getState().toJS())
-  );
-
-  io.on('connection', (socket) => {
-  	console.log("connection")
-
-  	store.dispatch({
-	  type: 'GET_CLASS_DATA'
-	});
-
-    socket.emit('state', store.getState()
-
-    );
-    socket.on('action', store.dispatch.bind(store));
-  });
-
-}
->>>>>>> 74abd919d7b8040673ab052834a3edc866b8adbd
