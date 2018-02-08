@@ -178,14 +178,9 @@ export class ClassPanel extends React.Component {
             this.setState({Situation: "Add"});
         }
 
-        this.setState({
-            /*TimeFrom: nextProps.TimeFrom,
-            TimeTo: nextProps.TimeTo,
-            Date: nextProps.Date,*/
-            LocationB: nextProps.LocationB,
-            LocationR: nextProps.LocationR,
-            Color: nextProps.Color
-        });
+        this.setState({LocationB: nextProps.LocationB});
+        this.setState({LocationR: nextProps.LocationR});
+
     }
 
     handleInputChange(event) {
@@ -205,23 +200,31 @@ export class ClassPanel extends React.Component {
 
         switch (name) {
             case "StartHour":
+                this.state.TimeFrom[0].hour(value);
+
                 this.setState({
-                    value: this.state.TimeFrom[0].hour(value), Changed: true
+                    TimeForm: this.state.TimeFrom,
                 });
                 break;
             case "StartMint":
+                this.state.TimeFrom[0].minute(value);
+
                 this.setState({
-                    value: this.state.TimeFrom[0].minute(value), Changed: true
+                    TimeFrom: this.state.TimeFrom,
                 });
                 break;
             case "StopHour":
+                this.state.TimeTo[0].hour(value);
+
                 this.setState({
-                    value: this.state.TimeTo[0].hour(value), Changed: true
+                    TimeTo: this.state.TimeTo,
                 });
                 break;
             case "StopMint":
+                this.state.TimeTo[0].minute(value);
+
                 this.setState({
-                    value: this.state.TimeTo[0].minute(value), Changed: true
+                    TimeTo: this.state.TimeTo,
                 });
                 break;
             case "classType":
@@ -229,9 +232,9 @@ export class ClassPanel extends React.Component {
                 this.state.Type.push(value);
 
                 this.setState({
-                    value: value, Changed: true,
-                    changeTab: true
+                    Type: this.state.Type,
                 });
+
                 break;
         }
     }
@@ -243,14 +246,12 @@ export class ClassPanel extends React.Component {
             let newDate1 = deleteDate(this.state.Date, value);
             this.setState({
                 Date: newDate1,
-                Changed: true,
                 backgroundColor: "#ffffff"
             });
         } else {
             let newDate2 = addDate(this.state.Date, value);
             this.setState({
                 Date: newDate2,
-                Changed: true,
                 backgroundColor: "#ff0000"
             });
         }
@@ -333,8 +334,10 @@ export class ClassPanel extends React.Component {
                 <button onClick={this.handleTabAdd}>+</button>
             </Tabs>
             {activeTab.length !== 0 ? activeTab[0].display : ""}
+
         </div>;
     }
+
 
     //Class detail information
     createDetailPanel() {
@@ -391,16 +394,16 @@ export class ClassPanel extends React.Component {
                         className="inputs"
                         id="PlaceBuilding"
                         name="LocationB"
-                        placeholder="Building"
                         value={this.state.LocationB}
+                        placeholder="Building"
                         onChange={this.handleInputChange}
                     />,
                     <input
                         className="inputs"
                         id="PlaceRoom"
                         name="LocationR"
-                        placeholder="Room"
                         value={this.state.LocationR}
+                        placeholder="Room"
                         onChange={this.handleInputChange}
                     />)
             ),
