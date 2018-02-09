@@ -201,14 +201,14 @@ export class ClassPanel extends React.Component {
                 this.state.TimeFrom[0].hour(value);
 
                 this.setState({
-                    value: this.state.TimeFrom[0].hour
+                    value: value
                 });
                 break;
             case "StartMint":
                 this.state.TimeFrom[0].minute(value);
 
                 this.setState({
-                    value: this.state.TimeFrom[0].minute
+                    value: value
                 });
                 break;
             case "StopHour":
