@@ -100,8 +100,9 @@ export class ClassPanel extends React.Component {
             Color: ["red"],
             Situation: "Cancel",
             Changed: false,
-            Tabs: [""],
-            TabChanged: false
+            Tabs: [],
+            TabChanged: false,
+            activeTabIndex: 0
         };
 
         //bind handler
@@ -201,40 +202,41 @@ export class ClassPanel extends React.Component {
                 this.state.TimeFrom[0].hour(value);
 
                 this.setState({
-                    value: value
+                    value: value,
+                    TimeFrom: this.state.TimeFrom
                 });
                 break;
             case "StartMint":
                 this.state.TimeFrom[0].minute(value);
 
                 this.setState({
-                    value: value
+                    value: value,
+                    TimeFrom: this.state.TimeFrom
                 });
                 break;
             case "StopHour":
                 this.state.TimeTo[0].hour(value);
 
                 this.setState({
-                    value: this.state.TimeTo[0].hour
+                    value: value,
+                    TimeTo: this.state.TimeTo
                 });
                 break;
             case "StopMint":
                 this.state.TimeTo[0].minute(value);
 
                 this.setState({
-                    value: this.state.TimeTo[0].minute
+                    value: value,
+                    TimeTo: this.state.TimeTo
                 });
                 break;
             case "classType":
-                console.log(this.props.Type);
-                console.log(this.state.Type);
                 this.state.Type.pop();
                 this.state.Type.push(value);
-                console.log(this.state.Type);
 
                 this.setState({
-                    Type: this.state.Type,
-                    value: this.state.Type
+                    value: value,
+                    Type: this.state.Type
                 });
 
                 break;
@@ -269,35 +271,39 @@ export class ClassPanel extends React.Component {
         });
     }
 
-    handleTabSelect(selectedIndex, selectedID) {
+    handleTabSelect(selectedIndex) {
         const newTabs = this.state.Tabs;
 
         for (let i = 0; i < newTabs.length; i++) {
-            newTabs[i].active = newTabs[i].id === selectedID;
+            newTabs[i].active = i === selectedIndex;
         }
 
         this.setState({
+            activeTabIndex: selectedIndex,
             Tabs: newTabs
         });
     }
 
     handleTabAdd() {
-        let newTabs = this.state.Tabs;
-        const count = "Time " + (newTabs[newTabs.length - 1].id + 1);
+        const newTabs = this.state.Tabs;
+        const count = "Time " + (newTabs[newTabs.length - 1].id + 2);
 
-        newTabs[newTabs.length - 1].active = false;
+        console.log(newTabs);
 
-        const newTab = {
+        for (let i = 0; i < newTabs.length; i++) {
+            newTabs[i].active = false;
+        }
+
+        newTabs.push({
             id: (newTabs[newTabs.length - 1].id + 1),
             content: count,
             active: true,
             display: this.createDetailPanel(99),
-        };
-
-        newTabs.push(newTab);
+        });
 
         this.setState({
             TabChanged: true,
+            activeTabIndex: (newTabs.length - 1),
             Tabs: newTabs
         });
     }
@@ -307,8 +313,9 @@ export class ClassPanel extends React.Component {
 
         if (newTabs.length !== 1) {
             newTabs.splice(removedIndex, 1);
-            newTabs[newTabs.length - 1].active = true;
+            newTabs[removedIndex - 1].active = true;
             this.setState({
+                activeTabIndex: (removedIndex - 1),
                 Tabs: newTabs
             });
         }
@@ -319,32 +326,44 @@ export class ClassPanel extends React.Component {
             this.state.Tabs = [""];
         }
 
-        const type1 = "LEC";
-        const type2 = "TUT";
-        const type3 = "LAB";
-        let count1 = 1;
-        let count2 = 1;
-        let count3 = 1;
-        let content = "Time 1";
-
-        for (let i = 0; i < this.state.Type.length; i++) {
-            if (this.state.Type[i] === type1) {
-                content = "LEC " + count1;
-                count1++;
-            } else if (this.state.Type[i] === type2) {
-                content = "TUT " + count2;
-                count2++;
-            } else if (this.state.Type[i] === type3) {
-                content = "LAB " + count3;
-                count3++;
-            }
-
-            this.state.Tabs[i] = {
-                id: (i + 1),
-                content: content,
+        if (this.state.Type.length === 0) {
+            this.state.Tabs.push({
+                id: 0,
+                content: "Time 1",
                 active: true,
-                display: this.createDetailPanel(i)
-            };
+                display: this.createDetailPanel(99)
+            });
+        } else {
+            const type1 = "LEC";
+            const type2 = "TUT";
+            const type3 = "LAB";
+            let count1 = 1;
+            let count2 = 1;
+            let count3 = 1;
+            let content = "Time 1";
+
+            for (let i = 0; i < this.state.Type.length; i++) {
+                if (this.state.Type[i] === type1) {
+                    content = "LEC " + count1;
+                    count1++;
+                } else if (this.state.Type[i] === type2) {
+                    content = "TUT " + count2;
+                    count2++;
+                } else if (this.state.Type[i] === type3) {
+                    content = "LAB " + count3;
+                    count3++;
+                }
+
+                let active = false;
+                active = i === this.state.activeTabIndex;
+
+                this.state.Tabs[i] = {
+                    id: i,
+                    content: content,
+                    active: active,
+                    display: this.createDetailPanel(i)
+                };
+            }
         }
 
         const activeTab = this.state.Tabs.filter(tab => tab.active === true);
