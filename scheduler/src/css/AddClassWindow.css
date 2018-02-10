@@ -11,13 +11,13 @@ div.AddClassWindow{
     right: 0;
     margin: auto;
     background-color: #66ff33; 
-    width: 75vw;
+    width: 500px;
     /*min-width: 450px;*/
-    height: 80vh;
+    height: 450px;
     background-color: white; 
     box-shadow: 10px 10px 5px rgba(136, 136, 136,0.5);
     z-index: 10; 
-    font-size: 2.5vh;
+    font-size: 14;
     border: 1px rgba(136, 136, 136,0.5);
     border-radius: 10px 10px 10px 10px;
 }
@@ -29,20 +29,18 @@ input {
     border-right: 1px solid black;
     background-color: white; 
     width: 10;
-    height: 4vh;
-    font-size:2vh;
+    font-size:12;
 }
 
 select {
 	width: 10vw;
-    height: 4vh;
-    font-size:2vh;
+    /*height: 4vh;*/
+    font-size:12;
 }
 
 button{
-    height: 5vh;
     width: 10vh;
-    font-size:2vh;
+    font-size:12;
 
 }
 
@@ -68,7 +66,7 @@ div.TitleTitle{
     width: 100%;
     height: calc((100%)*(0.7));
 	text-align: center;
-	font-size: calc((8vh)*0.7);
+	font-size: 36;
 }
 
 /*ClassInfo propertie*/
@@ -78,13 +76,23 @@ div#ClassInfo.AddSection{
 }
 
 div.classTitle{
-	margin-top:0.5vh;
-	margin-bottom: 0.25vh; 
+	margin-top: 3px;
+	margin-bottom: 2px; 
 	width: 100%;
+	height: 20px;
+}
+
+div.classInput{
+	margin-top: 3px;
+	margin-bottom: 2px; 
+	width: 100%;
+	height: 20px;
+
 }
 
 input#ClassName.inputs{
 	width: 30%;
+	margin-right: 5px;
 }
 
 input#ClassSection.inputs{
@@ -92,22 +100,16 @@ input#ClassSection.inputs{
 }
 
 input#ClassTitleName.inputs{
-	width: 80%;
+	width: 60%;
 }
 
 
 /*Tabs property*/
-.Tabs{
-	margin-top:0.5vh;
-	margin-bottom: 0.25vh;
+div.tabs{
+	margin-top: 3px;
+	margin-bottom: 2px;
     margin-left: 5px;
-    margin-right: -5px;
 	position: relative;
-/*	top: 0;
-	bottom: 0;
-    left: 0;
-    right: 0;
-    /*margin: auto;*/*/
     background-color: #66ff33; 
     width: 90%;
     /*min-width: 450px;*/
@@ -116,6 +118,89 @@ input#ClassTitleName.inputs{
     font-size: 2.5vh;
     border-radius: 10px 10px 10px 10px;
 }
+
+
+div.react-tabs-container{
+    margin: 0;
+
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-flow: row nowrap;
+    justify-content: flex-start;
+    border-bottom: 2px solid red;
+    height:25px;
+    overflow: hidden;
+}
+
+div.react-tabs-tab{
+    padding: 7px;
+    opacity: 1;
+    font-size: 12px;
+    flex-grow: 1;
+    max-width: 150px;
+    min-width: 40px;
+    font-family: "Segoe UI",sans-serif;
+}
+
+div.react-tabs-tab-content{
+	position: relative;
+    text-align: center;
+    display: inline-block;
+    width: calc(100% - 40px);
+    overflow: hidden;
+    font-size:10px;
+    top: 0;
+
+}
+
+div.react-tabs-tab-close{
+    visibility: hidden;
+    line-height: 15px;
+    border-top: 0px;
+    border-right: 4px solid;
+    border-left: 4px solid;
+    border-bottom: 3px solid;
+    display: inline-block;
+    text-align: center;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: bold;
+    width:11px;
+}
+
+div.react-tabs-child{
+    padding: 0px;
+    opacity: 1;
+    font-size: 2px;
+    flex-grow: 0;
+    margin-left: auto;
+    top:0;
+    font-family: "Segoe UI",sans-serif;
+}
+
+
+
+div.react-tabs-tab-close:hover{
+}
+
+div.react-tabs-tab:hover .react-tabs-tab-close{
+    visibility: visible;
+}
+
+div.react-tabs-active{
+    border-left: 4px solid orange;
+}
+
+div.react-tabs-active .react-tabs-tab-close:hover{
+}
+
+
+
+
 
 .tabButton{
 	display: inline-block;
@@ -164,6 +249,12 @@ div.stopTime{
 	width: 40%;
 }
 
+.AddSection#TimeInfo select{
+	position: relative;	
+	float: left;
+	width: 40%;
+}
+
 .AddSection#TimeInfo select option{
 	background: transparent;
     font-size: 2vh;
@@ -178,7 +269,6 @@ div.DateTime{
 	margin-top:0.5vh;
 	margin-bottom: 0.25vh;
 	width: 100%;
-
 }
 
 .DateTimeInput button{
@@ -206,6 +296,12 @@ div.classType{
 	clear: left;
 }
 
+
+select#classType.inputs{
+	position: relative;	
+	width: 10%;
+}
+
 /*PlaceInfo properties*/
 div.LocationTitle{
 	width: 100%;
@@ -222,9 +318,10 @@ div.ColorTitle{
 	width: 100%
 }
 .colorInput button{
-	width: 3vw;
-	height: 3vw;
-	margin-right: 2vw;
+	position:relative;
+	width: 10px;
+	height: 10px;
+	margin-right: 2%;
 	border-radius: 50%;
 }
 
