@@ -87,7 +87,9 @@ export class ClassPanel extends React.Component {
         super(props);
 
         this.state = {
+            ClassName: "",
             Name: "",
+            Code: "",
             Section: "",
             TitleName: "",
             TimeFrom: [moment("00:00 am", "HH:mm a")],
@@ -104,6 +106,9 @@ export class ClassPanel extends React.Component {
             TabChanged: false,
             activeTabIndex: 0
         };
+
+        //initial state
+        this.initialState = this.state;
 
         //bind handler
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -180,17 +185,28 @@ export class ClassPanel extends React.Component {
             this.setState(nextProps.ChangingClassInfo);
             this.setState({Situation: "Add"});
         }
+
+        if (this.props.AddClassWindowOn) {
+            this.setState(this.initialState);
+            this.setState({
+                ClassName: (this.state.Name + this.state.Code)
+            });
+        }
     }
 
     handleInputChange(event) {
-        const target = event.target;
-        const value = target.value;
-        const name = target.name;
+        const value = event.target.value;
+        const name = event.target.name;
 
-        this.setState({
-            [name]: value,
-            Changed: true
-        });
+        switch (name) {
+            case "Name":
+                this.setState({
+                    [name]: value,
+                    Changed: true
+                });
+                break;
+
+        }
     }
 
     handleSelectChange(event) {
@@ -570,7 +586,7 @@ export class ClassPanel extends React.Component {
                             id="ClassName"
                             name="Name"
                             placeholder="Class"
-                            value={this.state.Name + this.state.Code}
+                            value={this.ClassName}
                             onChange={this.handleInputChange}
                         />,
                         <input
