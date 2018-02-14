@@ -3,13 +3,15 @@
 :root {
 	
 	--cell-width: calc((100%)/7);
-	--cell-height: 3vh;
-	--day-height: 3vh;
+	--cell-height: 20px;
+	/*3vh;*/
+	--day-height: 20px; 
+	/*3vh;*/
 	--min-height: 3vw;
 	--time-width: 7vh;
 
 	--font-size-time: 2vh;
-	--font-size-day: 2vw;
+	--font-size-day: 18px;
 }
 
 body {
@@ -51,7 +53,7 @@ div{
 .TimeCell{
 	padding: 0px 0px;
 	height: var(--cell-height);
-	min-height: var(--min-height);
+	/*min-height: var(--min-height);*/
 	line-height: var(--cell-height);
 	width: var(--time-width);
 	position: relative;
@@ -64,7 +66,7 @@ div{
 
 .DayCell{
 	height: var(--day-height);
-	min-height: var(--min-height);
+	/*min-height: var(--min-height);*/
 	/*line-height: bottom;*/
 	/*width: var(--column-width);*/
 	position: relative;
@@ -85,7 +87,7 @@ div{
 
 .DataCell{
 	height: var(--cell-height);
-	min-height: var(--min-height);
+	/*min-height: var(--min-height);*/
 	background-color: #ffffff; 
 	position: relative;
 	color: black;
@@ -98,6 +100,10 @@ div{
 
 @media screen and (max-device-width:500px){ 
 	:root{--font-size-day: 40px; --font-size-time: 30px; --time-width: 80px; --cell-height: 5vh; --day-height: 5vh;} 
+}
+
+@media screen and (min-device-height:1800px){ 
+	:root{--font-size-day: 78px; --font-size-time: 30px; --time-width: 80px; --cell-height: 80px; --day-height: 80px;} 
 }
 
 @media screen and (max-device-height:600px){ 
