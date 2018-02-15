@@ -1,78 +1,80 @@
-import React, { Component }  from 'react';
+import React from 'react';
+
 var moment = require('moment');
 
-function GendayCell(props){
-	
+function GendayCell(props) {
 
 
-	var DayCell = React.createElement("div",
-		{
-			time: props.time.format("HH:mm").toString() + " " + props.Day,
-			className: 'DataCell',
-			key : props.time.format("HH:mm").toString() + " " + props.Day,
-			onClick : props.onClick
-		}
-    )
+    var DayCell = React.createElement("div",
+        {
+            time: props.time.format("HH:mm").toString() + " " + props.Day,
+            className: 'DataCell',
+            key: props.time.format("HH:mm").toString() + " " + props.Day,
+            onClick: props.onClick
+        }
+    );
 
-	return DayCell;
+    return DayCell;
 }
 
 
-function GenDayCells(props){
+function GenDayCells(props) {
 
-	var DayCells = props.TimeArr.map(
-		function(time){
-			var classtimed = {Name: "",
-							  Code: '',
-							  Section: "",
-							  TimeFrom: [time],
-							  TimeTo: [moment('00:00 am', "HH:mm A")],
-							  Date: [[props.Day]],
-							  LocationB: [""],
-							  LocationR: [""],
-							  Prof: "",
-							  Type: [""], 
-							  Color: [""],
-							 };
+    var DayCells = props.TimeArr.map(
+        function (time) {
+            var classtimed = {
+                Name: "",
+                Code: '',
+                Section: "",
+                TimeFrom: [time],
+                TimeTo: [moment('00:00 am', "HH:mm A")],
+                Date: [[props.Day]],
+                LocationB: [""],
+                LocationR: [""],
+                Prof: "",
+                Types: [""],
+                Color: [""],
+            };
 
-			var cell = <GendayCell
-				key = {time} 
-				time = {time} 
-				onClick = {() => props.onClick({AddClassWindowOn: true,
-												Class: classtimed
-												})}
-			/>
+            var cell = <GendayCell
+                key={time}
+                time={time}
+                onClick={() => props.onClick({
+                    AddClassWindowOn: true,
+                    Class: classtimed
+                })}
+            />;
 
-			return cell;
-		}
+            return cell;
+        }
 
 
-		//<div key = {Time.format("HH:mm") + " " + props.Day} className="DataCell"> </div>
-	);
-	
-	return DayCells;
+        //<div key = {Time.format("HH:mm") + " " + props.Day} className="DataCell"> </div>
+    );
+
+    return DayCells;
 }
 
-export function GenDayColumns(props){
-	const DayArr = ["Monday", "Tuesday", "Wednesday",
-				    "Thursday", "Friday", "Saturday",
-				    "Sunday"];
-	const DayArrSort = ["Mon", "Tue", "Wed",
-				    "Thu", "Fri", "Sat",
-				    "Sun"];
+export function GenDayColumns(props) {
+    const DayArr = ["Monday", "Tuesday", "Wednesday",
+        "Thursday", "Friday", "Saturday",
+        "Sunday"];
+    const DayArrSort = ["Mon", "Tue", "Wed",
+        "Thu", "Fri", "Sat",
+        "Sun"];
 
 
-	var DayColumns = DayArr.map((Day) => 
-		React.createElement("div", {className: "Cellcolumns", key: Day+"Columns"},
-			<div key = {Day} className="DayCell">{DayArrSort[DayArr.indexOf(Day)]}</div>,
-			<GenDayCells 
-				Day={Day} 
-				TimeArr={props.TimeArr}	
-				onClick={(i) => props.onClick(i)}			
-			/>
-		)
-	);
+    var DayColumns = DayArr.map((Day) =>
+        React.createElement("div", {className: "Cellcolumns", key: Day + "Columns"},
+            <div key={Day} className="DayCell">{DayArrSort[DayArr.indexOf(Day)]}</div>,
+            <GenDayCells
+                Day={Day}
+                TimeArr={props.TimeArr}
+                onClick={(i) => props.onClick(i)}
+            />
+        )
+    );
 
 
-	return DayColumns;	
+    return DayColumns;
 }

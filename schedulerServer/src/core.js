@@ -1,4 +1,5 @@
 import {List, Map} from 'immutable';
+
 var moment = require('moment');
 
 var Data = {    				
@@ -19,16 +20,16 @@ var Data = {
 			 LocationB: ["MC", "MC"],
 			 LocationR: ["3003", "3006"],
 			 Prof: "SB",
-			 Type: ["LEC", "TUT"], 
+                Types: ["LEC", "TUT"],
 			 Color: ["Red", "Green"],
 			}
-		],   	
-}
+		],
+};
 
 export const INITIAL_STATE = Map();
 
 export function GetClassData(state){
-	console.log("core")
+    console.log("core");
 	return state.set('ClassInfo', Data.Class);
 }
 

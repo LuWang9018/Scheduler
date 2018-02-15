@@ -10,9 +10,8 @@ export class ClassPanel extends React.Component {
         this.state = {
             ClassInfo: this.props,
         };
-        
-    }
 
+    }
 
 
     Hours() {
@@ -63,8 +62,8 @@ export class ClassPanel extends React.Component {
     }
     */
     createPanel() {
-        console.log("ChangingClassInfo")
-        console.log(this.props)
+        console.log("ChangingClassInfo");
+        console.log(this.props);
         var AddClass;
         AddClass = React.createElement("div", {className: "windowPanel", id: "test"},
             //Add class panel detail
