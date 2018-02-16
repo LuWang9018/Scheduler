@@ -404,7 +404,7 @@ export class ClassPanel extends React.Component {
         LocationB.splice(removedIndex, 1);
         LocationR.splice(removedIndex, 1);
 
-        if (removedIndex === 0) {
+        if (newTabs.length === 0 && removedIndex === 0) {
             TimeFrom.push(moment("00:00 am", "HH:mm a"));
             TimeTo.push(moment("00:00 am", "HH:mm a"));
             Date.push([""]);
@@ -429,8 +429,8 @@ export class ClassPanel extends React.Component {
             });
             activeTab = 0;
         } else {
-            newTabs[removedIndex - 1].active = true;
-            activeTab = removedIndex - 1;
+            newTabs[removedIndex].active = true;
+            activeTab = removedIndex;
         }
 
         this.setState({
