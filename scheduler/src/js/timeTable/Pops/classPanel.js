@@ -55,27 +55,25 @@ function GenCancelButton(props) {
 }
 
 function findDate(dates, day) {
-    const found = false;
-
     for (let i = 0; i < dates.length; i++) {
         if (dates[i].includes(day)) {
             return true;
         }
     }
 
-    return found;
+    return false;
 }
 
-function addDate(dates, day) {
-    dates[0].push(day);
+function addDate(dates, day, e) {
+    dates[e].push(day);
 
     return dates;
 }
 
-function deleteDate(dates, day) {
-    for (let i = 0; i < dates[0].length; i++) {
-        if (dates[0].indexOf(day) !== -1) {
-            dates[0].splice(dates[0].indexOf(day), 1);
+function deleteDate(dates, day, e) {
+    for (let i = 0; i < dates[e].length; i++) {
+        if (dates[i].indexOf(day) !== -1) {
+            dates[i].splice(dates[i].indexOf(day), 1);
         }
     }
 
@@ -156,13 +154,12 @@ export class ClassPanel extends React.Component {
         let bColor;
 
         for (let i = 0; i < 7; i++) {
-            if (e !== 99) {
-                if (findDate(this.state.Date[e], days[i])) {
-                    bColor = "#ff0000";
-                } else {
-                    bColor = "";
-                }
+            if (findDate(this.state.Date[e], days[i])) {
+                bColor = "#ff0000";
+            } else {
+                bColor = "";
             }
+
             daysList[i] = React.createElement("button", {
                 className: "SelectButton",
                 id: days[i],
@@ -170,7 +167,7 @@ export class ClassPanel extends React.Component {
                 value: days[i],
                 key: i,
                 style: {backgroundColor: bColor},
-                onClick: this.handleDateSelect
+                onClick: (event) => this.handleDateSelect(event, e)
             }, day[i]);
         }
 
@@ -194,8 +191,6 @@ export class ClassPanel extends React.Component {
     handleInputChange(event, selectedIndex) {
         const value = event.target.value;
         const name = event.target.name;
-
-        console.log(selectedIndex + ":" + name + ":" + value);
 
         switch (name) {
             case "ClassName":
@@ -229,22 +224,18 @@ export class ClassPanel extends React.Component {
                 });
                 break;
             case "LocationB":
-                console.log("Building Before: " + this.state.LocationB);
                 this.state.LocationB[selectedIndex] = value;
                 this.setState({
                     LocationB: this.state.LocationB,
                     Changed: true
                 });
-                console.log("Building After: " + this.state.LocationB);
                 break;
             case "LocationR":
-                console.log("Room before: " + this.state.LocationR);
                 this.state.LocationR[selectedIndex] = value;
                 this.setState({
                     LocationR: this.state.LocationR,
                     Changed: true
                 });
-                console.log("Room After: " + this.state.LocationR);
                 break;
             case "Prof":
                 this.setState({
@@ -268,7 +259,6 @@ export class ClassPanel extends React.Component {
                 this.state.TimeFrom[selectedIndex].hour(value);
 
                 this.setState({
-                    value: value,
                     TimeFrom: this.state.TimeFrom,
                     Changed: true
                 });
@@ -307,16 +297,16 @@ export class ClassPanel extends React.Component {
         }
     }
 
-    handleDateSelect(event) {
+    handleDateSelect(event, e) {
         const value = event.target.value;
 
-        if (findDate(this.state.Date, value)) {
-            let newDate1 = deleteDate(this.state.Date, value);
+        if (findDate(this.state.Date[e], value)) {
+            let newDate1 = deleteDate(this.state.Date, value, e);
             this.setState({
                 Date: newDate1,
             });
         } else {
-            let newDate2 = addDate(this.state.Date, value);
+            let newDate2 = addDate(this.state.Date, value, e);
             this.setState({
                 Date: newDate2,
                 backgroundColor: "#ff0000"
@@ -350,18 +340,39 @@ export class ClassPanel extends React.Component {
     handleTabAdd() {
         const newTabs = this.state.Tabs;
         const count = "Time " + (newTabs[newTabs.length - 1].id + 2);
-
-        console.log(newTabs);
+        const length = newTabs.length;
+        const TimeFrom = this.state.TimeFrom;
+        const TimeTo = this.state.TimeTo;
+        const Date = this.state.Date;
+        const Types = this.state.Types;
+        const LocationB = this.state.LocationB;
+        const LocationR = this.state.LocationR;
 
         for (let i = 0; i < newTabs.length; i++) {
             newTabs[i].active = false;
         }
 
+        TimeFrom.push(moment("00:00 am", "HH:mm a"));
+        TimeTo.push(moment("00:00 am", "HH:mm a"));
+        Date.push([""]);
+        Types.push("");
+        LocationB.push("");
+        LocationR.push("");
+
+        this.setState({
+            TimeFrom: TimeFrom,
+            TimeTo: TimeTo,
+            Date: Date,
+            Types: Types,
+            LocationB: LocationB,
+            LocationR: LocationR
+        });
+
         newTabs.push({
             id: (newTabs[newTabs.length - 1].id + 1),
             content: count,
             active: true,
-            display: this.createDetailPanel(99),
+            display: this.createDetailPanel(length),
         });
 
         this.setState({
@@ -372,21 +383,49 @@ export class ClassPanel extends React.Component {
     }
 
     handleTabClose(removedIndex) {
-        let newTabs = this.state.Tabs;
+        const newTabs = this.state.Tabs;
         let activeTab = removedIndex;
+        const TimeFrom = this.state.TimeFrom;
+        const TimeTo = this.state.TimeTo;
+        const Date = this.state.Date;
+        const Types = this.state.Types;
+        const LocationB = this.state.LocationB;
+        const LocationR = this.state.LocationR;
 
         for (let i = 0; i < newTabs.length; i++) {
             newTabs[i].active = false;
         }
 
         newTabs.splice(removedIndex, 1);
+        TimeFrom.splice(removedIndex, 1);
+        TimeTo.splice(removedIndex, 1);
+        Date.splice(removedIndex, 1);
+        Types.splice(removedIndex, 1);
+        LocationB.splice(removedIndex, 1);
+        LocationR.splice(removedIndex, 1);
 
         if (removedIndex === 0) {
+            TimeFrom.push(moment("00:00 am", "HH:mm a"));
+            TimeTo.push(moment("00:00 am", "HH:mm a"));
+            Date.push([""]);
+            Types.push("");
+            LocationB.push("");
+            LocationR.push("");
+
+            this.setState({
+                TimeFrom: TimeFrom,
+                TimeTo: TimeTo,
+                Date: Date,
+                Types: Types,
+                LocationB: LocationB,
+                LocationR: LocationR
+            });
+
             newTabs.push({
                 id: 0,
                 content: "Time 1",
                 active: true,
-                display: this.createDetailPanel(99)
+                display: this.createDetailPanel(0)
             });
             activeTab = 0;
         } else {
@@ -395,6 +434,12 @@ export class ClassPanel extends React.Component {
         }
 
         this.setState({
+            TimeFrom: TimeFrom,
+            TimeTo: TimeTo,
+            Date: Date,
+            Types: Types,
+            LocationB: LocationB,
+            LocationR: LocationR,
             activeTabIndex: activeTab,
             Tabs: newTabs
         });
@@ -405,57 +450,15 @@ export class ClassPanel extends React.Component {
             this.state.Tabs = [""];
         }
 
-        /*
-        if (this.state.Types.length === 0) {
-            this.state.Tabs.push({
-                id: 0,
-                content: "Time 1",
-                active: true,
-                display: this.createDetailPanel(99)
-            });
-        } else {
-            const type1 = "LEC";
-            const type2 = "TUT";
-            const type3 = "LAB";
-            let count1 = 1;
-            let count2 = 1;
-            let count3 = 1;
-            let content = "Time 1";
-
-            for (let i = 0; i < this.state.Types.length; i++) {
-                if (this.state.Types[i] === type1) {
-                    content = "LEC " + count1;
-                    count1++;
-                } else if (this.state.Types[i] === type2) {
-                    content = "TUT " + count2;
-                    count2++;
-                } else if (this.state.Types[i] === type3) {
-                    content = "LAB " + count3;
-                    count3++;
-                }
-
-                let active = false;
-                active = i === this.state.activeTabIndex;
-
-                this.state.Tabs[i] = {
-                    id: i,
-                    content: content,
-                    active: active,
-                    display: this.createDetailPanel(i)
-                };
-            }
-        }
-        */
-
         const type1 = "LEC";
         const type2 = "TUT";
         const type3 = "LAB";
         let count1 = 1;
         let count2 = 1;
         let count3 = 1;
-        let content = "Time 1";
+        let content;
 
-        for (let i = 0; i < this.state.Types.length; i++) {
+        for (let i = 0; i < this.state.Date.length; i++) {
             if (this.state.Types[i] === type1) {
                 content = "LEC " + count1;
                 count1++;
@@ -465,6 +468,8 @@ export class ClassPanel extends React.Component {
             } else if (this.state.Types[i] === type3) {
                 content = "LAB " + count3;
                 count3++;
+            } else {
+                content = "Time " + (i + 1);
             }
 
             let active = false;
@@ -538,7 +543,7 @@ export class ClassPanel extends React.Component {
                 <select className="inputs" id="classType" name="Types"
                         value={this.state.Types[i]}
                         onChange={(event) => this.handleSelectChange(event, i)}>
-                    <option value="" disabled selected>Select your class types</option>
+                    <option value="" disabled>Select your class types</option>
                     {ClassPanel.Types()}
                 </select>),
             //location information
