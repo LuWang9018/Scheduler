@@ -18,7 +18,6 @@ function GenSaveButtons(props) {
                 delete TMPClass.Changed;
                 return props.onClick({
                     AddClassWindowOn: false,
-                    Status: "Finish",
                     Class: TMPClass,
                     Situation: Situation
                 })
@@ -30,7 +29,7 @@ function GenSaveButtons(props) {
 function GenCancelButtons(props) {
     return React.createElement("div", {},
         <GenCancelButton
-            onClick={() => props.onClick({AddClassWindowOn: false, Status: "Finish"})}
+            onClick={() => props.onClick({AddClassWindowOn: false})}
         />
     )
 }
@@ -101,9 +100,9 @@ export class ClassPanel extends React.Component {
             Color: ["red"],
             Situation: "Cancel",
             Changed: false,
-            Tabs: [],
+            Tabs: [""],
             ActiveTabIndex: 0,
-            Status: "Continue"
+            //Alert: false
         };
 
         //initial state
@@ -113,10 +112,11 @@ export class ClassPanel extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleDateSelect = this.handleDateSelect.bind(this);
-        this.handleTabMove = this.handleTabMove.bind(this);
+        //this.handleTabMove = this.handleTabMove.bind(this);
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.handleTabAdd = this.handleTabAdd.bind(this);
         this.handleTabClose = this.handleTabClose.bind(this);
+        this.handleCloseWindow = this.handleCloseWindow.bind(this);
     }
 
     static Hours() {
@@ -167,7 +167,7 @@ export class ClassPanel extends React.Component {
                 name: day[i],
                 value: days[i],
                 key: i,
-                //style: {backgroundColor: bColor},
+                style: {backgroundColor: bColor},
                 onClick: (event) => this.handleDateSelect(event, e)
             }, day[i]);
         }
@@ -184,9 +184,16 @@ export class ClassPanel extends React.Component {
             this.setState({Situation: "Add"});
         }
 
-        if (this.props.AddClassWindowOn && nextProps.Status === "Finish" && nextProps.Situation === "") {
+        if (this.props.AddClassWindowOn) {
             this.setState(this.initialState);
         }
+    }
+
+    handleCloseWindow() {
+        return <div>
+
+        </div>;
+        this.props.onClick;
     }
 
     handleInputChange(event, selectedIndex) {
@@ -245,6 +252,8 @@ export class ClassPanel extends React.Component {
                 });
                 break;
         }
+
+        console.log(this.state.Changed);
     }
 
     handleClassNameChange() {
@@ -296,6 +305,8 @@ export class ClassPanel extends React.Component {
                 });
                 break;
         }
+
+        console.log(this.state.Changed);
     }
 
     handleDateSelect(event, e) {
@@ -318,9 +329,11 @@ export class ClassPanel extends React.Component {
                 Changed: true
             });
         }
+
+        console.log(this.state.Changed);
     }
 
-    handleTabMove(dragIndex, hoverIndex) {
+    /*handleTabMove(dragIndex, hoverIndex) {
         let newTabs = this.state.Tabs;
 
         newTabs.splice(hoverIndex, 0, newTabs.splice(dragIndex, 1)[0]);
@@ -329,7 +342,9 @@ export class ClassPanel extends React.Component {
             Tabs: newTabs,
             Changed: true
         });
-    }
+
+        console.log(this.state.Changed);
+    }*/
 
     handleTabSelect(selectedIndex) {
         const newTabs = this.state.Tabs;
@@ -340,8 +355,7 @@ export class ClassPanel extends React.Component {
 
         this.setState({
             ActiveTabIndex: selectedIndex,
-            Tabs: newTabs,
-            Changed: true
+            Tabs: newTabs
         });
     }
 
@@ -388,6 +402,8 @@ export class ClassPanel extends React.Component {
             Tabs: newTabs,
             Changed: true
         });
+
+        console.log(this.state.Changed);
     }
 
     handleTabClose(removedIndex) {
@@ -455,10 +471,12 @@ export class ClassPanel extends React.Component {
             Tabs: newTabs,
             Changed: true
         });
+
+        console.log(this.state.Changed);
     }
 
     newTabs() {
-        if (!this.state.Changed) {
+        if (this.state.Situation === "Add") {
             this.state.Tabs = [""];
         }
 
@@ -499,7 +517,7 @@ export class ClassPanel extends React.Component {
 
         return <div className="tabs">
             <Tabs
-                moveTab={this.handleTabMove}
+                //moveTab={this.handleTabMove}
                 selectTab={this.handleTabSelect}
                 closeTab={this.handleTabClose}
                 tabs={this.state.Tabs}
@@ -672,7 +690,7 @@ export class ClassPanel extends React.Component {
             React.createElement(
                 'div', {
                     className: "groundLevel",
-                    onClick: this.props.onClick
+                    onClick: this.handleClosePanel
                 }
             )
         )
