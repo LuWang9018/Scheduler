@@ -1,3 +1,8 @@
+:root{
+    --tab-color: hsl(0, 0%, 96%);
+    --colored: #4d9900;
+}
+
 /*Tabs property*/
 div.tabs{
 	margin-top: 3px;
@@ -9,14 +14,13 @@ div.tabs{
     /*min-width: 450px;*/
     background-color: white; 
     /*box-shadow: 2px 2px 2px 2px rgba(136, 136, 136,0.5);*/
-    font-size: 2.5vh;
+    font-size: 16px;
     border-radius: 10px 10px 10px 10px;
 }
 
 
 div.react-tabs-container{
     margin: 0;
-
     display: -webkit-box;
     display: -moz-box;
     display: -ms-flexbox;
@@ -52,8 +56,9 @@ div.react-tabs-tab{
 
 div.react-tabs-active{
     /*border-bottom: 2px solid white;*/
-    background-color: #d9d9d9;
+    background-color: var(--tab-color);
     z-index: 100;
+    border-color:var(--colored);
 }
 
 div.react-tabs-tab-content{
@@ -95,7 +100,7 @@ div.react-tabs-child{
 }
 
 div.react-tabs-child button{
-    background-color: #d9d9d9;
+    background-color: var(--tab-color);
     border:none;
     width: 25px;
     height: 25px;
@@ -112,24 +117,25 @@ div.react-tabs-tab:hover .react-tabs-tab-close{
 
 
 div.react-tabs-active .react-tabs-tab-close:hover{
+    background-color: var(--colored);
 }
 
 div.classDetail{
     /*border: 2px solid red;*/
     padding-left: 5px;
-    background-color: #d9d9d9; 
+    background-color: var(--tab-color); 
     z-index: -70;
     box-shadow: 5px 5px 3px rgba(136, 136, 136,0.5);
 }
 
 div.classDetail select{
-    background-color: #d9d9d9;
+    background-color: var(--tab-color);
 }
 
 div.classDetail button{
-    background-color: #d9d9d9;
+    background-color: var(--tab-color);
 }
 
 div.classDetail input{
-    background-color: #d9d9d9;
+    background-color: var(--tab-color);
 }

@@ -1,16 +1,18 @@
 /*@import url("globle.css");*/
 
 :root {
+
+	--min-timetable-width: 500px;
 	
 	--cell-width: calc((100%)/7);
-	--cell-height: 20px;
+	--cell-height: 30px;
 	/*3vh;*/
-	--day-height: 20px; 
+	--day-height: 30px; 
 	/*3vh;*/
 	--min-height: 3vw;
-	--time-width: 7vh;
+	--time-width: 40px;
 
-	--font-size-time: 2vh;
+	--font-size-time: 12px;
 	--font-size-day: 18px;
 }
 
@@ -32,7 +34,7 @@ div{
 	height:100%;
 	background-color: #ffffff;
 	/*background-color: #3399ff;*/
-	min-width: 500px;
+	min-width: var(--min-timetable-width);
 	position: absolute;
 }
 
@@ -46,7 +48,7 @@ div{
 .TimeTableDayColumns{
     position: absolute;
     left: var(--time-width);
-    right:1px;
+    right:10px;
 	height:100%;
 }
 
@@ -99,16 +101,16 @@ div{
 }
 
 @media screen and (max-device-width:500px){ 
-	:root{--font-size-day: 40px; --font-size-time: 30px; --time-width: 80px; --cell-height: 5vh; --day-height: 5vh;} 
+	:root{--min-timetable-width: 500px; --font-size-day: 40px; --font-size-time: 20px; --time-width: 60px; --cell-height: 80px; --day-height: 80px;} 
 }
 
 @media screen and (min-device-height:1800px){ 
-	:root{--font-size-day: 78px; --font-size-time: 30px; --time-width: 80px; --cell-height: 80px; --day-height: 80px;} 
+	:root{--min-timetable-width: 1000px; --font-size-day: 78px; --font-size-time: 30px; --time-width: 100px; --cell-height: 140px; --day-height: 140px;} 
 }
 
-@media screen and (max-device-height:600px){ 
+/*@media screen and (max-device-height:600px){ 
 	:root{--font-size-time: 15px;--time-width: 80px;} 
-}
+}*/
 
 
 /*css for AddClassWindow*/

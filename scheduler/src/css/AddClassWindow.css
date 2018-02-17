@@ -1,3 +1,13 @@
+:root{
+	--input-width: 150px;
+	--input-height: 20px;
+	--select-width: 75px;
+	--select-height: 20px;
+	--button-width: 50px;
+	--button-height: 20px;
+	--inside-font-size: 14px;
+
+};
 div{
 	margin: 0px;
 	box-sizing:border-box;
@@ -17,7 +27,7 @@ div.AddClassWindow{
     background-color: white; 
     box-shadow: 10px 10px 5px rgba(136, 136, 136,0.5);
     z-index: 10; 
-    font-size: 14;
+    font-size: 16px;
     border: 1px rgba(136, 136, 136,0.5);
     border-radius: 10px 10px 10px 10px;
 }
@@ -25,22 +35,26 @@ div.AddClassWindow{
 
 input {
     border: none;
-    border-bottom: 1px solid black;
-    border-right: 1px solid black;
+    border: 1px solid hsl(0, 0%, 90%);
     background-color: white; 
-    width: 10;
-    font-size:12;
+    width: var(--input-width);
+    height: var(--input-height);
+    font-size: (--inside-font-size);
 }
 
 select {
-	width: 10vw;
-    /*height: 4vh;*/
-    font-size:12;
+	width: var(--select-width);
+	height: var(--select-height);
+    font-size: (--inside-font-size);
+    border: 1px solid hsl(0, 0%, 90%);
 }
 
 button{
-    width: 10vh;
-    font-size:12;
+	margin-right: 5px;
+    width: var(button-width);
+    height: var(button-height);
+    font-size: (inside-font-size);
+    border: 1px solid hsl(0, 0%, 90%);
 
 }
 
@@ -49,7 +63,7 @@ div.panelTitle{
 	width: 100%;
 	height: 10%;
 	position: relative;
-	background-color: #4d9900;
+	background-color: var(--colored);
 	margin-left:0px;
 	border: 1px rgba(136, 136, 136,0.5);
     border-radius: 10px 10px 0px 0px;
@@ -91,52 +105,19 @@ div.classInput{
 }
 
 input#ClassName.inputs{
-	width: 30%;
 	margin-right: 5px;
 }
 
-input#ClassSection.inputs{
-	width: 30%;
+input#ClassTitleName.inputs{
+	width: calc(2*var(--input-width));
 }
 
-input#ClassTitleName.inputs{
-	width: 60%;
+div#ProfInfo.AddSection{
+	margin-left: 5px;
 }
 
 @import url("tabStyle.css");
 
-
-
-.tabButton{
-	display: inline-block;
-}
-
-.tab {
-	margin-bottom: -1px;
-    float:left;
-    display: inline-block;
-    vertical-align: top;
-    border: solid 1px black;
-    border-radius: 5px 5px 0px 0px;
-}
-
-.tab#tabindex{
-	position:relative;
-	width: 10%;
-}
-
-.tab button{
-	border: 0;
-}
-
-
-.tabContent{
-	margin-top: 0;
-	padding:5px;
-	border: solid 1px black;
-	box-shadow: 2px 2px 2px 2px rgba(136, 136, 136,0.5);
-	border-radius: 0px 0px 5px 5px;
-}
 
 /*Timeinfo properties*/
 div#TimeInfo.AddSection{
@@ -157,7 +138,6 @@ div.stopTime{
 .AddSection#TimeInfo select{
 	position: relative;	
 	float: left;
-	width: 40%;
 }
 
 .AddSection#TimeInfo select option{
@@ -168,19 +148,18 @@ div.stopTime{
 
 /*Date SelectButton*/
 div#DateSection.AddSection{
+
 	clear:left;
 }
 div.DateTime{
-	margin-top:0.5vh;
-	margin-bottom: 0.25vh;
 	width: 100%;
 }
 
 .DateTimeInput button{
 	width: 10%;
-    height: 4vh;
 	text-align: center;
 	margin-right:-1px;
+	border: 0;
 }
 
 .AddSection#DateSection button:hover{
@@ -188,7 +167,7 @@ div.DateTime{
 	background-color: #66cc00;
 }
 .AddSection#DateSection button:focus{
-	background-color: #4d9900;
+	background-color: var(--colored);
 }
 
 /*classType properties*/
@@ -201,15 +180,15 @@ div.classType{
 
 select#classType.inputs{
 	position: relative;	
-	width: 10%;
 }
 
 /*PlaceInfo properties*/
 div.LocationTitle{
 	width: 100%;
 }
-div.inputs.classLocationTitle{
-	width: 30%;
+
+input#PlaceBuilding.inputs{
+	margin-right: 5px;
 }
 
 
@@ -221,15 +200,22 @@ div.ColorTitle{
 }
 .colorInput button{
 	position:relative;
-	width: 10px;
-	height: 10px;
+	padding: 0px;
+	width: 15px;
+	height: 15px;
 	margin-right: 2%;
 	border-radius: 50%;
 }
 
-.SelectButton#color1 button{
+button#color1.SelectButton{
 	border:0;
-	background-color:#00ccff;
+	padding:1px;
+	background-color: black;
+}
+
+.colorInput.SelectButton#color1 button{
+	border:0;
+	background-color: black;
 }
 .SelectButton#color1 button:hover{
 	border: 1px black;
