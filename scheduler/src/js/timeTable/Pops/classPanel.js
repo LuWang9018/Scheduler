@@ -18,6 +18,7 @@ function GenSaveButtons(props) {
                 delete TMPClass.Changed;
                 return props.onClick({
                     AddClassWindowOn: false,
+                    Status: "Finish",
                     Class: TMPClass,
                     Situation: Situation
                 })
@@ -29,7 +30,7 @@ function GenSaveButtons(props) {
 function GenCancelButtons(props) {
     return React.createElement("div", {},
         <GenCancelButton
-            onClick={() => props.onClick({AddClassWindowOn: false})}
+            onClick={() => props.onClick({AddClassWindowOn: false, Status: "Finish"})}
         />
     )
 }
@@ -101,8 +102,8 @@ export class ClassPanel extends React.Component {
             Situation: "Cancel",
             Changed: false,
             Tabs: [],
-            TabChanged: false,
-            activeTabIndex: 0
+            ActiveTabIndex: 0,
+            Status: "Continue"
         };
 
         //initial state
@@ -166,7 +167,7 @@ export class ClassPanel extends React.Component {
                 name: day[i],
                 value: days[i],
                 key: i,
-                style: {backgroundColor: bColor},
+                //style: {backgroundColor: bColor},
                 onClick: (event) => this.handleDateSelect(event, e)
             }, day[i]);
         }
@@ -183,7 +184,7 @@ export class ClassPanel extends React.Component {
             this.setState({Situation: "Add"});
         }
 
-        if (this.props.AddClassWindowOn) {
+        if (this.props.AddClassWindowOn && nextProps.Status === "Finish" && nextProps.Situation === "") {
             this.setState(this.initialState);
         }
     }
@@ -197,7 +198,7 @@ export class ClassPanel extends React.Component {
                 const parts = value.match(/([A-Za-z]+)([0-9]+)/);
                 if (parts == null) {
                     this.setState({
-                        Classname: value,
+                        ClassName: value,
                         Name: value,
                         Code: "",
                         Changed: true
@@ -307,12 +308,14 @@ export class ClassPanel extends React.Component {
             let newDate1 = deleteDate(this.state.Date, value, e);
             this.setState({
                 Date: newDate1,
+                Changed: true
             });
         } else {
             let newDate2 = addDate(this.state.Date, value, e);
             this.setState({
                 Date: newDate2,
-                backgroundColor: "#ff0000"
+                //backgroundColor: "#ff0000",
+                Changed: true
             });
         }
     }
@@ -323,7 +326,8 @@ export class ClassPanel extends React.Component {
         newTabs.splice(hoverIndex, 0, newTabs.splice(dragIndex, 1)[0]);
 
         this.setState({
-            Tabs: newTabs
+            Tabs: newTabs,
+            Changed: true
         });
     }
 
@@ -335,8 +339,9 @@ export class ClassPanel extends React.Component {
         }
 
         this.setState({
-            activeTabIndex: selectedIndex,
-            Tabs: newTabs
+            ActiveTabIndex: selectedIndex,
+            Tabs: newTabs,
+            Changed: true
         });
     }
 
@@ -379,9 +384,9 @@ export class ClassPanel extends React.Component {
         });
 
         this.setState({
-            TabChanged: true,
-            activeTabIndex: (newTabs.length - 1),
-            Tabs: newTabs
+            ActiveTabIndex: (newTabs.length - 1),
+            Tabs: newTabs,
+            Changed: true
         });
     }
 
@@ -446,13 +451,14 @@ export class ClassPanel extends React.Component {
             Types: Types,
             LocationB: LocationB,
             LocationR: LocationR,
-            activeTabIndex: activeTab,
-            Tabs: newTabs
+            ActiveTabIndex: activeTab,
+            Tabs: newTabs,
+            Changed: true
         });
     }
 
     newTabs() {
-        if (!this.state.TabChanged) {
+        if (!this.state.Changed) {
             this.state.Tabs = [""];
         }
 
@@ -479,7 +485,7 @@ export class ClassPanel extends React.Component {
             }
 
             let active = false;
-            active = i === this.state.activeTabIndex;
+            active = i === this.state.ActiveTabIndex;
 
             this.state.Tabs[i] = {
                 id: i,
@@ -654,10 +660,12 @@ export class ClassPanel extends React.Component {
                         onClick={(i) => this.props.onClick(i)}
                     />,
                     <GenCancelButtons
-                        onClick={() => this.props.onClick({
-                            AddClassWindowOn: false,
-                            Action: "Cancel"
-                        })}
+                        onClick={() => {
+                            this.props.onClick({
+                                AddClassWindowOn: false,
+                                Action: "Cancel"
+                            })
+                        }}
                     />)
             ),
             //Add gray background
