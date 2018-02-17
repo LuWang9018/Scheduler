@@ -72,8 +72,8 @@ function addDate(dates, day, e) {
 
 function deleteDate(dates, day, e) {
     for (let i = 0; i < dates[e].length; i++) {
-        if (dates[i].indexOf(day) !== -1) {
-            dates[i].splice(dates[i].indexOf(day), 1);
+        if (dates[e][i].indexOf(day) === 0) {
+            dates[e].splice(i, 1);
         }
     }
 
@@ -300,6 +300,9 @@ export class ClassPanel extends React.Component {
     handleDateSelect(event, e) {
         const value = event.target.value;
 
+        console.log("Date Change:");
+        console.log(value + ":" + e);
+
         if (findDate(this.state.Date[e], value)) {
             let newDate1 = deleteDate(this.state.Date, value, e);
             this.setState({
@@ -428,6 +431,9 @@ export class ClassPanel extends React.Component {
                 display: this.createDetailPanel(0)
             });
             activeTab = 0;
+        } else if (removedIndex === newTabs.length) {
+            newTabs[removedIndex - 1].active = true;
+            activeTab = removedIndex - 1;
         } else {
             newTabs[removedIndex].active = true;
             activeTab = removedIndex;
@@ -586,7 +592,6 @@ export class ClassPanel extends React.Component {
         const Class = this.state;
         console.log("Update panel contents:");
         console.log(Class);
-        this.handleClassNameChange();
 
         //Add class panel detail
         return React.createElement("div", {},
@@ -627,8 +632,6 @@ export class ClassPanel extends React.Component {
                             onChange={this.handleInputChange}
                         />)
                 ),
-                //Class Detail tabs
-                this.newTabs(),
                 //Add prof name
                 React.createElement("div", {className: "AddSection", id: "ProfInfo"},
                     React.createElement("div", {className: "ProfTitle"}, "Prof: "),
@@ -642,6 +645,8 @@ export class ClassPanel extends React.Component {
                             onChange={this.handleInputChange}
                         />)
                 ),
+                //Class Detail tabs
+                this.newTabs(),
                 //Save and Cancel button
                 React.createElement("div", {className: "AddSectionButton"},
                     <GenSaveButtons
@@ -667,6 +672,7 @@ export class ClassPanel extends React.Component {
 
     passPanel() {
         if (this.props.AddClassWindowOn) {
+            this.handleClassNameChange();
             return this.createPanel();
         } else {
             return null;
