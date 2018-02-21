@@ -1,6 +1,6 @@
 import React from "react";
 import Tabs from "react-draggable-tabs";
-import {ReactModal} from "react-modal";
+import {ReactModal} from "react-modal/dist/react-modal";
 
 const moment = require('moment');
 
@@ -102,7 +102,8 @@ export class ClassPanel extends React.Component {
             Situation: "Cancel",
             Changed: false,
             Tabs: [""],
-            ActiveTabIndex: 0
+            ActiveTabIndex: 0,
+            showModal: false
         };
 
         //initial state
@@ -117,6 +118,8 @@ export class ClassPanel extends React.Component {
         this.handleTabAdd = this.handleTabAdd.bind(this);
         this.handleTabClose = this.handleTabClose.bind(this);
         this.handleCloseWindow = this.handleCloseWindow.bind(this);
+        this.handleOpenModal = this.handleOpenModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
     }
 
     static Hours() {
@@ -189,10 +192,21 @@ export class ClassPanel extends React.Component {
         }
     }
 
-    handleCloseWindow() {
-        return <div className="PopWindow">
-            <ReactModal>
+    handleOpenModal() {
+        this.setState({showModal: true});
+    }
 
+    handleCloseModal() {
+        this.setState({showModal: false});
+    }
+
+    handleCloseWindow() {
+        //this.props.onClick;
+        return <div className="PopWindow">
+            <ReactModal
+                isOpen={this.state.showModal}
+                contentLabel="Alert Message">
+                <h1>Hello!!!</h1>
             </ReactModal>
         </div>;
     }
