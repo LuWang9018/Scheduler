@@ -1,5 +1,6 @@
 import React from "react";
 import Tabs from "react-draggable-tabs";
+import {ReactModal} from "react-modal";
 
 const moment = require('moment');
 
@@ -101,8 +102,7 @@ export class ClassPanel extends React.Component {
             Situation: "Cancel",
             Changed: false,
             Tabs: [""],
-            ActiveTabIndex: 0,
-            //Alert: false
+            ActiveTabIndex: 0
         };
 
         //initial state
@@ -190,10 +190,11 @@ export class ClassPanel extends React.Component {
     }
 
     handleCloseWindow() {
-        return <div>
+        return <div className="PopWindow">
+            <ReactModal>
 
+            </ReactModal>
         </div>;
-        this.props.onClick;
     }
 
     handleInputChange(event, selectedIndex) {
@@ -625,7 +626,7 @@ export class ClassPanel extends React.Component {
                     React.createElement("div", {className: "TitleTitle"},
                         "New Class")),
                 //Class information
-                React.createElement("div", {className: "AddSection", id: "ClassInfo"},
+                React.createElement("div", {className: "AddSection", id: "ClassTitle"},
                     React.createElement("div", {className: "classTitle"}, "Class: "),
                     React.createElement("div", {className: "classInput"},
                         <input
@@ -644,7 +645,8 @@ export class ClassPanel extends React.Component {
                             value={this.state.Section}
                             onChange={this.handleInputChange}
                         />
-                    ),
+                    )),
+                React.createElement("div", {className: "AddSection", id: "ClassDetail"},
                     React.createElement("div", {className: "classTitle"}, "Class Detail: "),
                     React.createElement("div", {className: "classInput"},
                         <input
@@ -654,8 +656,7 @@ export class ClassPanel extends React.Component {
                             placeholder="Example: Introduction of Java"
                             value={this.state.TitleName}
                             onChange={this.handleInputChange}
-                        />)
-                ),
+                        />)),
                 //Add prof name
                 React.createElement("div", {className: "AddSection", id: "ProfInfo"},
                     React.createElement("div", {className: "ProfTitle"}, "Prof: "),
@@ -690,7 +691,7 @@ export class ClassPanel extends React.Component {
             React.createElement(
                 'div', {
                     className: "groundLevel",
-                    onClick: this.handleClosePanel
+                    onClick: ClassPanel.handleCloseWindow
                 }
             )
         )

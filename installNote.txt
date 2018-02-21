@@ -15,6 +15,7 @@ Install all of these:
 	npm install moment --save
 	npm install immutability-helper --save
 	npm install react-draggable-tabs --save
+	npm install react-modal-dialog
 	
 Run server:
 	npm run dev
