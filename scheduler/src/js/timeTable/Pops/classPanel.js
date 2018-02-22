@@ -1,6 +1,6 @@
 import React from "react";
 import Tabs from "react-draggable-tabs";
-import {ReactModal} from "react-modal/dist/react-modal";
+import {AlertWindow} from "./AlertWindow";
 
 const moment = require('moment');
 
@@ -103,23 +103,22 @@ export class ClassPanel extends React.Component {
             Changed: false,
             Tabs: [""],
             ActiveTabIndex: 0,
-            showModal: false
+            visible: false,
+            visibleChange: false
         };
 
         //initial state
         this.initialState = this.state;
+        this.initialVisible = this.state.visible;
 
         //bind handler
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleDateSelect = this.handleDateSelect.bind(this);
-        //this.handleTabMove = this.handleTabMove.bind(this);
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.handleTabAdd = this.handleTabAdd.bind(this);
         this.handleTabClose = this.handleTabClose.bind(this);
-        this.handleCloseWindow = this.handleCloseWindow.bind(this);
-        this.handleOpenModal = this.handleOpenModal.bind(this);
-        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.handleAlert = this.handleAlert.bind(this);
     }
 
     static Hours() {
@@ -190,25 +189,12 @@ export class ClassPanel extends React.Component {
         if (this.props.AddClassWindowOn) {
             this.setState(this.initialState);
         }
-    }
 
-    handleOpenModal() {
-        this.setState({showModal: true});
-    }
-
-    handleCloseModal() {
-        this.setState({showModal: false});
-    }
-
-    handleCloseWindow() {
-        //this.props.onClick;
-        return <div className="PopWindow">
-            <ReactModal
-                isOpen={this.state.showModal}
-                contentLabel="Alert Message">
-                <h1>Hello!!!</h1>
-            </ReactModal>
-        </div>;
+        if (this.state.visibleChange) {
+            this.setState({
+                visible: this.initialVisible
+            });
+        }
     }
 
     handleInputChange(event, selectedIndex) {
@@ -348,18 +334,12 @@ export class ClassPanel extends React.Component {
         console.log(this.state.Changed);
     }
 
-    /*handleTabMove(dragIndex, hoverIndex) {
-        let newTabs = this.state.Tabs;
-
-        newTabs.splice(hoverIndex, 0, newTabs.splice(dragIndex, 1)[0]);
-
+    handleAlert() {
         this.setState({
-            Tabs: newTabs,
-            Changed: true
+            visible: !this.state.visible,
+            visibleChange: !this.state.visibleChange
         });
-
-        console.log(this.state.Changed);
-    }*/
+    }
 
     handleTabSelect(selectedIndex) {
         const newTabs = this.state.Tabs;
@@ -532,7 +512,6 @@ export class ClassPanel extends React.Component {
 
         return <div className="tabs">
             <Tabs
-                //moveTab={this.handleTabMove}
                 selectTab={this.handleTabSelect}
                 closeTab={this.handleTabClose}
                 tabs={this.state.Tabs}
@@ -705,9 +684,14 @@ export class ClassPanel extends React.Component {
             React.createElement(
                 'div', {
                     className: "groundLevel",
-                    onClick: ClassPanel.handleCloseWindow
+                    onClick: this.handleAlert
                 }
-            )
+            ),
+            React.createElement("div", {},
+                console.log("Send: " + this.state.visible),
+                <AlertWindow
+                    visible={this.state.visible}
+                />)
         )
     }
 
