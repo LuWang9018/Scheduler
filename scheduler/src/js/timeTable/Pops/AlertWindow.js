@@ -8,8 +8,6 @@ export class AlertWindow extends React.Component {
         this.state = {
             visible: false
         };
-
-        this.closeModal = this.closeModal.bind(this);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -20,12 +18,6 @@ export class AlertWindow extends React.Component {
         }
     }
 
-    closeModal() {
-        this.setState({
-            visible: !this.props.visible
-        });
-    }
-
     render() {
         console.log("Display Alert Window");
         console.log("Props:" + this.props.visible);
@@ -34,14 +26,12 @@ export class AlertWindow extends React.Component {
             <p className="alertText">
                 Do you really want to close without save any change?</p>
             <div className="alertButton">
-                <button className="alertYes" name="alertYes" onClick={() => {
-                    this.props.onClick({
-                        AddClassWindowOn: false,
-                        Action: "Cancel"
-                    })
-                }}>Yes
+                <button className="alertYes" name="alertYes"
+                        onClick={this.props.changeVisible}>Yes
                 </button>
-                <button className="alertNo" name="alertNo" onClick={this.closeModal}>Cancel</button>
+                <button className="alertNo" name="alertNo"
+                        onClick={this.props.changeVisible}>Cancel
+                </button>
             </div>
         </Modal>
     }

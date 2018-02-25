@@ -103,13 +103,11 @@ export class ClassPanel extends React.Component {
             Changed: false,
             Tabs: [""],
             ActiveTabIndex: 0,
-            visible: false,
-            visibleChange: false
+            visible: false
         };
 
         //initial state
         this.initialState = this.state;
-        this.initialVisible = this.state.visible;
 
         //bind handler
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -188,12 +186,6 @@ export class ClassPanel extends React.Component {
 
         if (this.props.AddClassWindowOn) {
             this.setState(this.initialState);
-        }
-
-        if (this.state.visibleChange) {
-            this.setState({
-                visible: this.initialVisible
-            });
         }
     }
 
@@ -334,10 +326,17 @@ export class ClassPanel extends React.Component {
         console.log(this.state.Changed);
     }
 
-    handleAlert() {
+    handleAlert(event) {
+        const name = event.target.name;
+
+        if (name === "alertYes") {
+            this.props.onClick({
+                AddClassWindowOn: false
+            })
+        }
+
         this.setState({
-            visible: !this.state.visible,
-            visibleChange: !this.state.visibleChange
+            visible: !this.state.visible
         });
     }
 
@@ -691,6 +690,7 @@ export class ClassPanel extends React.Component {
                 console.log("Send: " + this.state.visible),
                 <AlertWindow
                     visible={this.state.visible}
+                    changeVisible={this.handleAlert}
                 />)
         )
     }
