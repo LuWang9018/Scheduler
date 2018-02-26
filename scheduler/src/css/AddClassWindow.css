@@ -1,6 +1,6 @@
 :root{
 	--input-width: 150px;
-	--input-height: 20px;
+	--input-height: 15px;
 	--select-width: 75px;
 	--select-height: 20px;
 	--button-width: 50px;
@@ -27,7 +27,7 @@ div.AddClassWindow{
     background-color: white; 
     box-shadow: 10px 10px 5px rgba(136, 136, 136,0.5);
     z-index: 10; 
-    font-size: 16px;
+    font-size: 14px;
     border: 1px rgba(136, 136, 136,0.5);
     border-radius: 10px 10px 10px 10px;
 }
@@ -84,24 +84,28 @@ div.TitleTitle{
 }
 
 /*ClassInfo propertie*/
-div#ClassInfo.AddSection{
+div#ClassTitle.AddSection{
 	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 2px;
+	width: 100%;
+}
+
+div#ClassDetail.AddSection{
+	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 2px;
 	width: 100%;
 }
 
 div.classTitle{
-	margin-top: 3px;
-	margin-bottom: 2px; 
 	width: 100%;
 	height: 20px;
 }
 
 div.classInput{
-	margin-top: 3px;
-	margin-bottom: 2px; 
 	width: 100%;
 	height: 20px;
-
 }
 
 input#ClassName.inputs{
@@ -112,31 +116,66 @@ input#ClassTitleName.inputs{
 	width: calc(2*var(--input-width));
 }
 
+/*Prof properties*/
 div#ProfInfo.AddSection{
 	margin-left: 5px;
+	margin-top: 5px;
+	margin-bottom: 2px;
+	width:100%;
 }
+div.ProfTitle{
+	width:100%;
+	height: 20px;
+}
+input#ProfName.inputs{
+	width: 30%;
+	height: 20px;
+}
+
 
 @import url("tabStyle.css");
 
 
 /*Timeinfo properties*/
 div#TimeInfo.AddSection{
+	padding-top: 5px;
+	margin-bottom: 2px;
 	width: 100%;
-	clear:left;
+	height: 100px;
 }
+
 div.startTime{
-	position: relative;	
-	float: left;
-	width: 40%;
-}
-div.stopTime{
-	position: relative;	
 	float: left;
 	width: 40%;
 }
 
+div.StartTime{
+	margin-top:5px;
+	height:20px;
+}
+
+div.StartTimeInput{
+	margin-bottom: 2px;
+	height: 25px;
+}
+
+div.stopTime{
+	float: left;
+	width: 40%;
+}
+
+div.StopTime{
+	margin-top:5px;
+	height:20px;
+}
+
+div.StopTimeInput{
+	margin-bottom: 2px;
+	height: 20px;
+}
+
 .AddSection#TimeInfo select{
-	position: relative;	
+	/*position: relative;	*/
 	float: left;
 }
 
@@ -148,11 +187,12 @@ div.stopTime{
 
 /*Date SelectButton*/
 div#DateSection.AddSection{
-
 	clear:left;
 }
 div.DateTime{
 	width: 100%;
+	margin-top: 5px;
+	height: 20px;
 }
 
 .DateTimeInput button{
@@ -209,7 +249,7 @@ div.ColorTitle{
 
 button#color1.SelectButton{
 	border:0;
-	padding:1px;
+	padding: 1px;
 	background-color: black;
 }
 
@@ -242,18 +282,7 @@ button#color1.SelectButton{
 	background-color:#00ccff;
 }
 
-/*Prof properties*/
-div#ProfInfo.AddSection{
-	margin-top:0.5vh;
-	margin-bottom: 0.25vh;
-	width:100%;
-}
-div.ProfTitle{
-	width:100%;
-}
-input#ProfName.inputs{
-	width: 30%;
-}
+
 
 
 

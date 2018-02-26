@@ -1,5 +1,6 @@
 import React from "react";
 import Tabs from "react-draggable-tabs";
+import {AlertWindow} from "./AlertWindow";
 
 const moment = require('moment');
 
@@ -102,7 +103,7 @@ export class ClassPanel extends React.Component {
             Changed: false,
             Tabs: [""],
             ActiveTabIndex: 0,
-            //Alert: false
+            visible: false
         };
 
         //initial state
@@ -112,11 +113,10 @@ export class ClassPanel extends React.Component {
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSelectChange = this.handleSelectChange.bind(this);
         this.handleDateSelect = this.handleDateSelect.bind(this);
-        //this.handleTabMove = this.handleTabMove.bind(this);
         this.handleTabSelect = this.handleTabSelect.bind(this);
         this.handleTabAdd = this.handleTabAdd.bind(this);
         this.handleTabClose = this.handleTabClose.bind(this);
-        this.handleCloseWindow = this.handleCloseWindow.bind(this);
+        this.handleAlert = this.handleAlert.bind(this);
     }
 
     static Hours() {
@@ -187,13 +187,6 @@ export class ClassPanel extends React.Component {
         if (this.props.AddClassWindowOn) {
             this.setState(this.initialState);
         }
-    }
-
-    handleCloseWindow() {
-        return <div>
-
-        </div>;
-        this.props.onClick;
     }
 
     handleInputChange(event, selectedIndex) {
@@ -333,18 +326,19 @@ export class ClassPanel extends React.Component {
         console.log(this.state.Changed);
     }
 
-    /*handleTabMove(dragIndex, hoverIndex) {
-        let newTabs = this.state.Tabs;
+    handleAlert(event) {
+        const name = event.target.name;
 
-        newTabs.splice(hoverIndex, 0, newTabs.splice(dragIndex, 1)[0]);
+        if (name === "alertYes") {
+            this.props.onClick({
+                AddClassWindowOn: false
+            })
+        }
 
         this.setState({
-            Tabs: newTabs,
-            Changed: true
+            visible: !this.state.visible
         });
-
-        console.log(this.state.Changed);
-    }*/
+    }
 
     handleTabSelect(selectedIndex) {
         const newTabs = this.state.Tabs;
@@ -517,7 +511,6 @@ export class ClassPanel extends React.Component {
 
         return <div className="tabs">
             <Tabs
-                //moveTab={this.handleTabMove}
                 selectTab={this.handleTabSelect}
                 closeTab={this.handleTabClose}
                 tabs={this.state.Tabs}
@@ -625,7 +618,7 @@ export class ClassPanel extends React.Component {
                     React.createElement("div", {className: "TitleTitle"},
                         "New Class")),
                 //Class information
-                React.createElement("div", {className: "AddSection", id: "ClassInfo"},
+                React.createElement("div", {className: "AddSection", id: "ClassTitle"},
                     React.createElement("div", {className: "classTitle"}, "Class: "),
                     React.createElement("div", {className: "classInput"},
                         <input
@@ -644,7 +637,8 @@ export class ClassPanel extends React.Component {
                             value={this.state.Section}
                             onChange={this.handleInputChange}
                         />
-                    ),
+                    )),
+                React.createElement("div", {className: "AddSection", id: "ClassDetail"},
                     React.createElement("div", {className: "classTitle"}, "Class Detail: "),
                     React.createElement("div", {className: "classInput"},
                         <input
@@ -654,8 +648,7 @@ export class ClassPanel extends React.Component {
                             placeholder="Example: Introduction of Java"
                             value={this.state.TitleName}
                             onChange={this.handleInputChange}
-                        />)
-                ),
+                        />)),
                 //Add prof name
                 React.createElement("div", {className: "AddSection", id: "ProfInfo"},
                     React.createElement("div", {className: "ProfTitle"}, "Prof: "),
@@ -690,9 +683,15 @@ export class ClassPanel extends React.Component {
             React.createElement(
                 'div', {
                     className: "groundLevel",
-                    onClick: this.handleClosePanel
+                    onClick: this.handleAlert
                 }
-            )
+            ),
+            React.createElement("div", {},
+                console.log("Send: " + this.state.visible),
+                <AlertWindow
+                    visible={this.state.visible}
+                    changeVisible={this.handleAlert}
+                />)
         )
     }
 
