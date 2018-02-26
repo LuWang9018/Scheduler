@@ -10,6 +10,9 @@ var db = mysql.createConnection({
 	database : 'SchedulerSchema'
 })
 
+var user_id = 1;
+var semester_id = 1;
+
 function GetClass(){
 	db.query('SELECT * FROM Classes', function(err, rows, fields){
 		if(err){
@@ -21,10 +24,10 @@ function GetClass(){
 		return rows[0].ID;
 	}).on('end', function(err, rows, fields){
         // Only emit notes after query has been completed
-        console.log('Return2:', rows);
+		console.log('Return2:', rows);
 
-        socket.emit('initial notes', notes)
-    });	
+		socket.emit('initial notes', notes)
+	});	
 }
 
 
@@ -49,9 +52,9 @@ export function startServer(store) {
 
 
 	            
-		socket.on('RequestData', function(msg) {
+		socket.on('RequestData', function(prop) {
 			var notes = [];
-			db.query('SELECT * FROM Classes')
+			db.query("call SchedulerTest.GetAllClass(" + semester_id.toString() + ")" )
 			.on('result', function(data){
                 // Push results onto the notes array
                 notes.push(data)
@@ -60,7 +63,6 @@ export function startServer(store) {
                 // Only emit notes after query has been completed
                 socket.emit('Data', notes)
             })
-
 	    })
 
 		
