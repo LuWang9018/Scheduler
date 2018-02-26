@@ -1,6 +1,7 @@
 import React from "react";
 import Tabs from "react-draggable-tabs";
 import {AlertWindow} from "./AlertWindow";
+import {Col} from "react-bootstrap";
 
 const moment = require('moment');
 
@@ -66,7 +67,11 @@ function findDate(dates, day) {
 }
 
 function addDate(dates, day, e) {
-    dates[e].push(day);
+    if (dates[e][0] === "") {
+        dates[e][0] = day;
+    } else {
+        dates[e].push(day);
+    }
 
     return dates;
 }
@@ -79,6 +84,14 @@ function deleteDate(dates, day, e) {
     }
 
     return dates;
+}
+
+function finalzeClass() {
+
+}
+
+function fieldCheck(course) {
+
 }
 
 export class ClassPanel extends React.Component {
@@ -103,7 +116,9 @@ export class ClassPanel extends React.Component {
             Changed: false,
             Tabs: [""],
             ActiveTabIndex: 0,
-            visible: false
+            visible: false,
+            Semesters: ["Winter 2018", "Spring/Summer 2018", "Fall 2018"],
+            Semester: ""
         };
 
         //initial state
@@ -117,6 +132,8 @@ export class ClassPanel extends React.Component {
         this.handleTabAdd = this.handleTabAdd.bind(this);
         this.handleTabClose = this.handleTabClose.bind(this);
         this.handleAlert = this.handleAlert.bind(this);
+        this.handleSemester = this.handleSemester.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     static Hours() {
@@ -146,6 +163,15 @@ export class ClassPanel extends React.Component {
             type[i] = React.createElement("option", {key: i, value: types[i]}, types[i]);
         }
         return type;
+    }
+
+    Semester() {
+        const semester = [""];
+        const semesters = this.state.Semesters;
+        for (let i = 0; i < semesters.length; i++) {
+            semester[i] = React.createElement("option", {key: i, value: semesters[i]}, semesters[i]);
+        }
+        return semester;
     }
 
     DateButtons(e) {
@@ -190,7 +216,7 @@ export class ClassPanel extends React.Component {
     }
 
     handleInputChange(event, selectedIndex) {
-        const value = event.target.value;
+        const value = event.target.value.toUpperCase();
         const name = event.target.name;
 
         switch (name) {
@@ -245,11 +271,9 @@ export class ClassPanel extends React.Component {
                 });
                 break;
         }
-
-        console.log(this.state.Changed);
     }
 
-    handleClassNameChange() {
+    handlePreProcess() {
         this.state.ClassName = this.state.Name + this.state.Code;
     }
 
@@ -298,15 +322,10 @@ export class ClassPanel extends React.Component {
                 });
                 break;
         }
-
-        console.log(this.state.Changed);
     }
 
     handleDateSelect(event, e) {
         const value = event.target.value;
-
-        console.log("Date Change:");
-        console.log(value + ":" + e);
 
         if (findDate(this.state.Date[e], value)) {
             let newDate1 = deleteDate(this.state.Date, value, e);
@@ -322,8 +341,14 @@ export class ClassPanel extends React.Component {
                 Changed: true
             });
         }
+    }
 
-        console.log(this.state.Changed);
+    handleSemester(event) {
+        const value = event.target.value;
+        this.setState({
+            Semester: value,
+            Changed: true
+        })
     }
 
     handleAlert(event) {
@@ -338,6 +363,14 @@ export class ClassPanel extends React.Component {
         this.setState({
             visible: !this.state.visible
         });
+    }
+
+    handleSubmit() {
+        if (fieldCheck(this.state)) {
+
+        } else {
+
+        }
     }
 
     handleTabSelect(selectedIndex) {
@@ -396,8 +429,6 @@ export class ClassPanel extends React.Component {
             Tabs: newTabs,
             Changed: true
         });
-
-        console.log(this.state.Changed);
     }
 
     handleTabClose(removedIndex) {
@@ -465,8 +496,6 @@ export class ClassPanel extends React.Component {
             Tabs: newTabs,
             Changed: true
         });
-
-        console.log(this.state.Changed);
     }
 
     newTabs() {
@@ -529,12 +558,14 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "startTime"},
                     React.createElement("div", {className: "StartTime"}, "Start Time: "),
                     React.createElement("div", {className: "StartTimeInput"},
-                        <select className="inputs" id="StartHour" name="StartHour"
-                                value={this.state.TimeFrom[i].hour()}
-                                onChange={(event) => this.handleSelectChange(event, i)}>
-                            {ClassPanel.Hours()}
-                        </select>,
-                        <select className="inputs" id="StartMint" name="StartMint"
+                        <Col xs={6}>
+                            <select className="inputs" id="StartHour" name="StartHour" size="0"
+                                    value={this.state.TimeFrom[i].hour()}
+                                    onChange={(event) => this.handleSelectChange(event, i)}>
+                                {ClassPanel.Hours()}
+                            </select>
+                        </Col>,
+                        <select className="inputs" id="StartMint" name="StartMint" size="0"
                                 value={this.state.TimeFrom[i].minute()}
                                 onChange={(event) => this.handleSelectChange(event, i)}>
                             {ClassPanel.Mints()}
@@ -543,12 +574,12 @@ export class ClassPanel extends React.Component {
                 React.createElement("div", {className: "stopTime"},
                     React.createElement("div", {className: "StopTime"}, "Stop Time: "),
                     React.createElement("div", {className: "StopTimeInput"},
-                        <select className="inputs" id="StopHour" name="StopHour"
+                        <select className="inputs" id="StopHour" name="StopHour" size="0"
                                 value={this.state.TimeTo[i].hour()}
                                 onChange={(event) => this.handleSelectChange(event, i)}>
                             {ClassPanel.Hours()}
                         </select>,
-                        <select className="inputs" id="StopMint" name="StopMint"
+                        <select className="inputs" id="StopMint" name="StopMint" size="0"
                                 value={this.state.TimeTo[i].minute()}
                                 onChange={(event) => this.handleSelectChange(event, i)}>
                             {ClassPanel.Mints()}
@@ -578,7 +609,7 @@ export class ClassPanel extends React.Component {
                         id="PlaceBuilding"
                         name="LocationB"
                         value={this.state.LocationB[i]}
-                        placeholder="Building"
+                        placeholder="Example: ABC"
                         onChange={(event) => this.handleInputChange(event, i)}
                     />,
                     <input
@@ -586,7 +617,7 @@ export class ClassPanel extends React.Component {
                         id="PlaceRoom"
                         name="LocationR"
                         value={this.state.LocationR[i]}
-                        placeholder="Room"
+                        placeholder="Example: 123"
                         onChange={(event) => this.handleInputChange(event, i)}
                     />)
             ),
@@ -619,13 +650,13 @@ export class ClassPanel extends React.Component {
                         "New Class")),
                 //Class information
                 React.createElement("div", {className: "AddSection", id: "ClassTitle"},
-                    React.createElement("div", {className: "classTitle"}, "Class: "),
+                    React.createElement("div", {className: "classTitle"}, "Course: "),
                     React.createElement("div", {className: "classInput"},
                         <input
                             className="inputs"
                             id="ClassName"
                             name="ClassName"
-                            placeholder="Class Name"
+                            placeholder="Example: ABC123"
                             value={this.state.ClassName}
                             onChange={this.handleInputChange}
                         />,
@@ -633,7 +664,7 @@ export class ClassPanel extends React.Component {
                             className="inputs"
                             id="ClassSection"
                             name="Section"
-                            placeholder="Section"
+                            placeholder="Example: 101"
                             value={this.state.Section}
                             onChange={this.handleInputChange}
                         />
@@ -662,6 +693,19 @@ export class ClassPanel extends React.Component {
                             onChange={this.handleInputChange}
                         />)
                 ),
+                //Semester
+                React.createElement("div", {className: "SemesterInput", id: "SemesterInfo"},
+                    React.createElement("div", {className: "SemesterTitle"}, "Semester: "),
+                    React.createElement("div", {className: "semesterInfoInput"},
+                        <Col xs={6}>
+                            <select className="Semester" name="Semester"
+                                    value={this.state.Semester}
+                                    onChange={this.handleSemester}>
+                                <option value="" disabled>Select your semester</option>
+                                {this.Semester()}
+                            </select>
+                        </Col>),
+                ),
                 //Class Detail tabs
                 this.newTabs(),
                 //Save and Cancel button
@@ -669,14 +713,14 @@ export class ClassPanel extends React.Component {
                     <GenSaveButtons
                         Class={this.state}
                         onClick={(i) => this.props.onClick(i)}
+                        //onClick={this.handleSubmit}
                     />,
                     <GenCancelButtons
-                        onClick={() => {
-                            this.props.onClick({
-                                AddClassWindowOn: false,
-                                Action: "Cancel"
-                            })
-                        }}
+                        onClick={() => this.props.onClick({
+                            AddClassWindowOn: false,
+                            Action: "Cancel"
+                        })
+                        }
                     />)
             ),
             //Add gray background
@@ -687,7 +731,6 @@ export class ClassPanel extends React.Component {
                 }
             ),
             React.createElement("div", {},
-                console.log("Send: " + this.state.visible),
                 <AlertWindow
                     visible={this.state.visible}
                     changeVisible={this.handleAlert}
@@ -697,7 +740,7 @@ export class ClassPanel extends React.Component {
 
     passPanel() {
         if (this.props.AddClassWindowOn) {
-            this.handleClassNameChange();
+            this.handlePreProcess();
             return this.createPanel();
         } else {
             return null;

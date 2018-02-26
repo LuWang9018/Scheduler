@@ -17,6 +17,8 @@ Install all of these:
 	npm install --save socket.io-client
 	npm install react-draggable-tabs --save
 	npm install react-awesome-modal
+	npm install react-input-enhancements
+	npm install react-bootstrap
 	
 Run server:
 	npm run dev

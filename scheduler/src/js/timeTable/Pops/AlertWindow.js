@@ -19,9 +19,6 @@ export class AlertWindow extends React.Component {
     }
 
     render() {
-        console.log("Display Alert Window");
-        console.log("Props:" + this.props.visible);
-        console.log("Receive: " + this.state.visible);
         return <Modal visible={this.state.visible} className="alertWindow">
             <p className="alertText">
                 Do you really want to close without save any change?</p>
