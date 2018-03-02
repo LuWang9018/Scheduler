@@ -108,7 +108,7 @@ export function RequestData(props) {
 
     socket.on('Hello', function (msg) {
         console.log(msg);
-        socket.emit('RequestData', {my: 'data'});
+        socket.emit('RequestData', props);
         socket.on('Data', function (data) {
             console.log(data);
             precressDataOneSem(data);
