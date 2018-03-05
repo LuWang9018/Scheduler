@@ -145,9 +145,11 @@ export class TableGen extends Component {
         console.log(props);
 
         var Class = {
-            Name: '',
-            Code: '',
-            Section: "",
+            CourseID: -1,           
+            CourseSubject: '',
+            CourseCode: '',
+            CourseSection: "",
+            CourseName: "placeHolder",            
             TimeFrom: [moment("00:00 am", "HH:mm a")],
             TimeTo: [moment("00:00 am", "HH:mm a")],
             Date: [[""]],
@@ -156,6 +158,8 @@ export class TableGen extends Component {
             Prof: "",
             Types: [""],
             Color: ["red"],
+            CourseDayFrom: "2018-01-01",
+            CourseDayTo: "2018-12-30"            
         };
 
 

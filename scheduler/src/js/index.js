@@ -10,7 +10,7 @@ ReactDOM.render(
     <div>
         <TableGen
             Data={RequestData()}
-            RequestData={() => RequestData()}
+            RequestData={(props) => RequestData(props)}
             UpdateData={(props) => UpdateData(props)}
             AddData={(props) => AddData(props)}
         />

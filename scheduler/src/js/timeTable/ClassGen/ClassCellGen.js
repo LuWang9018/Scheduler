@@ -48,12 +48,12 @@ function GenClassCells(props) {
     return React.createElement("div",
         {
             style: divStyle,
-            key: props.Class.Name + " ",
+            key: props.Class.CourseSubject + " ",
             onClick: props.onClick
         },
-        props.Class.Name +
-        props.Class.Code + '-' +
-        props.Class.Section + ' (' +
+        props.Class.CourseSubject +
+        props.Class.CourseCode + '-' +
+        props.Class.CourseSection + ' (' +
         props.Class.Types[props.index] + ')',
         <br/>,
         props.Class.LocationB[props.index] + props.Class.LocationR[props.index]
