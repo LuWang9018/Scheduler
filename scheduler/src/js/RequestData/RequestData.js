@@ -1,63 +1,12 @@
 import React from 'react';
 import openSocket from 'socket.io-client';
+import { store } from '../Redux/Redux';
+import { Act_RequestData } from '../Redux/Action/actions.js';
 
 var moment = require('moment');
 const socket = openSocket('http://localhost:8090');
 
-const DayArr = ["Monday", "Tuesday", "Wednesday",
-                "Thursday", "Friday", "Saturday",
-                "Sunday"];
-
-var Data = {
-    //Class list
-    //TODO
-    //should get from server
-    //Define a fromate later
-    Class: [
-        {
-            CourseID: [-1],
-            CourseSubject: "Eng",
-            CourseCode: 101,
-            CourseSection: "001",
-            CourseName: "placeHolder",
-            TimeFrom: [moment('06:10 am', "HH:mm A"),
-                moment('08:10 am', "HH:mm A")],
-            TimeTo: [moment('07:30 am', "HH:mm A"),
-                moment('9:10 am', "HH:mm A")],
-            Date: [["Monday", "Wednesday", "Friday"],
-                ["Monday", "Wednesday"]],
-            LocationB: ["MC", "MC"],
-            LocationR: ["3003", "3006"],
-            Prof: "SB",
-            Types: ["LEC", "TUT"],
-            Color: ["Red", "Green"],
-            CourseDayFrom: "2018-01-01",
-            CourseDayTo: "2018-12-30"
-        },
-        {
-            CourseID: [-1],
-            CourseSubject: "Math",
-            CourseCode: 102,
-            CourseSection: "001",
-            CourseName: "placeHolder",
-            TimeFrom: [moment('09:30 am', "HH:mm A")],
-            TimeTo: [moment('11:00 am', "HH:mm A")],
-            Date: [["Tuesday", "Thursday"]],
-            LocationB: ["RCH"],
-            LocationR: ["160A"],
-            Prof: "SB",
-            Types: ["LEC"],
-            Color: ["Red"],
-            CourseDayFrom: "2018-01-01",
-            CourseDayTo: "2018-12-30"
-        },
-    ],
-};
-
-
-// SD.Semester_ID, SD.Semester_From, SD.Semester_To,
-// SG.Semester_Year, SG.Semester_Season
-
+/*
 function precressDataOneSem(Data){
     var Classes = [];
     for(var i = 0; i < Data.length - 1; i++){
@@ -103,25 +52,38 @@ function precressDataOneSem(Data){
         Classes.push(Class_tmp);
     }
 }
+*/
 
 export function RequestData(props) {
 
+    console.log("Connecting Server    (cellGen.JS)");
+
     socket.on('Hello', function (msg) {
+
         console.log(msg);
+
+        console.log("Requesting Data    (cellGen.JS)");
+
         socket.emit('RequestData', props);
+
         socket.on('Data', function (data) {
+
+            console.log("Receive Data    (cellGen.JS)");
             console.log(data);
-            precressDataOneSem(data);
+            //precressDataOneSem(data);
+            store.dispatch(Act_RequestData(data));
+
+            console.log("Update Store    (cellGen.JS)");
+            console.log(store.getState());
         })
     });
 
 
-    return Data
-
+    return store.getState();
 }
 
 export function UpdateData(props) {
-    console.log("update called");
+    console.log("update called    (cellGen.JS)");
     console.log(props);
 }
 

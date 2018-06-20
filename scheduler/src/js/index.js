@@ -4,7 +4,7 @@ import '../css/index.css';
 
 import {NewTableGen, TableGen} from './timeTable/cellGen.js';
 import {AddData, RequestData, UpdateData} from './RequestData/RequestData'
-
+import {store} from './Redux/Redux';
 
 ReactDOM.render(
     <div>
@@ -16,4 +16,4 @@ ReactDOM.render(
         />
     </div>,
     document.getElementById('root')
-);
+); 

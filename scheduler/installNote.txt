@@ -19,6 +19,9 @@ Install all of these:
 	npm install react-awesome-modal
 	npm install react-input-enhancements
 	npm install react-bootstrap
+	npm install --save redux
+	npm install --save-dev babel-plugin-transform-es2015-destructuring
+	npm install --save-dev babel-plugin-transform-object-rest-spread
 	
 Run server:
 	npm run dev

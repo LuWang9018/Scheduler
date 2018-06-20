@@ -3,16 +3,19 @@ import {GenTimeColumns} from "./ColumnsGen/TimeCGen";
 import {GenDayColumns} from "./ColumnsGen/DayCGen";
 import {GenAllClasses} from "./ClassGen/ClassCellGen";
 import {ClassPanel} from "./Pops/ClassPanel";
+import {store} from '../Redux/Redux';
+import {Act_RequestData, Act_Change_Tmp_Class} from '../Redux/Action/actions'
 
 var moment = require('moment');
 
 export class TableGen extends Component {
     constructor(props) {
         super(props);
+
+        
+
         this.state = {
-            //display time from xx:xx to yy:yy
-            //TODO
-            //change Time format later!
+
             TimeRange: this.FindMinMaxTime(props.Data),
 
             //A time array
@@ -31,6 +34,44 @@ export class TableGen extends Component {
             AddClassWindowOn: false,
             ChangingClassInfo: null
         };
+
+        
+    }
+
+    componentDidMount() {
+        // it remembers to subscribe to the store so it doesn't miss updates
+        this.unsubscribe = store.subscribe(this.UpdateCells.bind(this))
+    }
+
+    componentWillUnmount() {
+    // and unsubscribe later
+        this.unsubscribe()
+    }
+
+    UpdateCells(){
+
+        console.log('UpdateCells    (cellGen.JS)');
+
+        var NewClasses = store.getState().Class;
+        console.log(store.getState());
+
+        //update class lish first
+        this.setState( {Class: NewClasses} );
+
+        //re-calculate time gap
+        this.setState( 
+            {
+                TimeRange: this.FindMinMaxTime(this.state),
+                TimeArr: this.InitTime(
+                    {
+                        Class: this.state.Class
+                    }
+                )
+            }
+        )
+
+        //re-render
+        this.forceUpdate();
     }
 
     InitTime(props) {
@@ -50,7 +91,6 @@ export class TableGen extends Component {
             //console.log(tmp);
 
         }
-
         return TmpTimeArr
     }
 
@@ -62,14 +102,14 @@ export class TableGen extends Component {
 
         for (var i = 0; i < props.Class.length; i++) {
 
-            for (var p = 0; p < props.Class[i].TimeFrom.length; p++) {
-                var start = props.Class[i].TimeFrom[p].clone();
+            for (var p = 0; p < props.Class[i].Class_Detail.length; p++) {
+                var start = props.Class[i].Class_Detail[p].TimeFrom.clone();
                 if (start.isBefore(min)) {
                     min = start.clone();
                 }
             }
-            for (var p = 0; p < props.Class[i].TimeTo.length; p++) {
-                var end = props.Class[i].TimeTo[p].clone();
+            for (var p = 0; p < props.Class[i].Class_Detail.length; p++) {
+                var end = props.Class[i].Class_Detail[p].TimeTo.clone();
                 if (end.isAfter(max)) {
                     max = end.clone();
                 }
@@ -105,92 +145,52 @@ export class TableGen extends Component {
                 },
                 <GenDayColumns
                     TimeArr={this.state.TimeArr}
-                    onClick={(props) => this.handleWhiteCellClick(props)}
+                    onClick={(props) => this.handleCellClick(props)}
                 />,
                 <GenAllClasses
                     TimeRange={this.state.TimeRange}
                     Class={this.state.Class}
                     form={this.state.AddClassWindowOn}
-                    onClick={(props) => this.handleWhiteCellClick(props)}
+                    onClick={(props) => this.handleCellClick(props)}
                 />
             ),
-            //this.GenClassEdit()
             <ClassPanel
                 ChangingClassInfo={currentChangingClassInfo}
                 AddClassWindowOn={this.state.AddClassWindowOn}
-                onClick={(props) => this.handleWhiteCellClick(props)}
             />
         )
     }
 
-    /*
-        GenClassEdit(){
-
-            if(this.state.AddClassWindowOn === true){
-                return <ClassPanel
-                    ChangingClassInfo = {this.state.ChangingClassInfo}
-                    OnOff= {this.state.AddClassWindowOn}
-                    onClick={(props) => this.handleWhiteCellClick(props)}
-                />
-            }
-        }
-    */
 
     //turn add class window on/off
     //props: {
     //	OnOff: true/flase
     //}
-    handleWhiteCellClick(props) {
-        console.log("handleWhiteCellClick");
+    handleCellClick(props) {
+
+        
+
+        console.log("handleCellClick    (cellGen.JS)");
         console.log(props);
-
-        var Class = {
-            CourseID: -1,           
-            CourseSubject: '',
-            CourseCode: '',
-            CourseSection: "",
-            CourseName: "placeHolder",            
-            TimeFrom: [moment("00:00 am", "HH:mm a")],
-            TimeTo: [moment("00:00 am", "HH:mm a")],
-            Date: [[""]],
-            LocationB: [""],
-            LocationR: [""],
-            Prof: "",
-            Types: [""],
-            Color: ["red"],
-            CourseDayFrom: "2018-01-01",
-            CourseDayTo: "2018-12-30"            
-        };
-
-
-        if (props.Class !== undefined) {
-            this.setState({
-                AddClassWindowOn: props.AddClassWindowOn,
-                ChangingClassInfo: props.Class
-            });
-        } else {
-            this.setState({
-                AddClassWindowOn: props.AddClassWindowOn,
-                ChangingClassInfo: Class
-            });
-        }
-
+        store.dispatch(Act_Change_Tmp_Class(props.Class));
+        /*
         if (props.Situation !== undefined) {
             if (props.Situation === "Change") {
                 this.props.UpdateData(props.Class);
             } else if (props.Situation === "Add") {
                 this.props.AddData(props.Class);
             }
-            console.log("RequestData");
+            console.log("RequestData     (cellGen.JS)");
             console.log(this.props.RequestData());
 
             var Class = this.props.RequestData();
             this.setState({Class: Class.Class});
         }
+        */
     }
 
 
-    render() {
+    render() {        
         return this.CreateTimeCells()
     }
 }

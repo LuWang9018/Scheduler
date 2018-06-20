@@ -23,18 +23,27 @@ function GenDayCells(props) {
     var DayCells = props.TimeArr.map(
         function (time) {
             var classtimed = {
-                Name: "",
-                Code: '',
-                Section: "",
-                TimeFrom: [time],
-                TimeTo: [moment('00:00 am', "HH:mm A")],
-                Date: [[props.Day]],
-                LocationB: [""],
-                LocationR: [""],
-                Prof: "",
-                Types: [""],
-                Color: [""],
-            };
+                ClassName: "",           
+                CourseSubject: "",
+                CourseCode: "",
+                CourseSection: "",
+                CourseName: "",                        
+                Class_Detail: [
+                    {
+                        CourseID: -1,
+                        TimeFrom: moment('00:00 am', "HH:mm A"),
+                        TimeTo: moment('00:00 am', "HH:mm A"),
+                        Date: props.Day,
+                        LocationB: "",
+                        LocationR: "",
+                        Prof: "",
+                        Types: "",
+                        Color: "",
+                        CourseDayFrom: "",
+                        CourseDayTo: ""               
+                    }
+                ]
+            } 
 
             var cell = <GendayCell
                 key={time}

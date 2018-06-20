@@ -198,17 +198,20 @@ div.DateTime{
 .DateTimeInput button{
 	width: 10%;
 	text-align: center;
-	margin-right:-1px;
-	border: 0;
+	margin-right:1px;
+	border-width: 4px;
+	background-color : #ffffff;
 }
 
 .AddSection#DateSection button:hover{
 	border: 0;
 	background-color: #66cc00;
 }
+/*
 .AddSection#DateSection button:focus{
 	background-color: var(--colored);
 }
+*/
 
 /*classType properties*/
 div.classType{
@@ -232,7 +235,7 @@ input#PlaceBuilding.inputs{
 }
 
 
-/*ColorSection button*/
+ColorSection button
 div.ColorTitle{
 	margin-top:0.5vh;
 	margin-bottom: 0.25vh;
@@ -241,10 +244,11 @@ div.ColorTitle{
 .colorInput button{
 	position:relative;
 	padding: 0px;
-	width: 15px;
-	height: 15px;
+	width: 30px;
+	height: 30px;
 	margin-right: 2%;
 	border-radius: 50%;
+	border-width: 4px;
 }
 
 button#color1.SelectButton{
