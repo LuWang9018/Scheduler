@@ -70,11 +70,45 @@ export function Reducer(state, action){
 		case 'AddClass':
 
 			console.log('AddClass');
-			return Object.assign({}, state, {});
+			return {
+					...state,
+					Class: [
+							...state.Class,
+							state.Tmp_Class
+					],
+					Config: {
+						...state.Config,
+						TimeTable:{
+							...state.Config.TimeTable,
+							AddTableDirty: true
+						}							
+					}					
+				}
 			break;
 
 		case 'ChangeClass':
 			console.log('ChangeClass');
+			var Class_name = state.Tmp_Class.ClassName;
+			var course_id = state.Tmp_Class.Class_Detail[0].CourseID
+			for(var i = 0; i < state.Class.length; i++){
+				if(state.Class[i].Class_Detail[0].CourseID){
+					return {
+						...state,
+						Class:[
+							...state.Class.slice(0, i),
+							state.Tmp_Class,
+							...state.Class.slice(i+1)
+						],	
+						Config:{
+							...state.Config,
+							TimeTable: {
+								...state.Config.TimeTable, 
+								AddClassWindowOn: false
+							}							
+						}
+					}
+				}
+			}
 			return Object.assign({}, state, {});
 			break;	
 
@@ -82,7 +116,19 @@ export function Reducer(state, action){
 			console.log('Btn_Cancle');
 			console.log(store.getState());
 			if(store.getState().Config.TimeTable.AddTableDirty){
-				//add later
+				//add later waring later
+				return {
+						...state,
+						Config: {
+							...state.Config,
+							TimeTable: 
+								{
+									...state.Config.TimeTable,
+									AddClassWindowOn: false
+								}
+							}
+						}
+				
 			}else{
 				return {
 						...state,
@@ -129,6 +175,13 @@ export function Reducer(state, action){
 								},
 								...state.Tmp_Class.Class_Detail.slice(Cur_Tag + 1)								
 							]
+						},
+						Config: {
+							...state.Config,
+							TimeTable:{
+								...state.Config.TimeTable,
+								AddTableDirty: true
+							}							
 						}											
 					}	
 
@@ -149,7 +202,14 @@ export function Reducer(state, action){
 								},
 								...state.Tmp_Class.Class_Detail.slice(Cur_Tag + 1)								
 							]
-						}											
+						},
+						Config: {
+							...state.Config,
+							TimeTable:{
+								...state.Config.TimeTable,
+								AddTableDirty: true
+							}							
+						}																		
 					}			
 		}				
 		case 'Delete_Tab':
@@ -164,8 +224,17 @@ export function Reducer(state, action){
 								[
 									EmptyClassDetail
 								]
-							}
+							},
+							Config: {
+								...state.Config,
+								TimeTable:{
+									...state.Config.TimeTable,
+									AddTableDirty: true
+								}							
+							}							
 						}
+
+
 			}else{
 				return {
 						...state,
@@ -176,7 +245,14 @@ export function Reducer(state, action){
 										...state.Tmp_Class.Class_Detail.slice(0, action.Data),
 										...state.Tmp_Class.Class_Detail.slice(action.Data+1)
 									]
-							}
+							},
+							Config: {
+								...state.Config,
+								TimeTable:{
+									...state.Config.TimeTable,
+									AddTableDirty: true
+								}							
+							}								
 						}
 			}
 			
@@ -234,7 +310,7 @@ function Red_handleInputChange(event) {
             TmpClass.CourseName = value;
 
             break;
-//need to check later                
+                
         case "LocationB":
             TmpClass.Class_Detail[Cur_Tag].LocationB = value;
 
@@ -244,6 +320,7 @@ function Red_handleInputChange(event) {
 
             break;
         case "Prof":
+
             TmpClass.Class_Detail[Cur_Tag].Prof = value;
             break;
     }
@@ -273,7 +350,14 @@ function Red_handleSelectChange(state, event) {
 								},
 								...state.Tmp_Class.Class_Detail.slice(Cur_Tag + 1)								
 							]
-						}											
+						},
+						Config: {
+							...state.Config,
+							TimeTable:{
+								...state.Config.TimeTable,
+								AddTableDirty: true
+							}							
+						}										
 					}
 
             break;
@@ -291,7 +375,11 @@ function Red_handleSelectChange(state, event) {
 								},
 								...state.Tmp_Class.Class_Detail.slice(Cur_Tag + 1)								
 							]
-						}											
+						},
+						Config:{
+							...state.Config,
+							AddTableDirty: true
+						}												
 					}
 
             break;
@@ -309,7 +397,14 @@ function Red_handleSelectChange(state, event) {
 								},
 								...state.Tmp_Class.Class_Detail.slice(Cur_Tag + 1)								
 							]
-						}											
+						},
+						Config: {
+							...state.Config,
+							TimeTable:{
+								...state.Config.TimeTable,
+								AddTableDirty: true
+							}							
+						}																		
 					}
 
             break;
@@ -327,16 +422,41 @@ function Red_handleSelectChange(state, event) {
 								},
 								...state.Tmp_Class.Class_Detail.slice(Cur_Tag + 1)								
 							]
-						}											
+						},
+						Config: {
+							...state.Config,
+							TimeTable:{
+								...state.Config.TimeTable,
+								AddTableDirty: true
+							}							
+						}																		
 					}
 
             break;
-        case "Types":
-            this.state.Types[selectedIndex] = value;
-            this.setState({
-                Types: this.state.Types,
-                Changed: true
-            });
+        case "TYPES":
+            
+            return { 
+						...state, 
+						Tmp_Class: {
+							...state.Tmp_Class,
+							Class_Detail: [
+								...state.Tmp_Class.Class_Detail.slice(0, Cur_Tag),
+								{
+									...state.Tmp_Class.Class_Detail[Cur_Tag],
+									Types: value
+								},
+								...state.Tmp_Class.Class_Detail.slice(Cur_Tag + 1)								
+							]
+						},
+						Config: {
+							...state.Config,
+							TimeTable:{
+								...state.Config.TimeTable,
+								AddTableDirty: true
+							}							
+						}																		
+					}
+
             break;
     }
 }

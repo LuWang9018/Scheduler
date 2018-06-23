@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {store} from '../../Redux/Redux';
 
 const moment = require('moment');
 
@@ -10,20 +11,23 @@ function GenClassCells(props) {
 
     const unityPX = 1;
 
+    var ColorGroup = store.getState().Config.TimeTable.ColorGroup;
+
     var divStyle = {
         position: 'absolute',
         top: '0px',
         left: '0px',
         margin: '0px',
-        padding: '0px 0px',
-        //border: '0',
+        padding: '2px 2px',
+        borderRadius: '8px',
         height: '0px',
-        width: "calc(" + (100.00 / 7).toString() + "%" + " + 1px)",
-        'backgroundColor': props.Class_Detail.Color,
-        color: 'black',
-        border: '0.1px solid black',
+        width: "calc(" + (100.00 / 7).toString() + "%" + " - 1px)",
+        border: '4px solid black',
         'boxSizing': 'border-box',
         "marginLeft": "0px",
+        "borderColor": ColorGroup[props.Class_Detail.Color].borderColor,
+        "fontColor": ColorGroup[props.Class_Detail.Color].fontColor,
+        "backgroundColor" : ColorGroup[props.Class_Detail.Color].backgroundColor,
     };
     const startTime = props.TimeRange.MinTime;
     let timeDiff = props.Class_Detail.TimeFrom.diff(startTime);
@@ -47,7 +51,7 @@ function GenClassCells(props) {
 
         if(props.Class_Detail.Date.charAt(i) === '1'){
             var tmp_divStyle = Object.assign({}, divStyle)
-            tmp_divStyle.left = (i * (100.00 / 7)).toString() + "%" ;
+            tmp_divStyle.left = "calc(" + (i * (100.00 / 7)).toString() + "%" + " + 1px)" ;
 
             classCellArray.push(
                 React.createElement("div",
@@ -83,6 +87,7 @@ class GenClassForAllDay extends Component {
                 Class_Detail={Class_Detail}
                 key={Date + index}
                 TimeRange={this.props.TimeRange}
+                index = {index}
                 onClick={() => this.props.onClick({
                     AddClassWindowOn: true,
                     Class: this.props.Class

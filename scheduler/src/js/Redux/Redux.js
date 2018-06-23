@@ -10,14 +10,14 @@ var Data = {
     //Define a fromate later
     Class: [
         {
-            ClassName: "Eng101",           
-            CourseSubject: "Eng",
+            ClassName: "ENG101",           
+            CourseSubject: "ENG",
             CourseCode: "101",
             CourseSection: "001",
-            CourseName: "placeHolder",                        
+            CourseName: "PLACEHOLDER",                        
             Class_Detail: [
                 {
-                	CourseID: -1,
+                    CourseID: -1,
                     TimeFrom: moment('06:10 am', "HH:mm A"),
                     TimeTo: moment('07:30 am', "HH:mm A"),
                     Date: "1010100",
@@ -25,33 +25,33 @@ var Data = {
                     LocationR: "3003",
                     Prof: "SB",
                     Types: "LEC",
-                    Color: "Red",
+                    Color: 2,
                     CourseDayFrom: "2018-01-01",
                     CourseDayTo: "2018-12-30"               
                 },
                 {
-                	CourseID: -1,
-                    TimeFrom: moment('2:10 pm', "HH:mm A"),
-                    TimeTo: moment('3:30 pm', "HH:mm A"),
-                    Date: '1010100',
-                    LocationB: "MC",
-                    LocationR: "3003",
-                    Prof: "SB",
+                    CourseID: -2,
+                    TimeFrom: moment('10:10 am', "HH:mm A"),
+                    TimeTo: moment('11:30 am', "HH:mm A"),
+                    Date: "1000000",
+                    LocationB: "MC2",
+                    LocationR: "3027",
+                    Prof: "ABC",
                     Types: "TUT",
-                    Color: "Red",
+                    Color: 2,
                     CourseDayFrom: "2018-01-01",
                     CourseDayTo: "2018-12-30"               
                 }
             ]
         },
         {
-            Class_Name: "Math102",
-            CourseSubject: "Math",
+            ClassName: "MATH102",
+            CourseSubject: "MATH",
             CourseCode: "102",
             CourseSection: "001",
-            CourseName: "placeHolder",            
+            CourseName: "PLACEHOLDER",            
             Class_Detail: [{
-            	CourseID: -1,
+            	CourseID: -3,
                 TimeFrom: moment('09:00 am', "HH:mm A"),
                 TimeTo: moment('10:30 am', "HH:mm A"),
                 Date: "0100000",
@@ -59,18 +59,18 @@ var Data = {
                 LocationR: "160A",
                 Prof: "SB",
                 Types: "LEC",
-                Color: "Red",
+                Color: 1,
                 CourseDayFrom: "2018-01-01",
                 CourseDayTo: "2018-12-30"
             }]
         },
     ],
     Tmp_Class:{
-            ClassName: "Eng101",           
-            CourseSubject: "Eng",
+            ClassName: "ENG101",           
+            CourseSubject: "ENG",
             CourseCode: "101",
             CourseSection: "001",
-            CourseName: "placeHolder",                        
+            CourseName: "PLACEHOLDER",                        
             Class_Detail: [
                 {
                     CourseID: -1,
@@ -81,20 +81,20 @@ var Data = {
                     LocationR: "3003",
                     Prof: "SB",
                     Types: "LEC",
-                    Color: 0,
+                    Color: 2,
                     CourseDayFrom: "2018-01-01",
                     CourseDayTo: "2018-12-30"               
                 },
                 {
-                    CourseID: -1,
-                    TimeFrom: moment('06:10 am', "HH:mm A"),
-                    TimeTo: moment('07:30 am', "HH:mm A"),
-                    Date: "1010100",
-                    LocationB: "MC",
-                    LocationR: "3003",
-                    Prof: "SB",
-                    Types: "LEC",
-                    Color: 1,
+                    CourseID: -2,
+                    TimeFrom: moment('10:10 am', "HH:mm A"),
+                    TimeTo: moment('11:30 am', "HH:mm A"),
+                    Date: "1000000",
+                    LocationB: "MC2",
+                    LocationR: "3027",
+                    Prof: "ABC",
+                    Types: "TUT",
+                    Color: 2,
                     CourseDayFrom: "2018-01-01",
                     CourseDayTo: "2018-12-30"               
                 }
@@ -102,9 +102,10 @@ var Data = {
         },
     Config: {
         TimeTable: {
-            AddClassWindowOn: true,
+            AddClassWindowOn: false,
             AddTableDirty: false,
             ActiveTab: 0,
+            CurrentAction: "null",
             ColorGroup: [
                             {
                                 "borderColor": "#CCFFFF",
@@ -115,6 +116,16 @@ var Data = {
                                 "borderColor": "#FF9999",
                                 "fontColor": "#000000",
                                 "backgroundColor" : "#FFCCCC",
+                            },
+                            {
+                                "borderColor": "#66CCCC",
+                                "fontColor": "#000000",
+                                "backgroundColor" : "#CCFFFF",
+                            },
+                            {
+                                "borderColor": "#66CC66",
+                                "fontColor": "#000000",
+                                "backgroundColor" : "#CCFF99",
                             },
                         ]
         }

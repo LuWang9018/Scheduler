@@ -22,6 +22,14 @@ function GenDayCells(props) {
 
     var DayCells = props.TimeArr.map(
         function (time) {
+            var DateArray = "0000000";
+            const DayArr = ["Monday", "Tuesday", "Wednesday",
+                            "Thursday", "Friday", "Saturday",
+                            "Sunday"];
+
+            var index = DayArr.indexOf(props.Day);
+            DateArray = DateArray.substr(0, index) + 1 + DateArray.substr(index+1);
+
             var classtimed = {
                 ClassName: "",           
                 CourseSubject: "",
@@ -33,12 +41,12 @@ function GenDayCells(props) {
                         CourseID: -1,
                         TimeFrom: moment('00:00 am', "HH:mm A"),
                         TimeTo: moment('00:00 am', "HH:mm A"),
-                        Date: props.Day,
+                        Date: DateArray,
                         LocationB: "",
                         LocationR: "",
                         Prof: "",
                         Types: "",
-                        Color: "",
+                        Color: 0,
                         CourseDayFrom: "",
                         CourseDayTo: ""               
                     }

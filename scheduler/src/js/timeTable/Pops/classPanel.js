@@ -369,12 +369,13 @@ var Format = [{
                                 {
                                     Type: "SELECT",
                                     ClassName : "inputs",
-                                    ID: "classType",
+                                    ID: "TYPES",
                                     SIZE: 0,
                                     Content: "TYPES"
                                 }  
                             ]
                         },
+                        //prof
                         {
                             Type: "DIV",
                             ClassName : "AddSection",

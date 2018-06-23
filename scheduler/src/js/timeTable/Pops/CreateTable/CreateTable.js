@@ -91,6 +91,7 @@ class HandleTabs extends Component{
 		                closeTab={this.handleTabClose}
 		                key = {store.getState().Tmp_Class.ClassName}
 		                tabs={store.getState().Tmp_Class.Class_Detail}
+		                backgroundColor = "#CCFFFF"
 		            > 
 		            	<button>+</button>
 		            </Tabs>
@@ -271,12 +272,16 @@ function Find_Action(ID){
 	console.log(ID);
 	switch(ID){
 		case "Btn_Save":
-			var current_Action = store.getState().Action;
-			if(current_Action === "ADD_CLASS"){
-				store.dispatch(Act_AddClass(null));
-			}else{
-				store.dispatch(Act_ChangeClass(null));
-			}			
+			var current_Action = store.getState().Config.TimeTable.Action;
+			if(store.getState().Config.TimeTable.AddTableDirty === true){
+				console.log('current_Action');
+				console.log(current_Action);
+				if(current_Action === "ADD_CLASS"){
+					store.dispatch(Act_AddClass(null));
+				}else{
+					store.dispatch(Act_ChangeClass(null));
+				}						
+			}	
 			break;
 		case "Btn_Cancle":
 			store.dispatch(Act_Btn_Cancle(null));
@@ -316,7 +321,10 @@ function show_value(valueName){
 			break;
 		case "StopMint":
 			return store.getState().Tmp_Class.Class_Detail[current_tab].TimeTo.minute();
-			break;						
+			break;	
+		case "Prof":	
+			return store.getState().Tmp_Class.Class_Detail[current_tab].Prof;
+			break;				
 		default:
 			return;
 	}

@@ -23,7 +23,7 @@ div.AddClassWindow{
     background-color: #66ff33; 
     width: 500px;
     /*min-width: 450px;*/
-    height: 450px;
+    height: 480px;
     background-color: white; 
     box-shadow: 10px 10px 5px rgba(136, 136, 136,0.5);
     z-index: 10; 
@@ -118,7 +118,7 @@ input#ClassTitleName.inputs{
 
 /*Prof properties*/
 div#ProfInfo.AddSection{
-	margin-left: 5px;
+
 	margin-top: 5px;
 	margin-bottom: 2px;
 	width:100%;
@@ -141,7 +141,7 @@ div#TimeInfo.AddSection{
 	padding-top: 5px;
 	margin-bottom: 2px;
 	width: 100%;
-	height: 100px;
+
 }
 
 div.startTime{

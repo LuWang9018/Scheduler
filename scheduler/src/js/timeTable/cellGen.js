@@ -168,11 +168,11 @@ export class TableGen extends Component {
     //}
     handleCellClick(props) {
 
-        
+        var tmp_class = Object.assign({}, props.Class);
 
         console.log("handleCellClick    (cellGen.JS)");
         console.log(props);
-        store.dispatch(Act_Change_Tmp_Class(props.Class));
+        store.dispatch(Act_Change_Tmp_Class(tmp_class));
         /*
         if (props.Situation !== undefined) {
             if (props.Situation === "Change") {
@@ -194,3 +194,4 @@ export class TableGen extends Component {
         return this.CreateTimeCells()
     }
 }
+
